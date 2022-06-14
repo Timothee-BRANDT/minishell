@@ -9,8 +9,19 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
+typedef struct s_data{
+        char *buffer;
+        char *tmp;
+		t_list	*env;
+}       t_data;
+
 int	    check_space(char *buffer);
-t_list  *create_list(char **buffer_splited);
 void	ft_print_list(t_list	*lst);
+void	ft_print_env(t_list	*lst);
+int     on_error(char *str, int code);
+int		check_quote(t_data *data);
+t_list  *create_list(t_data *data);
+t_list	*env_to_list(char **env);
+void    unset_name(t_list **list, char *name);
 
 #endif

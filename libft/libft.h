@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 14:40:13 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/06/10 17:51:30 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/06/14 14:49:29 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ typedef struct s_list
 	struct s_list	*prev;
 	struct s_list	*next;
 	void			*content;
-}					t_list;
+}				t_list;
 
 int			ft_atoi(const char *str);
 void		ft_bzero(void *s, size_t n);
@@ -41,7 +41,7 @@ int			ft_memcmp(const void *s1, const void *s2, size_t n);
 void		*ft_memcpy(void *dest, const void *src, size_t n);
 void		*ft_memmove(void *dst, const void *src, size_t len);
 void		*ft_memset(void *dest, int src, size_t n);
-char		**ft_split(char const *s, char sep);
+char		**ft_split(char const *s, char c);
 char		*ft_strchr(const char *s, int c);
 char		*ft_strdup(const char *s);
 char		*ft_strjoin(char const *s1, char const *s2);
@@ -74,4 +74,5 @@ void		ft_putchar(char c);
 int			ft_strcmp(char *s1, char *s2);
 int			size(char *str);
 long long	ft_atoll(const char *str);
+char	**rem_split(char **tab, const char *str);
 #endif

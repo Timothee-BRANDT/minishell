@@ -6,7 +6,7 @@
 #    By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/09 14:04:53 by tbrandt           #+#    #+#              #
-#    Updated: 2022/06/11 14:09:09 by tbrandt          ###   ########.fr        #
+#    Updated: 2022/06/14 14:39:29 by tbrandt          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,8 @@ NAME	=	minishell
 SRC		=	main.c			\
 			create_list.c	\
 			utils.c			\
+			parse_buffer.c	\
+			builtins.c		\
 
 OBJ		=	$(SRC:%.c=%.o)
 

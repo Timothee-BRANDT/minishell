@@ -1,44 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   parse_buffer.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/10 17:12:32 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/06/14 14:47:11 by tbrandt          ###   ########.fr       */
+/*   Created: 2022/06/11 16:36:23 by tbrandt           #+#    #+#             */
+/*   Updated: 2022/06/14 14:38:32 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_print_list(t_list	*lst)
+int	is_space(char c)
 {
-	if (!lst)
-    {
-		printf("Empty List\n");
-        return ;
-    }
-	while (lst)
-	{
-		printf("List:%s\n", (char *)(lst->content));
-		lst = lst->next;
-	}
+	if (c == ' ' || c == '\t')
+		return (1);
+	return (0);
 }
 
-void	ft_print_env(t_list	*lst)
+int check_quote(t_data *data)
 {
-	if (!lst)
-        return ;
-	while (lst)
-	{
-		printf("%s\n", (char *)(lst->content));
-		lst = lst->next;
-	}
-}
+	int	i;
+	int check;
+	int	tmp;
 
-int on_error(char *str, int code)
-{
-	printf("%s\n", str);
-	return (code);
+	i = -1;
+	tmp = 0;
+	while (data->buffer[++i])
+	{
+		if (data->buffer[i] == 34 || data->buffer[i] == 39)
+		{
+			tmp++;
+			check = data->buffer[i];
+			while (data->buffer[++i] != check && data->buffer[i] != '\0');
+			if (data->buffer[i] == check)
+				tmp--;
+		}
+	}
+	if (tmp > 0)
+			return(0);
+	return (1);
 }
