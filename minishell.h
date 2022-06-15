@@ -13,6 +13,7 @@ typedef struct s_data{
         char *buffer;
         char *tmp;
 		t_list	*env;
+        t_list  *export;
 }       t_data;
 
 int	    check_space(char *buffer);
@@ -22,6 +23,8 @@ int     on_error(char *str, int code);
 int		check_quote(t_data *data);
 t_list  *create_list(t_data *data);
 t_list	*env_to_list(char **env);
-void    unset_name(t_list **list, char *name);
+void    export_name(t_list **env, t_list **export, char *name);
+void    unset_name_env(t_list **env, char *name);
+void    unset_name_export(t_list **export, char *name);
 
 #endif

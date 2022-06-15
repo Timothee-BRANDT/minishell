@@ -6,7 +6,7 @@
 #    By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/09 14:04:53 by tbrandt           #+#    #+#              #
-#    Updated: 2022/06/14 14:39:29 by tbrandt          ###   ########.fr        #
+#    Updated: 2022/06/15 11:54:39 by tbrandt          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ SRC		=	main.c			\
 			create_list.c	\
 			utils.c			\
 			parse_buffer.c	\
-			builtins.c		\
+			export_unset.c	\
 
 OBJ		=	$(SRC:%.c=%.o)
 
