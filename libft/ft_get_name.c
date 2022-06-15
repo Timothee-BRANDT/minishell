@@ -1,29 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isalnum.c                                       :+:      :+:    :+:   */
+/*   ft_get_name.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/18 13:43:57 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/06/15 14:46:56 by tbrandt          ###   ########.fr       */
+/*   Created: 2022/06/15 14:34:56 by tbrandt           #+#    #+#             */
+/*   Updated: 2022/06/15 14:50:33 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_isalnum(int c)
+char *ft_get_name(char *str)
 {
-	if ((c >= 'a' & c <= 'z' || c >= 'A' & c <= 'Z') || (c >= '0' && c <= '9'))
-		return (1);
-	else
-		return (0);
+    int		i;
+    char	*result;	
+
+	if (!str)
+		return (NULL);
+    i = 0;
+    while (str[i] != '=')
+        i++;
+	result = malloc(sizeof(char *) * i);
+	i = 0;
+	while (str[i] && str[i] != '=')
+	{
+		result[i] = str[i];
+		i++;
+	}
+	result[i] = '\0';
+	return (result);
 }
-/*
-#include <stdio.h>
-int main()
-{
-	printf("%d", ft_isalnum(16));
-	printf("\n");
-	printf("%d", isalnum(16));
-}*/

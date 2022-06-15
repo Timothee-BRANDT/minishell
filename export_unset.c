@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 14:31:02 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/06/15 12:13:34 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/06/15 17:18:41 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,39 @@ t_list	*env_to_list(char **env)
 	return (list);
 }
 
-void	export_name(t_list **env, t_list **export, char *name)
+int	is_in_list(t_list **list, char *name)
+{
+	t_list	*ptr;
+
+	ptr = *list;
+	while(ptr->next != NULL)
+	{
+		if (ft_strcmp(ft_get_name((char *)(ptr->next->content)), name) == 0)
+			return (1);
+		ptr = ptr->next;
+	}
+	return (0);
+}
+
+void	found_and_replace(t_list **export, char *name)
+{
+	t_list	*ptr;
+
+	ptr = *export;
+	while (ptr)
+	{
+		if (ft_strcmp(ft_get_name((char *)(ptr->next->content)), ft_get_name(name)) == 0)
+		{
+			printf("ptr->next->content :%s\n", ptr->next->content);
+			free(ptr->next);
+			ptr->next = ft_lstnew((void *)name);
+			break ;
+		}
+		ptr = ptr->next;
+	}	
+}
+
+int	export_name(t_list **env, t_list **export, char *name)
 {
 	int	i;
 	int	check;
@@ -35,7 +67,9 @@ void	export_name(t_list **env, t_list **export, char *name)
 	i = 0;
 	check = 0;
 	if (!(*env) || !(*export))
-		return;
+		return(1);
+	if (name[0] == '=')
+		return (2);
 	while(name[i])
 	{
 		if (name[i] == '=')
@@ -44,11 +78,27 @@ void	export_name(t_list **env, t_list **export, char *name)
 	}
 	if (check == 1)
 	{
-		ft_lstadd_back(export, ft_lstnew((void *)name));
-		ft_lstadd_back(env, ft_lstnew((void *)name));
+		if (is_in_list(export, ft_get_name(name)) == 1)
+		{
+			printf("THERE IS A DOUBLE\n");
+			found_and_replace(export, name);
+		}
+		else
+		{
+			printf("else????????\n");
+			ft_lstadd_back(export, ft_lstnew((void *)name));
+		}
+		// checker si il existe deja dans export, si oui, le free et le remplacer par le nouveau maillon
+		// else le addback dans export;
+		if (is_in_list(env, ft_get_name(name)) == 0)
+		{
+			printf("put in list env\n");
+			ft_lstadd_back(env, ft_lstnew((void *)name));
+		}
 	}
-	else
+	else if (is_in_list(export, ft_get_name(name)) == 0)
 		ft_lstadd_back(export, ft_lstnew((void *)name));
+	return (0);
 }
 
 void	unset_name_env(t_list **env, char *name)

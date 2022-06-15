@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 14:07:48 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/06/15 12:18:31 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/06/15 14:55:41 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ int main(int argc, char *argv[], char *env[])
 	printf("%s\n", (char *)(cmd->next->content));
 	// need to init_data
 	// export -> checker si je trouve un espace, si j'en trouve un, mettre cette variable dans export et pas dans env;
-
 	if (argc == 1)
 	{
 		data->env = env_to_list(env);
@@ -44,9 +43,18 @@ int main(int argc, char *argv[], char *env[])
 			if (ft_strcmp(data->buffer, "export") == 0) // parsing de manu -> si le maillon = env;
 				ft_print_env(data->export);
 			if (ft_strcmp(data->buffer, "export a=b") == 0)
+			{
 				export_name(&data->env, &data->export, "a=b");
+			}
+			if (ft_strcmp(data->buffer, "export a") == 0)
+			{
+				export_name(&data->env, &data->export, "a");
+			}
 			if (ft_strcmp(data->buffer, "export c") == 0)
-				export_name(&data->env, &data->export, "c");
+			{
+				if (export_name(&data->env, &data->export, "c") == 2)
+					printf("%s\n", "export: `=': not a valid identifier");
+			}
 			if (ft_strcmp(data->buffer, "unset LESS") == 0)
 			{
 				unset_name_env(&data->env, cmd->next->content);
