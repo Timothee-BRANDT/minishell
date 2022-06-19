@@ -41,10 +41,7 @@ int	is_in_list(t_list **list, char *name)
 	while(ptr->next != NULL)
 	{
 		if (ft_strcmp(ft_get_key((char *)(ptr->next->content)), name) == 0)
-		{
-			printf("result:%s\n", ft_get_key((char *)(ptr->next->content)));
 			return (1);
-		}
 		ptr = ptr->next;
 	}
 	return (0);
@@ -127,13 +124,11 @@ int	export_name(t_list **env, t_list **export, t_list **cmd, int code)
 		{
 			if (plus == 0)
 			{
-				printf("simple replace\n");
 				found_and_replace(export, str);
 			}
 			else
 			{
 				check = 0;
-				printf("ADD CONDITION\n");
 				found_and_add(export, str);
 				found_and_add(env, str);
 			}
@@ -141,10 +136,7 @@ int	export_name(t_list **env, t_list **export, t_list **cmd, int code)
 		else
 			ft_lstadd_back(export, ft_lstnew((void *)str));
 		if (is_in_list(env, ft_get_key(str)) == 1 && check == 1)
-		{
-				printf("HEEEEEERE\n");
 				found_and_replace(env, str);
-		}
 		if (is_in_list(env, ft_get_key(str)) == 0)
 			ft_lstadd_back(env, ft_lstnew((void *)str));
 	}
