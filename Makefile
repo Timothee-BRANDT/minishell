@@ -6,7 +6,7 @@
 #    By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/09 14:04:53 by tbrandt           #+#    #+#              #
-#    Updated: 2022/06/15 16:47:08 by tbrandt          ###   ########.fr        #
+#    Updated: 2022/06/17 19:38:35 by tbrandt          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,10 +15,11 @@ CFLAGS	=	-Wall -Wextra -Werror -g #-fsanitize=address
 NAME	=	minishell
 
 SRC		=	main.c			\
-			create_list.c	\
+			parsing.c		\
 			utils.c			\
+			utils2.c		\
 			parse_buffer.c	\
-			export_unset.c	\
+			export.c		\
 
 OBJ		=	$(SRC:%.c=%.o)
 

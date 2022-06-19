@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 17:12:32 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/06/15 16:00:46 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/06/16 15:49:28 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	ft_print_list(t_list	*lst)
 	}
 }
 
+
 void	ft_print_env(t_list	*lst)
 {
 	if (!lst)
@@ -41,4 +42,30 @@ int on_error(char *str, int code)
 {
 	printf("%s\n", str);
 	return (code);
+}
+
+int	ft_isspace(int c)
+{
+	if (((c == '\n') || (c == '\v') || (c == '\t')) \
+	|| ((c == '\r') || (c == '\f') || (c == ' ')))
+		return (1);
+	return (0);
+}
+
+char	*ft_strncpy(char *dest, char *src, unsigned int n)
+{
+	unsigned int	i;
+
+	i = 0;
+	while ((src[i] != '\0') && (i < n))
+	{
+		dest[i] = src[i];
+		i++;
+	}
+	while (i < n)
+	{
+		dest[i] = '\0';
+		i++;
+	}
+	return (dest);
 }
