@@ -123,25 +123,24 @@ int	export_name(t_list **env, t_list **export, t_list **cmd, int code)
 		if (is_in_list(export, ft_get_key(str)) == 1)
 		{
 			if (plus == 0)
-			{
 				found_and_replace(export, str);
-			}
 			else
 			{
 				check = 0;
 				found_and_add(export, str);
-				found_and_add(env, str);
+				if (is_in_list(env, ft_get_key(str)) == 1)
+					found_and_add(env, str);
 			}
 		}
 		else
-			ft_lstadd_back(export, ft_lstnew((void *)str));
+			ft_lstadd_back(export, ft_lstnew(remove_plus(str)));
 		if (is_in_list(env, ft_get_key(str)) == 1 && check == 1)
 				found_and_replace(env, str);
 		if (is_in_list(env, ft_get_key(str)) == 0)
-			ft_lstadd_back(env, ft_lstnew((void *)str));
+			ft_lstadd_back(env, ft_lstnew(remove_plus(str)));
 	}
 	else if (is_in_list(export, ft_get_key(str)) == 0)
-		ft_lstadd_back(export, ft_lstnew((void *)str));
+		ft_lstadd_back(export, ft_lstnew(remove_plus(str)));
 	if ((*cmd)->next != NULL && !is_token((char *)(*cmd)->next->content))
 		return (export_name(env, export, &(*cmd)->next, 1));
 	return (0);

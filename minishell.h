@@ -24,6 +24,7 @@ typedef struct s_data{
 }       t_data;
 
 int	    check_space(char *buffer);
+char	*remove_plus(char *str);
 void	ft_print_list(t_list	*lst);
 void	ft_print_env(t_list	*lst);
 int     on_error(char *str, int code);

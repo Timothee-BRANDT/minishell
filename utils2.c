@@ -34,7 +34,7 @@ char	*ft_get_key(char *str)
 	if (!str)
 		return (NULL);
     i = 0;
-	while (str[i] && str[i] != '=' && str[i] == '+')
+	while (str[i] && str[i] != '=' && str[i] != '+')
 		i++;
 	result = malloc(sizeof(char) * (i + 1));
 	i = 0;
@@ -122,4 +122,25 @@ char	*ft_strjoin_export(char const *s1, char const *s2)
 	}
 	str[i] = '\0';
 	return (str);
+}
+
+char	*remove_plus(char *str)
+{
+	char	*res;
+	int		i;
+	int		j;
+
+	res = malloc(sizeof(char) * ft_strlen(str));
+	i = 0;
+	j = 0;
+	while (str[i])
+	{
+		if (str[i] == '+')
+			i++;
+		res[j] = str[i];
+		i++;
+		j++;
+	}
+	res[j] = '\0';
+	return (res);
 }
