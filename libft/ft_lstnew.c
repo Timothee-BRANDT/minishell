@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbrandt <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: mmatthie <mmatthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 11:37:52 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/06/12 18:21:00 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/06/19 17:54:46 by mmatthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_list	*ft_lstnew(void  *content)
+t_list	*ft_lstnew(void *content)
 {
 	t_list	*list;
 
@@ -20,16 +20,6 @@ t_list	*ft_lstnew(void  *content)
 	if (!list)
 		return (NULL);
 	list->content = content;
-	list->prev = NULL;
 	list->next = NULL;
 	return (list);
 }
-/*
-#include <stdio.h>
-int main()
-{
-	t_list *p;
-
-	p = ft_lstnew((void *)53453453);
-	printf("%d", (int)p->content);
-}*/

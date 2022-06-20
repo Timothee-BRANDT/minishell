@@ -6,60 +6,103 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 14:07:48 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/06/19 13:26:16 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/06/20 12:20:58 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int main(int argc, char *argv[], char *env[])
+t_list	*ft_list(t_list	*lst, char	*str)
 {
-	t_data	*data;
-	t_list	*cmd;
+	t_list	*li;
+
+	li = NULL;
+	if (lst == NULL)
+	{
+		lst = ft_lstnew(str);
+		return (lst);
+	}
+	else
+	{
+		li = ft_lstnew(str);
+		ft_lstadd_back(&lst, li);
+		return (lst);
+	}
+	return (lst);
+}
+
+int	make_second(char	*buffer, t_data *data, int count)
+{
+	int	j;
 	int	i;
 
-	i = 0;
-	(void)argv;
-	data = malloc(sizeof(t_data));
-	if (argc == 1)
+	j = 0;
+	i = count;
+	while (buffer[i] != data->token && buffer[i])
 	{
-		data->env = env_to_list(env);
-		data->export = env_to_list(env);
-		while(1)
-		{
-			data->buffer = readline(">$ ");
-			cmd = get_word_in_list(data->buffer, data);
-			//ft_print_list(cmd);
-			//printf("get_value:%s\n", ft_get_value(data->buffer));
-			if (ft_strcmp(data->buffer, "env") == 0) // parsing de manu -> si le maillon = env;
-				ft_print_env(data->env);
-			if (ft_strcmp(data->buffer, "export") == 0) // parsing de manu -> si le maillon = env;
-				ft_print_env(data->export);
-			if (cmd->next)
-				export_name(&data->env, &data->export, &cmd, 0);
-			if (ft_strcmp(data->buffer, "export c") == 0)
-			{
-				//if (export_name(&data->env, &data->export, "c") == 2)
-					//printf("%s\n", "export: `=': not a valid identifier");
-			}
-			if (ft_strcmp(data->buffer, "unset LESS") == 0)
-			{
-				unset_name_env(&data->env, cmd->next->content);
-				unset_name_export(&data->export, cmd->next->content);
-			}
-			if (ft_strcmp(data->buffer, "unset a") == 0)
-			{
-				unset_name_env(&data->env, "a");
-				unset_name_export(&data->export, "a");
-			}
-			if (ft_strcmp(data->buffer, "unset c") == 0)
-			{
-				unset_name_env(&data->env, "c");
-				unset_name_export(&data->export, "c");
-			}
-			add_history(data->buffer);
-			//free(data->buffer);
-		}
+		j++;
+		i++;
 	}
+	data->second = ft_calloc(1, j);
+	data->second = ft_strncpy(data->second, &buffer[count], j);
+	data->join = ft_join_free_ss(data->first, data->second);
+	if (!data->join)
+	{
+		ft_putstr_fd("error in join\n", 2);
+		exit(EXIT_FAILURE);
+	}
+	data->first = ft_calloc(1, ft_strlen(data->join) + 1);
+	data->first = ft_strncpy(data->first, data->join, ft_strlen(data->join));
+	count = i;
+	return (count);
+}
+
+t_list	*get_word_in_list(char	*buffer, t_data	*data)
+{
+	t_list	*lst;
+	int		i;
+
+	i = -1;
+	data->count = 0;
+	lst = NULL;
+	data->indicate = 0;
+	while (data->count < (int)ft_strlen(buffer))
+	{
+		while (ft_isspace(buffer[data->count]))
+			data->count++;
+		if (buffer[data->count] != '"' && buffer[data->count] \
+		!= '\'' && buffer[data->count] != '\0')
+			data->count = get_word(buffer, data, data->count);
+		else if (buffer[data->count] == '"' || buffer[data->count] == '\'')
+			data->count = get_quotes(buffer, data, data->count);
+		if (buffer[data->count] == ' ' || buffer[data->count] == '\0')
+			lst = ft_list(lst, data->get_word);
+	}
+	return (lst);
+}
+
+int	main(int ac, char	**av, char	**env)
+{
+	t_data	*data;
+
+	(void) ac;
+	(void) av;
+	data = malloc(sizeof(t_data));
+	data->env = env_to_list(env);
+	data->export = env_to_list(env);
+	while (1)
+	{
+		data->buffer = readline(">$ ");
+		if (!check_quote(data->buffer))
+		{
+			ft_putstr_fd("error, quotes not closed.\n", 2);
+			exit(EXIT_FAILURE);
+		}
+		data->cmd = get_word_in_list(data->buffer, data);
+		ft_export(data, data->cmd);
+		//ft_print_list(data->cmd);
+		add_history(data->buffer);
+	}
+	free(data->buffer);
 	return (0);
 }

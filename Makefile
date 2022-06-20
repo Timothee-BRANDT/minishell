@@ -6,7 +6,7 @@
 #    By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/09 14:04:53 by tbrandt           #+#    #+#              #
-#    Updated: 2022/06/17 19:38:35 by tbrandt          ###   ########.fr        #
+#    Updated: 2022/06/20 12:00:21 by tbrandt          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,17 +14,17 @@ CC		=	gcc
 CFLAGS	=	-Wall -Wextra -Werror -g #-fsanitize=address
 NAME	=	minishell
 
-SRC		=	main.c			\
-			parsing.c		\
-			utils.c			\
-			utils2.c		\
-			parse_buffer.c	\
-			export.c		\
+SRC		=	main.c				\
+			utils.c				\
+			check.c				\
+			built_in/export.c	\
+			built_in/utils.c	\
+			built_in/utils2.c	\
 
 OBJ		=	$(SRC:%.c=%.o)
 
 LIBS    =   -L/Users/tbrandt/.brew/opt/readline/lib -lreadline
-HEADERS =   -I$(HEADER) -I/Users/tbrandt/.brew/opt/readline/include
+HEADERS =   -I/Users/tbrandt/.brew/opt/readline/include
 
 all: $(NAME)
 

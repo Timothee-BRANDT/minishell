@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_print_split.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mmatthie <mmatthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 17:50:26 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/06/10 17:50:34 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/06/19 14:40:01 by mmatthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	ft_print_split(char	**map)
 {
 	size_t	i;
+
 	i = 0;
 	while (map[i])
 	{
