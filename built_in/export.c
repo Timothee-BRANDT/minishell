@@ -1,73 +1,92 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   export.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/06/20 13:12:18 by tbrandt           #+#    #+#             */
+/*   Updated: 2022/06/21 13:33:52by tbrandt          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
-int	export_name(t_list **env, t_list **export, t_list **cmd, int code)
+void	init_data(t_data *data)
 {
-	int	i;
-	int	check;
-	int plus;
-	char *str;
-	
-	i = -1;
-	
-	check = 0;
-	plus = 0;
+	data->i = 0;
+	data->check = 0;
+	data->plus = 0;
+}
+
+int	export_name(t_list **cmd, t_data *data, int code)
+{
+	t_list	*tmp;
+
+	tmp = *cmd;
+	init_data(data);
 	if (code == 0)
-		*cmd = (*cmd)->next;	
-	str = ((char *)(*cmd)->content);
-	if (is_token(str))
+		tmp = (*cmd)->next;
+	data->str = ((char *)tmp->content);
+	if (is_token(data->str))
 		return (2);
-	if (ft_strcmp(str, "=") == 0)
+	if (ft_strcmp(data->str, "=") == 0)
 		return (3);
-	while (str[++i])
+	while (data->str[data->i])
 	{
-		if (str[i] == '=')
+		if (data->str[data->i] == '=')
 		{
-			check = 1;
-			if (str[i - 1] == '+')
-				plus = 1;
+			data->check = 1;
+			if (data->str[data->i - 1] == '+')
+				data->plus = 1;
 		}
+		data->i++;
 	}
-	if (check == 1)
-	{
-		if (is_in_list(export, ft_get_key(str)) == 1)
-		{
-			if (plus == 0)
-			{
-				found_and_replace(export, str);
-			}
-			else
-			{
-				check = 0;
-				found_and_add(export, str);
-				if (is_in_list(env, ft_get_key(str)) == 1)
-					found_and_add(env, str);
-			}
-		}
-		else
-			ft_lstadd_back(export, ft_lstnew(remove_plus(str)));
-		if (is_in_list(env, ft_get_key(str)) == 1 && check == 1)
-				found_and_replace(env, str);
-		if (is_in_list(env, ft_get_key(str)) == 0)
-			ft_lstadd_back(env, ft_lstnew(remove_plus(str)));
-	}
-	else if (is_in_list(export, ft_get_key(str)) == 0)
-		ft_lstadd_back(export, ft_lstnew(remove_plus(str)));
-	if ((*cmd)->next != NULL && !is_token((char *)(*cmd)->next->content))
-		return (export_name(env, export, &(*cmd)->next, 1));
+	exec_export(data);
+	if ((*cmd)->next != NULL && \
+	!is_token((char *)(*cmd)->next->content))
+		return (export_name(&(*cmd)->next, data, 1));
 	return (0);
 }
 
-void	unset_name_env(t_list **env, char *name)
+void	exec_export(t_data *data)
+{
+	if (data->check == 1)
+	{
+		if (is_in_list(&data->export, ft_get_key(data->str)) == 1)
+		{
+			if (data->plus == 0)
+				found_and_replace(&data->export, data->str);
+			else
+			{
+				data->check = 0;
+				found_and_add(&data->export, data->str);
+				if (is_in_list(&data->env, ft_get_key(data->str)) == 1)
+					found_and_add(&data->env, data->str);
+			}
+		}
+		else
+			ft_lstadd_back(&data->export, ft_lstnew(remove_plus(data->str)));
+		if (is_in_list(&data->env, ft_get_key(data->str)) == 1 && data->check == 1)
+				found_and_replace(&data->env, data->str);
+		if (is_in_list(&data->env, ft_get_key(data->str)) == 0)
+			ft_lstadd_back(&data->env, ft_lstnew(data->str));
+	}
+	else if (is_in_list(&data->export, ft_get_key(remove_plus(data->str))) == 0)
+			ft_lstadd_back(&data->export, ft_lstnew(remove_plus(data->str)));
+}
+
+void	unset_name_env(t_list **env, t_list **cmd)
 {
 	t_list	*ptr;
 	t_list	*tmp;
 	int		len;
 
 	ptr = *env;
-	len = ft_strlen(name);
+	len = ft_strlen((char *)(*cmd)->next->content);
 	while (ptr->next != NULL)
 	{
-		if (ft_strncmp((char *)(ptr->next->content), name, len) == 0)
+		if ((*cmd)->next && ft_strncmp((char *)(ptr->next->content), (*cmd)->next->content, len) == 0)
 		{
 			tmp = ptr->next;
 			ptr->next = ptr->next->next;
@@ -77,36 +96,57 @@ void	unset_name_env(t_list **env, char *name)
 		}
 		ptr = ptr->next;
 	}
+	if ((*cmd)->next && (*cmd)->next->next && !is_token((char *)(*cmd)->next->content))
+		return (unset_name_export(env, &(*cmd)->next));
 }
 
-void	unset_name_export(t_list **export, char *name)
+void	unset_name_export(t_list **export, t_list **cmd)
 {
 	t_list	*ptr;
 	t_list	*tmp;
 	int		len;
 
 	ptr = *export;
-	len = ft_strlen(name);
+	len = ft_strlen((char *)(*cmd)->next->content);
 	while (ptr->next != NULL)
 	{
-		if (ft_strncmp((char *)(ptr->next->content), name, len) == 0)
+		if ((*cmd)->next && ft_strncmp((char *)(ptr->next->content), (*cmd)->next->content, len) == 0)
 		{
+			printf("-----------------IN THE IF CONDITION------------\n");
 			tmp = ptr->next;
+			printf("TEST1\n");
 			ptr->next = ptr->next->next;
+			printf("TEST2\n");
 			free(tmp);
+			printf("TEST3\n");
 			if (!ptr->next)
 				return ;
+			printf("TEST4\n");
 		}
 		ptr = ptr->next;
+		printf("TEST5\n");
+	}
+	if ((*cmd)->next && (*cmd)->next->next && !is_token((char *)(*cmd)->next->content))
+	{
+		printf("GO RECURSIF\n");
+		printf("resusif call cmd->next :%s\n", (char *)(*cmd)->next);
+		return (unset_name_export(export, &(*cmd)->next));
 	}
 }
 
-void	ft_export(t_data	*data, t_list	*cmd)
+void	ft_export(t_list **cmd, t_data	*data)
 {
-	if (ft_strcmp((char *)(cmd)->content, "env") == 0)
+	//printf("(*cmd)->content :%s\n", (char *)(*cmd)->content);
+	if (ft_strcmp((char *)(*cmd)->content, "env") == 0)
 		ft_print_env(data->env);
-	if (ft_strcmp((char *)(cmd)->content, "export") == 0 && !cmd->next)
+	if (ft_strcmp((char *)(data->cmd)->content, "export") == 0 && !data->cmd->next)
 		ft_print_env(data->export);
-	else if (cmd->next)
-		export_name(&data->env, &data->export, &cmd, 0);
+	if (data->cmd->next)
+		export_name(cmd, data, 0);
+	//printf("(*cmd)->content :%s\n", (char *)(*cmd)->content);
+	if (ft_strcmp((char *)(*cmd)->content, "unset") == 0 && (*cmd)->next)
+	{
+		unset_name_export(&data->export, cmd);
+		unset_name_env(&data->env, cmd);
+	}
 }

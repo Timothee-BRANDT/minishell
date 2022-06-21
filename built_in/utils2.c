@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 11:57:36 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/06/20 12:00:15 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/06/20 18:04:32 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,10 +97,12 @@ char	*remove_plus(char *str)
 	char	*res;
 	int		i;
 	int		j;
-
-	res = malloc(sizeof(char) * ft_strlen(str));
-	i = 0;
+	int		k;
+	
+	i =	0;
 	j = 0;
+	k = 0;
+	res = malloc(sizeof(char) * ft_strlen(str));
 	while (str[i])
 	{
 		if (str[i] == '+')

@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 11:55:22 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/06/20 12:00:09 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/06/20 15:11:30 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,8 +98,7 @@ char	*ft_strjoin_export(char const *s1, char const *s2)
 		str[i] = s1[i];
 		i++;
 	}
-	str[i] = '=';
-	i++;
+	str[i++] = '=';
 	while (s2[j])
 	{
 		str[i] = s2[j];

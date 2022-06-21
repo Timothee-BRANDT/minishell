@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmatthie <mmatthie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 17:12:32 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/06/19 19:33:14 by mmatthie         ###   ########.fr       */
+/*   Updated: 2022/06/20 15:17:31 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	ft_print_list(t_list	*lst)
 {
 	if (!lst)
 		printf("Empty List\n");
-	while (lst)
+	while (lst != NULL)
 	{
 		printf("List:%s\n", (char *)(lst->content));
 		lst = lst->next;
