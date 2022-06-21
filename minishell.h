@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 19:34:14 by mmatthie          #+#    #+#             */
-/*   Updated: 2022/06/21 15:11:54 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/06/21 18:35:30 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,14 @@ typedef struct s_data
 	int		count;
 	int		indicate;
 	int		token;
+	// export.c
 	int		i;
 	int		check;
 	int		plus;
 	char	*str;
 	char	*get_key;
+	char	*result;
+	char	*removed;
 	t_list	*env;
 	t_list	*export;
 	t_list	*cmd;
@@ -68,7 +71,7 @@ int		get_without_quotes(char	*buffer, t_data	*data, int count);
 t_list	*env_to_list(char **env);
 int		is_in_list(t_list **list, char *name);
 void	found_and_replace(t_list **export, char *name);
-void	found_and_add(t_list **export, char *name);
+void	found_and_add(t_list **export, char *name, t_data *data);
 void	exec_export(t_data *data);
 int		export_name(t_list **cmd, t_data *data, int code);
 void	unset_name_env(t_list **env, t_list **cmd);
@@ -80,5 +83,7 @@ char	*ft_get_value(char *str);
 char	*remove_plus(char *str);
 char	*ft_get_key(char *str);
 void	ft_print_env(t_list	*lst);
+void	set_export_var(t_data *data);
+void    free_two_string(char *s1, char *s2);
 
 #endif

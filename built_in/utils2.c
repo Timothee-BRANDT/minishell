@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 11:57:36 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/06/20 18:04:32 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/06/21 17:26:0 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,19 @@ t_list	*env_to_list(char **env)
 int	is_in_list(t_list **list, char *name)
 {
 	t_list	*ptr;
+	char	*get_key;
 
 	ptr = *list;
 	while(ptr->next != NULL)
 	{
-		if (ft_strcmp(ft_get_key((char *)(ptr->next->content)), name) == 0)
+		get_key = ft_get_key((char *)(ptr->next->content));
+		if (ft_strcmp(get_key, name) == 0)
+		{
+			free(get_key);
 			return (1);
+		}
 		ptr = ptr->next;
+		free(get_key);
 	}
 	return (0);
 }
@@ -51,45 +57,55 @@ void	found_and_replace(t_list **export, char *name)
 {
 	t_list	*ptr;
 	t_list	*tmp;
+	char	*get_key_export;
+	char	*get_key_name;
 
 	ptr = *export;
 	while (ptr)
 	{
-		if (ft_strcmp(ft_get_key((char *)(ptr->next->content)), ft_get_key(name)) == 0)
+		get_key_export = ft_get_key((char *)(ptr->next->content));
+		get_key_name = ft_get_key(name);
+		if (ft_strcmp(get_key_export, get_key_name) == 0)
 		{
+			free_two_string(get_key_export, get_key_name);
 			tmp = ptr->next->next;
 			free(ptr->next);
 			ptr->next = ft_lstnew((void *)name);
 			ptr->next->next = tmp;
 			break ;
 		}
+		free_two_string(get_key_export, get_key_name);
 		ptr = ptr->next;
 	}	
 }
 
-void    found_and_add(t_list **export, char *name)
+void    found_and_add(t_list **export, char *name, t_data *data)
 {
-        t_list  *ptr;
-        t_list  *tmp;
-		char	*string;
-		char	*res = NULL;
-
-        ptr = *export;
-        while (ptr)
-        {
-                if (ft_strcmp(ft_get_key((char *)(ptr->next->content)), ft_get_key(name)) == 0)
-                {
-						string = ft_strjoin_export(ft_get_key((char *)(ptr->next->content)), ft_get_value((char *)(ptr->next->content)));
-						res = ft_strjoin(string, ft_get_value(name));
-                        tmp = ptr->next->next;
-                        free(ptr->next);
-                        ptr->next = ft_lstnew(res);
-                        ptr->next->next = tmp;
-						//free(string);
-                        break ;
-                }
-                ptr = ptr->next;
-        }
+	t_list  *ptr; 
+	t_list  *tmp;
+	char	*string;
+	char	*get_key_export;
+	char	*get_key_name;
+	
+	ptr = *export;
+	while (ptr)
+	{
+		get_key_export = ft_get_key((char *)(ptr->next->content));
+		get_key_name = ft_get_key(name);
+		if (ft_strcmp(get_key_export, get_key_name) == 0)
+		{
+			string = ft_strjoin_export(get_key_export, get_key_name);
+			free_two_string(get_key_export, get_key_name);
+			data->result = ft_strjoin(string, ft_get_value(name));
+			tmp = ptr->next->next;
+            free(ptr->next);
+			ptr->next = ft_lstnew(data->result);
+			ptr->next->next = tmp;
+			break ;
+		}
+		free_two_string(get_key_export, get_key_name);
+		ptr = ptr->next;
+	}
 }
 
 char	*remove_plus(char *str)

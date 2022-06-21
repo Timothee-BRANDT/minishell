@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 14:07:48 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/06/21 15:36:45 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/06/21 18:58:35 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,12 @@ t_list	*get_word_in_list(char	*buffer, t_data	*data)
 		else if (buffer[data->count] == '"' || buffer[data->count] == '\'')
 			data->count = get_quotes(buffer, data, data->count);
 		if (buffer[data->count] == ' ' || buffer[data->count] == '\0')
-			lst = ft_list(lst, data->get_word);
+		{
+			while (ft_isspace(buffer[data->count]))
+				data->count++;
+			if (buffer[data->count] != ' ' || buffer[data->count] == '\0')
+				lst = ft_list(lst, data->get_word);
+		}
 	}
 	return (lst);
 }
@@ -102,7 +107,8 @@ int	main(int ac, char	**av, char	**env)
 		ft_export(&data->cmd, data);
 		//ft_print_list(data->cmd);
 		add_history(data->buffer);
-	//system("leaks minishell");
+		//ft_print_env(data->cmd);
+		//system("leaks minishell");
 	}
 	free(data->buffer);
 	return (0);
