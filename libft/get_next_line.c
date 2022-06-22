@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbrandt <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 17:09:26 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/06/09 14:37:06 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/06/22 13:25:35 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,17 +69,4 @@ char	*get_next_line(int fd)
 	free(buffer);
 	str = return_line(&excess, str, tmp, read_value);
 	return (str);
-}
-
-#include <stdio.h>
-int main(int argc, char *argv[])
-{
-	int	fd;
-	char	*line;
-
-	(void)argc;
-	fd = open(argv[1], O_RDONLY);
-	line = get_next_line(fd);
-	printf("GNL return : %s\n", line);
-	return (0);
 }

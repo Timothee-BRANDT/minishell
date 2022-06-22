@@ -14,7 +14,7 @@
 
 t_list	*env_to_list(char **env)
 {
-	t_list *list;
+	t_list	*list;
 	int		i;
 
 	i = 1;
@@ -39,7 +39,7 @@ int	is_in_list(t_list **list, char *name)
 	char	*get_key;
 
 	ptr = *list;
-	while(ptr->next != NULL)
+	while (ptr->next != NULL)
 	{
 		get_key = ft_get_key((char *)(ptr->next->content));
 		if (ft_strcmp(get_key, name) == 0)
@@ -79,14 +79,14 @@ void	found_and_replace(t_list **export, char *name)
 	}	
 }
 
-void    found_and_add(t_list **export, char *name, t_data *data)
+void	found_and_add(t_list **export, char *name, t_data *data)
 {
-	t_list  *ptr; 
-	t_list  *tmp;
+	t_list	*ptr;
+	t_list	*tmp;
 	char	*string;
 	char	*get_key_export;
 	char	*get_key_name;
-	
+
 	ptr = *export;
 	while (ptr)
 	{
@@ -98,7 +98,7 @@ void    found_and_add(t_list **export, char *name, t_data *data)
 			free_two_string(get_key_export, get_key_name);
 			data->result = ft_strjoin(string, ft_get_value(name));
 			tmp = ptr->next->next;
-            free(ptr->next);
+			free(ptr->next);
 			ptr->next = ft_lstnew(data->result);
 			ptr->next->next = tmp;
 			break ;
@@ -114,8 +114,8 @@ char	*remove_plus(char *str)
 	int		i;
 	int		j;
 	int		k;
-	
-	i =	0;
+
+	i = 0;
 	j = 0;
 	k = 0;
 	res = malloc(sizeof(char) * ft_strlen(str));

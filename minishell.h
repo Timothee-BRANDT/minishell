@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 19:34:14 by mmatthie          #+#    #+#             */
-/*   Updated: 2022/06/21 18:35:30 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/06/22 13:58:19 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ typedef struct s_data
 	int		count;
 	int		indicate;
 	int		token;
-	// export.c
 	int		i;
 	int		check;
 	int		plus;
@@ -49,6 +48,7 @@ typedef struct s_data
 }				t_data;
 
 //utils.c
+int		on_error(char *str, int code);
 char	*ft_strncpy(char *dest, char *src, unsigned int n);
 void	ft_print_list(t_list	*lst);
 int		check_quote(char *buffer);
@@ -79,11 +79,12 @@ void	unset_name_export(t_list **export, t_list **cmd);
 void	ft_export(t_list **cmd, t_data	*data);
 char	*ft_strjoin_export(char const *s1, char const *s2);
 int		is_token(char *str);
+void	init_data(t_data *data);
+int		set_export_var(t_data *data);
 char	*ft_get_value(char *str);
 char	*remove_plus(char *str);
 char	*ft_get_key(char *str);
 void	ft_print_env(t_list	*lst);
-void	set_export_var(t_data *data);
-void    free_two_string(char *s1, char *s2);
+void	free_two_string(char *s1, char *s2);
 
 #endif
