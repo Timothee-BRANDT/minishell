@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 17:12:32 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/06/22 15:43:00 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/06/22 18:52:22 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,9 @@ int	check_quote(char	*buffer)
 
 	i = 0;
 	tmp = 0;
-	while (buffer[i])
+	if (!buffer)
+		return (1);
+	while (buffer && buffer[i])
 	{
 		if (buffer[i] == 34 || buffer[i] == 39)
 		{

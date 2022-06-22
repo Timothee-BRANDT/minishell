@@ -82,28 +82,29 @@ void	found_and_replace(t_list **export, char *name)
 void	found_and_add(t_list **export, char *name, t_data *data)
 {
 	t_list	*ptr;
-	t_list	*tmp;
-	char	*string;
-	char	*get_key_export;
-	char	*get_key_name;
 
 	ptr = *export;
 	while (ptr)
 	{
-		get_key_export = ft_get_key((char *)(ptr->next->content));
-		get_key_name = ft_get_key(name);
-		if (ft_strcmp(get_key_export, get_key_name) == 0)
+		data->get_key_export = ft_get_key((char *)(ptr->next->content));
+		data->get_key_name = ft_get_key(name);
+		if (ft_strcmp(data->get_key_export, data->get_key_name) == 0)
 		{
-			string = ft_strjoin_export(get_key_name, ft_get_value((ptr->next->content)));
-			free_two_string(get_key_export, get_key_name);
-			data->result = ft_strjoin(string, ft_get_value(name));
-			tmp = ptr->next->next;
+			data->get_value_export = ft_get_value(ptr->next->content);
+			data->get_value_name = ft_get_value(name);
+			data->string = ft_strjoin_export \
+			(data->get_key_name, data->get_value_export);
+			//free_two_string(data->get_key_name, data->get_key_export);
+			data->result = ft_strjoin(data->string, data->get_value_name);
+			free_all(data);
+			//free_three_string(data->get_value_export, data->get_value_name, data->string, data->result);
+			data->tmp = ptr->next->next;
 			free(ptr->next);
 			ptr->next = ft_lstnew(data->result);
-			ptr->next->next = tmp;
+			ptr->next->next = data->tmp;
 			break ;
 		}
-		free_two_string(get_key_export, get_key_name);
+		free_two_string(data->get_key_export, data->get_key_name);
 		ptr = ptr->next;
 	}
 }

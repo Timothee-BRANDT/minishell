@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 19:34:14 by mmatthie          #+#    #+#             */
-/*   Updated: 2022/06/22 16:24:29 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/06/22 18:44:00 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,16 @@ typedef struct s_data
 	int		check;
 	int		plus;
 	char	*str;
+	char	*string;
 	char	*get_key;
 	char	*result;
 	char	*get_key_export;
 	char	*get_key_name;
+	char	*get_value_export;
+	char	*get_value_name;
 	t_list	*env;
 	t_list	*export;
+	t_list	*tmp;
 	t_list	*cmd;
 }				t_data;
 
@@ -89,7 +93,8 @@ char	*ft_get_value(char *str);
 char	*remove_plus(char *str);
 char	*ft_get_key(char *str);
 void	ft_print_env(t_list	*lst);
+void	free_all(t_data *data);
 void	free_two_string(char *s1, char *s2);
-void	exec_add(t_data *data, char *str);
+void	free_three_string(char *s1, char *s2, char *s3, char *s4);
 
 #endif

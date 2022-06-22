@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 13:12:18 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/06/22 17:45:27 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/06/22 18:56:25 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,18 +46,13 @@ void	exec_export(t_data *data)
 			else
 			{
 				data->check = 0;
-				printf("data->str :%s\n", data->str);
-				printf("FOUND IN EXPORT AND REPLACE IT\n");
 				found_and_add(&data->export, data->str, data);
 				if (is_in_list(&data->env, data->get_key) == 1)
 					found_and_add(&data->env, data->str, data);
 			}
 		}
 		else
-		{
-			printf("simple add in export\n");
 			ft_lstadd_back(&data->export, ft_lstnew(data->str));
-		}
 		if (is_in_list(&data->env, data->get_key) == 1 && data->check == 1)
 			found_and_replace(&data->env, data->str);
 		if (is_in_list(&data->env, data->get_key) == 0)
@@ -122,6 +117,8 @@ void	unset_name_export(t_list **export, t_list **cmd)
 
 void	ft_export(t_list **cmd, t_data	*data)
 {
+	if (!(*cmd))
+		return ;
 	if (ft_strcmp((char *)(*cmd)->content, "env") == 0)
 		ft_print_env(data->env);
 	if (ft_strcmp((char *)(data->cmd)->content, \

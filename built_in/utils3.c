@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 18:26:03 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/06/22 16:24:19 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/06/22 18:42:16y tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,28 @@ int	on_error(char *str, int code)
 	return (code);
 }
 
+void	free_all(t_data *data)
+{
+	free(data->get_key_name);
+	free(data->get_key_export);
+	free(data->get_value_export);
+	free(data->get_value_name);
+	free(data->string);
+	ft_manage(data->result);
+}
+
 void	free_two_string(char *s1, char *s2)
 {
 	free(s1);
 	free(s2);
+}
+
+void	free_three_string(char *s1, char *s2, char *s3, char *s4)
+{
+	free(s1);
+	free(s2);
+	free(s3);
+	ft_manage(s4);
 }
 
 void	init_data(t_data *data)
@@ -53,15 +71,4 @@ int	set_export_var(t_data *data)
 		data->i++;
 	}
 	return (0);
-}
-
-void	exec_add(t_data *data, char *str)
-{
-	char	*string;
-
-	string = ft_strjoin_export(data->get_key_export, data->get_key_name);
-	free_two_string(data->get_key_export, data->get_key_name);
-	data->result = ft_strjoin(string, str);
-	ft_manage(data->result);
-	free(string);
 }
