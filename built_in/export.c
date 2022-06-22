@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 13:12:18 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/06/22 13:55:55 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/06/22 17:45:27 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,11 @@ int	export_name(t_list **cmd, t_data *data, int code)
 	if (code == 0)
 		tmp = (*cmd)->next;
 	data->str = ((char *)tmp->content);
-	data->removed = remove_plus(data->str);
-	init_data(data);
 	if (is_token(data->str))
-		return (2);
+		return (on_error("syntax error near unexpected token `newline'\n", 1));
 	if (ft_strcmp(data->str, "=") == 0)
-		return (3);
+		return (on_error("not a valid identifier.\n", 1));
+	init_data(data);
 	if (code == 0)
 		if (set_export_var(data) == 1)
 			return (on_error("Not a valid identifier.\n", 1));
@@ -47,13 +46,18 @@ void	exec_export(t_data *data)
 			else
 			{
 				data->check = 0;
+				printf("data->str :%s\n", data->str);
+				printf("FOUND IN EXPORT AND REPLACE IT\n");
 				found_and_add(&data->export, data->str, data);
 				if (is_in_list(&data->env, data->get_key) == 1)
 					found_and_add(&data->env, data->str, data);
 			}
 		}
 		else
+		{
+			printf("simple add in export\n");
 			ft_lstadd_back(&data->export, ft_lstnew(data->str));
+		}
 		if (is_in_list(&data->env, data->get_key) == 1 && data->check == 1)
 			found_and_replace(&data->env, data->str);
 		if (is_in_list(&data->env, data->get_key) == 0)
@@ -62,7 +66,6 @@ void	exec_export(t_data *data)
 	else if (is_in_list(&data->export, data->get_key) == 0)
 		ft_lstadd_back(&data->export, ft_lstnew(data->str));
 	free(data->get_key);
-	free(data->removed);
 }
 
 void	unset_name_env(t_list **env, t_list **cmd)

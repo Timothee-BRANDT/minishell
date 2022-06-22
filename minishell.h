@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 19:34:14 by mmatthie          #+#    #+#             */
-/*   Updated: 2022/06/22 13:58:19 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/06/22 16:24:29 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,26 +41,30 @@ typedef struct s_data
 	char	*str;
 	char	*get_key;
 	char	*result;
-	char	*removed;
+	char	*get_key_export;
+	char	*get_key_name;
 	t_list	*env;
 	t_list	*export;
 	t_list	*cmd;
 }				t_data;
 
 //utils.c
+t_list	*get_in_list(char	*buffer, t_data	*data, t_list	*lst);
 int		on_error(char *str, int code);
 char	*ft_strncpy(char *dest, char *src, unsigned int n);
 void	ft_print_list(t_list	*lst);
 int		check_quote(char *buffer);
 int		ft_isspace(int c);
 int		get_quotes(char	*buffer, t_data	*data, int count);
+void	ft_manage(void	*to_add);
+void	ft_free_list(t_list	**lst);
 
 //main.c
-t_list	*ft_list(t_list	*lst, char	*str);
-t_list	*get_word_in_list(char	*buffer, t_data	*data);
 int		make_second(char	*buffer, t_data	*data, int count);
 
 //check.c 
+t_list	*ft_list(t_list	*lst, t_data *data);
+t_list	*get_word_in_list(char	*buffer, t_data	*data);
 int		get_second_word(char	*buffer, int count, t_data	*data);
 char	*ft_join_free_ss(char *s1, char *s2);
 int		get_word(char	*buffer, t_data	*data, int count);
@@ -86,5 +90,6 @@ char	*remove_plus(char *str);
 char	*ft_get_key(char *str);
 void	ft_print_env(t_list	*lst);
 void	free_two_string(char *s1, char *s2);
+void	exec_add(t_data *data, char *str);
 
 #endif

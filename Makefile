@@ -6,7 +6,7 @@
 #    By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/09 14:04:53 by tbrandt           #+#    #+#              #
-#    Updated: 2022/06/21 18:26:50 by tbrandt          ###   ########.fr        #
+#    Updated: 2022/06/22 15:14:02 by tbrandt          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,8 +15,10 @@ CFLAGS	=	-Wall -Wextra -Werror -g #-fsanitize=address
 NAME	=	minishell
 
 SRC		=	main.c				\
-			utils.c				\
-			check.c				\
+			parsing/utils.c		\
+			parsing/utils2.c	\
+			parsing/check.c		\
+			parsing/check2.c	\
 			built_in/export.c	\
 			built_in/utils.c	\
 			built_in/utils2.c	\

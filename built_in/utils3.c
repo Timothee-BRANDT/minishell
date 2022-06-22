@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 18:26:03 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/06/22 13:55:40 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/06/22 16:24:19 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,15 @@ int	set_export_var(t_data *data)
 		data->i++;
 	}
 	return (0);
+}
+
+void	exec_add(t_data *data, char *str)
+{
+	char	*string;
+
+	string = ft_strjoin_export(data->get_key_export, data->get_key_name);
+	free_two_string(data->get_key_export, data->get_key_name);
+	data->result = ft_strjoin(string, str);
+	ft_manage(data->result);
+	free(string);
 }

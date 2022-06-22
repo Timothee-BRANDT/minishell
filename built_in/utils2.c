@@ -94,7 +94,7 @@ void	found_and_add(t_list **export, char *name, t_data *data)
 		get_key_name = ft_get_key(name);
 		if (ft_strcmp(get_key_export, get_key_name) == 0)
 		{
-			string = ft_strjoin_export(get_key_export, get_key_name);
+			string = ft_strjoin_export(get_key_name, ft_get_value((ptr->next->content)));
 			free_two_string(get_key_export, get_key_name);
 			data->result = ft_strjoin(string, ft_get_value(name));
 			tmp = ptr->next->next;
