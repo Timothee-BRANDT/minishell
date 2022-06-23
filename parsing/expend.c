@@ -44,4 +44,3 @@ int	get_double(char	*str, int count, t_data	*data)
 	return (count);
 }
 
-
