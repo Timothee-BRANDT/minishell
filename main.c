@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mmatthie <mmatthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 14:07:48 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/06/23 12:38:59 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/06/24 00:46:20 by mmatthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int	main(int ac, char	**av, char	**env)
 			ft_putstr_fd("error, quotes not closed.\n", 2);
 			exit(EXIT_FAILURE);
 		}
+		add_space(data);
 		data->cmd = get_word_in_list(data->buffer, data);
 		ft_export(&data->cmd, data);
 		ft_print_list(data->cmd);

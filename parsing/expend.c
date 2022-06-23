@@ -19,11 +19,8 @@ int	get_expend(char	*str, int count, t_data	*data)
 		data->get_env = getenv(data->get_str_env);
 		if (data->get_env)
 		{
-			printf("data->get_env : %s\n", data->get_env);
 			data->get_word = ft_calloc(1, ft_strlen(data->get_env));
 			data->get_word = ft_strncpy(data->get_word, data->get_env, ft_strlen(data->get_env));
-			printf("ft_strlen(data->get_env) : %zu\n", ft_strlen(data->get_env));
-			printf("data->get_word : %s\n", data->get_word);
 		}
 		else
 			data->get_word = NULL;

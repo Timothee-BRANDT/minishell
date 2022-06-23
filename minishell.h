@@ -6,7 +6,7 @@
 /*   By: mmatthie <mmatthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 19:34:14 by mmatthie          #+#    #+#             */
-/*   Updated: 2022/06/23 17:19:43 by mmatthie         ###   ########.fr       */
+/*   Updated: 2022/06/24 00:49:54 by mmatthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,4 +104,10 @@ void	free_three_string(char *s1, char *s2, char *s3, char *s4);
 
 int	get_expend(char	*str, int count, t_data	*data);
 int	get_double(char	*str, int count, t_data	*data);
+
+//utils2.c
+void	add_space(t_data	*data);
+int		ft_check_token(char	c);
+int		get_len4addspace(t_data	*data);
+int		skip_it(t_data	*data, int	i);
 #endif
