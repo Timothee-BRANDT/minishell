@@ -6,7 +6,7 @@
 /*   By: mmatthie <mmatthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 15:08:29 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/06/23 17:15:18 by mmatthie         ###   ########.fr       */
+/*   Updated: 2022/06/23 17:33:06 by mmatthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ t_list	*get_word_in_list(char	*buffer, t_data	*data)
 			while (ft_isspace(buffer[data->count]))
 				data->count++;
 			if (buffer[data->count] != '"' && buffer[data->count] \
-			!= '\'' && buffer[data->count] != '\0')
+			!= '\'' && buffer[data->count] != '\0' && buffer[data->count] != '$')
 				data->count = get_word(buffer, data, data->count);
 			else if (buffer[data->count] == '"' || buffer[data->count] == '\'')
 				data->count = get_quotes(buffer, data, data->count);

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+         #
+#    By: mmatthie <mmatthie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/09 14:04:53 by tbrandt           #+#    #+#              #
-#    Updated: 2022/06/22 15:14:02 by tbrandt          ###   ########.fr        #
+#    Updated: 2022/06/23 17:20:03 by mmatthie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,7 @@ SRC		=	main.c				\
 			parsing/utils2.c	\
 			parsing/check.c		\
 			parsing/check2.c	\
+			parsing/expend.c	\
 			built_in/export.c	\
 			built_in/utils.c	\
 			built_in/utils2.c	\

@@ -21,6 +21,8 @@ int	get_expend(char	*str, int count, t_data	*data)
 			data->get_word = ft_calloc(1, ft_strlen(data->get_env));
 			data->get_word = ft_strncpy(data->get_word, data->get_env, ft_strlen(data->get_env));
 		}
+		else
+			data->get_word = NULL;
 		ft_manage(data->get_str_env);
 		ft_manage(data->get_env);
 		ft_manage(data->get_word);
@@ -32,6 +34,7 @@ int	get_expend(char	*str, int count, t_data	*data)
 
 int	get_double(char	*str, int count, t_data	*data)
 {
+	(void) str;
 	data->first = ft_calloc(1, 5);
 	data->first = ft_strdup("70591");
 	data->get_word = ft_calloc(1, 5);
@@ -39,8 +42,6 @@ int	get_double(char	*str, int count, t_data	*data)
 	ft_manage(data->first);
 	ft_manage(data->get_word);
 	count += 2;
-	if (str[count] != '$' || str[count] != '\0')
-		count = get_join(str, count, count, data);
 	return (count);
 }
 

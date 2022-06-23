@@ -6,7 +6,7 @@
 /*   By: mmatthie <mmatthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 19:34:14 by mmatthie          #+#    #+#             */
-/*   Updated: 2022/06/23 17:12:16 by mmatthie         ###   ########.fr       */
+/*   Updated: 2022/06/23 17:19:43 by mmatthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,4 +99,9 @@ void	free_all(t_data *data);
 void	free_two_string(char *s1, char *s2);
 void	free_three_string(char *s1, char *s2, char *s3, char *s4);
 
+
+//get_expend
+
+int	get_expend(char	*str, int count, t_data	*data);
+int	get_double(char	*str, int count, t_data	*data);
 #endif

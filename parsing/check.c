@@ -6,7 +6,7 @@
 /*   By: mmatthie <mmatthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 14:34:37 by mmatthie          #+#    #+#             */
-/*   Updated: 2022/06/23 17:14:11 by mmatthie         ###   ########.fr       */
+/*   Updated: 2022/06/23 17:31:49 by mmatthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ int	get_second_word(char	*buffer, int count, t_data	*data)
 	int	j;
 
 	j = 0;
+	if (buffer[count] == '$')
+		get_expend(buffer, count, data);
 	if (buffer[count] == '"' || buffer[count] == '\'')
 	{
 		data->token = buffer[count];
