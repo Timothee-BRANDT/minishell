@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 11:55:22 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/06/22 13:19:11 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/06/23 11:40:05 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ char	*ft_get_key(char *str)
 	i = 0;
 	while (str[i] && str[i] != '=' && str[i] != '+')
 		i++;
-	result = malloc(sizeof(char) * (i + 1));
+	result = malloc(sizeof(char) * i + 1);
 	i = 0;
-	while (str[i] != '\0' && str[i] != '=' && str[i] != '+')
+	while (str[i] && str[i] != '=' && str[i] != '+')
 	{
 		result[i] = str[i];
 		i++;
@@ -54,7 +54,7 @@ char	*ft_get_value(char *str)
 		i++;
 		j++;
 	}
-	result[i] = '\0';
+	result[j] = '\0';
 	return (result);
 }
 
@@ -91,7 +91,7 @@ char	*ft_strjoin_export(char const *s1, char const *s2)
 	str = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2)) + 2);
 	if (!str)
 		return (NULL);
-		i = 0;
+	i = 0;
 	j = 0;
 	while (s1[i])
 	{

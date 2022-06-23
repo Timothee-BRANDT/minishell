@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 14:07:48 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/06/22 18:56:49 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/06/23 11:31:51 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,11 @@ int	main(int ac, char	**av, char	**env)
 		}
 		data->cmd = get_word_in_list(data->buffer, data);
 		ft_export(&data->cmd, data);
-		//ft_print_list(data->cmd);
+		ft_print_list(data->cmd);
 		add_history(data->buffer);
 		free(data->buffer);
 		ft_free_list(&data->cmd);
-		system("leaks minishell");
+		//system("leaks minishell");
 	}
 	free(data->buffer);
 	return (0);

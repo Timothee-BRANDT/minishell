@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmatthie <mmatthie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 14:34:37 by mmatthie          #+#    #+#             */
-/*   Updated: 2022/06/22 15:14:36 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/06/23 10:08:11 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,6 @@ int	get_join(char	*str, int count, int j, t_data	*data)
 		data->first = ft_strncpy \
 		(data->first, data->join, ft_strlen(data->join));
 		ft_manage(data->get_word);
-		free(data->join);
 	}
 	free(data->first);
 	return (count);

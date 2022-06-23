@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 13:12:18 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/06/22 18:56:25 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/06/23 11:35:05 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int	export_name(t_list **cmd, t_data *data, int code)
 	if (code == 0)
 		tmp = (*cmd)->next;
 	data->str = ((char *)tmp->content);
+	printf("STR: %s\n", data->str);
 	if (is_token(data->str))
 		return (on_error("syntax error near unexpected token `newline'\n", 1));
 	if (ft_strcmp(data->str, "=") == 0)
@@ -124,7 +125,7 @@ void	ft_export(t_list **cmd, t_data	*data)
 	if (ft_strcmp((char *)(data->cmd)->content, \
 	"export") == 0 && !data->cmd->next)
 		ft_print_env(data->export);
-	if (data->cmd->next)
+	if (ft_strcmp((char *)(*cmd)->content, "export") == 0 && data->cmd->next)
 		export_name(cmd, data, 0);
 	if (ft_strcmp((char *)(*cmd)->content, "unset") == 0 && (*cmd)->next)
 	{
