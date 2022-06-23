@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mmatthie <mmatthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 15:08:29 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/06/22 15:24:11 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/06/23 17:15:18 by mmatthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ t_list	*get_word_in_list(char	*buffer, t_data	*data)
 				data->count = get_word(buffer, data, data->count);
 			else if (buffer[data->count] == '"' || buffer[data->count] == '\'')
 				data->count = get_quotes(buffer, data, data->count);
+			else if (buffer[data->count] == '$')
+				data->count = get_expend(buffer, data->count, data);
 			if (buffer[data->count] == ' ' || buffer[data->count] == '\0')
 				lst = get_in_list(buffer, data, lst);
 		}

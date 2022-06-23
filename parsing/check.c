@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mmatthie <mmatthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 14:34:37 by mmatthie          #+#    #+#             */
-/*   Updated: 2022/06/23 10:08:11 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/06/23 17:14:11 by mmatthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ int	get_word(char	*str, t_data *data, int count)
 	data->first = ft_strncpy(data->first, &str[count], i);
 	if (str[j] == '"' || str[j] == '\'')
 		count = get_join(str, count, j, data);
+	else if (str[j] == '$')
+		count = get_expend(str, count, data);
 	else
 	{
 		data->get_word = ft_calloc(1, ft_strlen(data->first) + 1);
