@@ -4,6 +4,11 @@ Git commit on branch :
 - git checkout "the name branch";
 - doing some stuff;
 - git add .;
+"never forget to commit bro"
 - git commit -am "commit message"
+- git push;
+
+
+BE CAREFULL !!
 - git merge (will merge everything from commit)
 
