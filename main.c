@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 14:07:48 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/06/23 11:31:51 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/06/23 12:37:38 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,6 @@ int	main(int ac, char	**av, char	**env)
 		//system("leaks minishell");
 	}
 	free(data->buffer);
+	//we are on the develop branch;
 	return (0);
 }
