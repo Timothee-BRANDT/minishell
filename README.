@@ -1,10 +1,14 @@
-Parsing de notre buffer;
+Git commit on branch :
 
-1) Chercher une cote ou une double quote
-2) Cercher la simple ou la double correspondante, si aucun match, return error + exit programme.
-    2.1) si match avec simple => socker le ' argument blabla ' dans la liste;
-    2.2) si match avec une double => idem stockage dans token + expand les $variable;
+- git branch -a;
+- git checkout "the name branch";
+- doing some stuff;
+- git add .;
+"never forget to commit bro"
+- git commit -am "commit message"
+- git push;
 
-3) Else (j'ai trouver aucune quote)
-    ft_split(buffer, ' ');
+
+BE CAREFULL !!
+- git merge (will merge everything from commit)
 
