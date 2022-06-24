@@ -6,7 +6,7 @@
 /*   By: mmatthie <mmatthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 19:34:14 by mmatthie          #+#    #+#             */
-/*   Updated: 2022/06/24 11:12:31 by mmatthie         ###   ########.fr       */
+/*   Updated: 2022/06/24 14:39:41 by mmatthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ typedef struct s_data
 	char	*get_str_env;
 	char	*get_env;
 	char	*add_space2buffer;
+	int		i_space;
+	int		j_space;
 	t_list	*env;
 	t_list	*export;
 	t_list	*tmp;
@@ -110,5 +112,5 @@ int	get_double(char	*str, int count, t_data	*data);
 void	add_space(t_data	*data);
 int		ft_check_token(char	c);
 int		get_len4addspace(t_data	*data);
-int		skip_it(t_data	*data, int	i);
+int		skip_it(t_data	*data);
 #endif

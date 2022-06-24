@@ -6,7 +6,7 @@
 /*   By: mmatthie <mmatthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 14:34:37 by mmatthie          #+#    #+#             */
-/*   Updated: 2022/06/23 17:31:49 by mmatthie         ###   ########.fr       */
+/*   Updated: 2022/06/24 18:17:15 by mmatthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	get_word(char	*str, t_data *data, int count)
 
 	i = 0;
 	j = count;
-	while (str[j] != '"' && str[j] != '\'' && str[j] != '\0' && str[j] != ' ')
+	while (str[j] != '\0' && str[j] != '"' && str[j] != '\'' && str[j] != ' ')
 	{
 		j++;
 		i++;

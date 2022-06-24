@@ -12,3 +12,25 @@ Git commit on branch :
 BE CAREFULL !!
 - git merge (will merge everything from commit)
 
+
+some test for the parsing :
+
+- aloura"la'famillelle'" 'comment           "ca"va"|" ;
+
+- ls|la;
+
+- <ls|la>;
+
+- cat test.txt | "wc -l" > lol.txt;
+
+- "cat" "test.txt" "|" "wc -l" ">" "lol.txt";
+
+- 'cat' 'test.txt' '|' '"wc -l"' '>' 'lol.txt';
+
+- aloura"la"famille'comment' ca 'va'mdrrrr;
+
+- ls|lals|lals|lals|lals|lals|lals|la;
+
+have some issues on add_spaces , on some HUGE buffer for argument:
+
+- try to check add_space and other new functions;
