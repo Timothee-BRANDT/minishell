@@ -6,7 +6,7 @@
 /*   By: mmatthie <mmatthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 19:34:14 by mmatthie          #+#    #+#             */
-/*   Updated: 2022/06/24 00:49:54 by mmatthie         ###   ########.fr       */
+/*   Updated: 2022/06/24 11:12:31 by mmatthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ typedef struct s_data
 	char	*get_value_name;
 	char	*get_str_env;
 	char	*get_env;
+	char	*add_space2buffer;
 	t_list	*env;
 	t_list	*export;
 	t_list	*tmp;

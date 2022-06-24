@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbrandt <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: mmatthie <mmatthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 15:16:08 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/06/10 16:02:24 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/06/24 13:32:08 by mmatthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ size_t	ft_strlen(const char *str)
 
 	i = 0;
 	res = 0;
-	if (str[i] == '-')
-		res--;
+	/*if (str[i] == '-')
+		res--;*/
 	while (str[i])
 	{
 		res++;

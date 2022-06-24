@@ -6,7 +6,7 @@
 /*   By: mmatthie <mmatthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 15:12:20 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/06/24 01:43:56 by mmatthie         ###   ########.fr       */
+/*   Updated: 2022/06/24 11:54:00 by mmatthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,49 +28,65 @@ t_list	*get_in_list(char	*buffer, t_data	*data, t_list	*lst)
 	return (lst);
 }
 
+int	add_it(t_data	*data, int	i, int j)
+{
+	if (ft_check_token(data->buffer[i + 1]) == 0)
+	{
+		data->add_space2buffer[j] = data->buffer[i];
+		data->add_space2buffer[j + 1] = ' ';
+		data->add_space2buffer[j + 2] = data->buffer[i + 1];
+		data->add_space2buffer[j + 3] = ' ';
+		j += 4;
+		i += 1;
+	}
+	return (j);
+}
+
 void	add_space(t_data	*data)
 {
 	int	i;
 	int	j;
-	char	*str;
 	int	len;
 
 	i = -1;
 	j = 0;
 	len = get_len4addspace(data);
-	str = malloc(sizeof(char) * len + 1);
-	if (!str)
+	data->add_space2buffer = malloc(sizeof(char) * len + 1);
+	if (!data->add_space2buffer)
 		return ;
 	while (data->buffer[++i] && data->buffer)
 	{
-		if (ft_check_token(data->buffer[i + 1]) == 0)
+		if (ft_check_token(data->buffer[i + 1]) == 0 && data->buffer[i + 1] == data->buffer[i + 2])
 		{
-			str[j] = data->buffer[i];
-			str[j + 1] = ' ';
-			str[j + 2] = data->buffer[i + 1];
-			str[j + 3] = ' ';
+			data->add_space2buffer[++j] = data->buffer[i + 2];
+			data->add_space2buffer[j + 1] = ' ';
+			data->add_space2buffer[j + 2] = data->buffer[i + 3];
+			data->add_space2buffer[j + 3] = ' ';
+			j += 4;
+			i += 3;
+		}
+		
+		else if (ft_check_token(data->buffer[i + 1]) == 0)
+		{
+			data->add_space2buffer[j] = data->buffer[i];
+			data->add_space2buffer[j + 1] = ' ';
+			data->add_space2buffer[j + 2] = data->buffer[i + 1];
+			data->add_space2buffer[j + 3] = ' ';
 			j += 4;
 			i += 1;
 		}
-		else if (ft_check_token(data->buffer[i + 1]) == 0 && data->buffer[i + 1] == data->buffer[i + 2])
-		{
-			str[++j] = data->buffer[i + 2];
-			str[j + 1] = ' ';
-			str[j + 2] = data->buffer[i + 3];
-			str[j + 3] = ' ';
-			j += 3;
-			i += 3;
-		}
+		
+		
 		else
 		{
-			str[j] = data->buffer[i];
+			data->add_space2buffer[j] = data->buffer[i];
 			j++;
-		}
+		}	
+
 	}
-	//get_buffer(str);
-	data->buffer = ft_calloc(1, ft_strlen(str + 1));
-	data->buffer = ft_strncpy(data->buffer, str, ft_strlen(str));
-	printf("data->buffer : %s\n",data->buffer);
+	printf("data->add_space : %s\n", data->add_space2buffer);
+	data->buffer = ft_calloc(1, ft_strlen(data->add_space2buffer + 1));
+	data->buffer = ft_strncpy(data->buffer, data->add_space2buffer, ft_strlen(data->add_space2buffer));
 }
 
 int	ft_check_token(char	c)
