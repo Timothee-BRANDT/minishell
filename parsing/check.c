@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mmatthie <mmatthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 14:34:37 by mmatthie          #+#    #+#             */
-/*   Updated: 2022/06/23 10:08:11 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/06/27 11:02:57 by mmatthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ char	*ft_join_free_ss(char *s1, char *s2)
 	j = 0;
 	while (s2[j])
 		join[i++] = s2[j++];
-	join[i] = 0;
+	join[i] = '\0';
 	free(s1);
 	free(s2);
 	return (join);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mmatthie <mmatthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 17:12:32 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/06/22 18:52:22 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/06/27 11:06:07 by mmatthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int	get_quotes(char	*buffer, t_data	*data, int count)
 	count++;
 	while (buffer[++i] != data->token && buffer[i] != '\0')
 		j++;
-	data->first = ft_calloc(1, j);
+	data->first = ft_calloc(1, j + 1);
 	data->first = ft_strncpy(data->first, &buffer[count], j);
 	i++;
 	if (buffer[i] != ' ' || buffer[i] != '\0')

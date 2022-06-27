@@ -1,10 +1,40 @@
-Parsing de notre buffer;
+some basic args to test parsing :
 
-1) Chercher une cote ou une double quote
-2) Cercher la simple ou la double correspondante, si aucun match, return error + exit programme.
-    2.1) si match avec simple => socker le ' argument blabla ' dans la liste;
-    2.2) si match avec une double => idem stockage dans token + expand les $variable;
+basic :
+- cat lol cat lol catlol cat lol lol lol                       lol;
+- "";
+- catlol                                      cat;
+- lol;
 
-3) Else (j'ai trouver aucune quote)
-    ft_split(buffer, ' ');
+for quotes :
+- 'cat""lol' "lol'laquotes'" mdrrr'lol' "letest'deouf";
+- ok'doncla"camarche"' "et la?" 'canedevrait"pas' "poserde soucis";
+- "par contrela'c'est un peu problematique";
+
+for add_space :
+- cat|lol;
+- >cat|lol;
+- cat>|lol;
+- cat||lol;
+
+
+expand :
+
+- "lol$PATH" echo $PWD;
+- cat $PATH cat$PATH cat$PATH cat$PATH;
+- cat "$PATH" lol "oups"$mdr;
+
+Git commit on branch :
+
+- git branch -a;
+- git checkout "the name branch";
+- doing some stuff;
+- git add .;
+"never forget to commit bro"
+- git commit -am "commit message"
+- git push;
+
+
+BE CAREFULL !!
+- git merge (will merge everything from commit)
 

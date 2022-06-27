@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mmatthie <mmatthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 19:34:14 by mmatthie          #+#    #+#             */
-/*   Updated: 2022/06/22 18:44:00 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/06/27 11:21:51 by mmatthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ typedef struct s_data
 	char	*get_key_name;
 	char	*get_value_export;
 	char	*get_value_name;
+	int		i_space;
+	int		j_space;
 	t_list	*env;
 	t_list	*export;
 	t_list	*tmp;
@@ -66,7 +68,7 @@ void	ft_free_list(t_list	**lst);
 //main.c
 int		make_second(char	*buffer, t_data	*data, int count);
 
-//check.c 
+//check.c
 t_list	*ft_list(t_list	*lst, t_data *data);
 t_list	*get_word_in_list(char	*buffer, t_data	*data);
 int		get_second_word(char	*buffer, int count, t_data	*data);
@@ -96,5 +98,9 @@ void	ft_print_env(t_list	*lst);
 void	free_all(t_data *data);
 void	free_two_string(char *s1, char *s2);
 void	free_three_string(char *s1, char *s2, char *s3, char *s4);
+
+
+//add_space.c
+char	*ft_add_space(char	*buffer, t_data	*data);
 
 #endif

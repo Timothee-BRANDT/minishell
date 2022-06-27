@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mmatthie <mmatthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 15:08:29 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/06/22 15:24:11 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/06/27 11:05:29 by mmatthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,10 @@ int	make_second(char	*buffer, t_data *data, int count)
 		j++;
 		i++;
 	}
-	data->second = ft_calloc(1, j);
+	data->second = ft_calloc(1, j + 1);
 	data->second = ft_strncpy(data->second, &buffer[count], j);
 	data->join = ft_join_free_ss(data->first, data->second);
+	//printf("data->join : %s\n", data->join);
 	if (!data->join)
 	{
 		ft_putstr_fd("error in join\n", 2);

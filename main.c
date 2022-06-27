@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mmatthie <mmatthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 14:07:48 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/06/23 12:38:59 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/06/27 11:20:17 by mmatthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int	main(int ac, char	**av, char	**env)
 {
 	t_data	*data;
+	char	*cmd_history;
 
 	(void) ac;
 	(void) av;
@@ -29,13 +30,16 @@ int	main(int ac, char	**av, char	**env)
 			ft_putstr_fd("error, quotes not closed.\n", 2);
 			exit(EXIT_FAILURE);
 		}
+		cmd_history = ft_strdup(data->buffer);
+		data->buffer = ft_add_space(data->buffer, data);
 		data->cmd = get_word_in_list(data->buffer, data);
 		ft_export(&data->cmd, data);
 		ft_print_list(data->cmd);
-		add_history(data->buffer);
-		free(data->buffer);
+		add_history(cmd_history);
+		free (cmd_history);
+		free (data->buffer);
 		ft_free_list(&data->cmd);
-		//system("leaks minishell");
+		system("leaks minishell");
 	}
 	free(data->buffer);
 	return (0);
