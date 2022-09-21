@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 13:12:18 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/06/23 11:35:05 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/09/21 14:24:05 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,13 @@ int	export_name(t_list **cmd, t_data *data, int code)
 	if (code == 0)
 		tmp = (*cmd)->next;
 	data->str = ((char *)tmp->content);
-	printf("STR: %s\n", data->str);
 	if (is_token(data->str))
 		return (on_error("syntax error near unexpected token `newline'\n", 1));
 	if (ft_strcmp(data->str, "=") == 0)
 		return (on_error("not a valid identifier.\n", 1));
 	init_data(data);
-	if (code == 0)
-		if (set_export_var(data) == 1)
-			return (on_error("Not a valid identifier.\n", 1));
+	if (set_export_var(data) == 1)
+		return (on_error("Not a valid identifier.\n", 1));
 	exec_export(data);
 	if ((*cmd)->next != NULL && \
 	!is_token((char *)(*cmd)->next->content))
@@ -40,27 +38,24 @@ void	exec_export(t_data *data)
 {
 	if (data->check == 1)
 	{
-		if (is_in_list(&data->export, data->get_key) == 1)
-		{
-			if (data->plus == 0)
-				found_and_replace(&data->export, data->str);
-			else
-			{
-				data->check = 0;
-				found_and_add(&data->export, data->str, data);
-				if (is_in_list(&data->env, data->get_key) == 1)
-					found_and_add(&data->env, data->str, data);
-			}
-		}
-		else
+		if (!is_in_list(&data->export, data->get_key))
 			ft_lstadd_back(&data->export, ft_lstnew(data->str));
-		if (is_in_list(&data->env, data->get_key) == 1 && data->check == 1)
-			found_and_replace(&data->env, data->str);
-		if (is_in_list(&data->env, data->get_key) == 0)
+		if (!is_in_list(&data->env, data->get_key))
 			ft_lstadd_back(&data->env, ft_lstnew(data->str));
+		if (is_in_list(&data->export, data->get_key) && data->plus == 0)
+			found_and_replace(&data->export, data->str);
+		if (is_in_list(&data->export, data->get_key) && data->plus == 1)
+			found_and_add(&data->export, data->str, data);
+		if (is_in_list(&data->env, data->get_key) && data->plus == 0)
+			found_and_replace(&data->env, data->str);
+		if (is_in_list(&data->env, data->get_key) && data->plus == 1)
+			found_and_add(&data->env, data->str, data);
 	}
-	else if (is_in_list(&data->export, data->get_key) == 0)
-		ft_lstadd_back(&data->export, ft_lstnew(data->str));
+	else
+	{
+		if (!is_in_list(&data->export, data->get_key))
+			ft_lstadd_back(&data->export, ft_lstnew(data->str));
+	}
 	free(data->get_key);
 }
 
