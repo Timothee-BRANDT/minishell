@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 18:26:03 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/09/21 14:21:26 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/09/21 14:26:56 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	free_two_string(char *s1, char *s2)
 
 void	init_data(t_data *data)
 {
+	data->i = 0;
 	data->check = 0;
 	data->plus = 0;
 	data->get_key = ft_get_key(data->str);
@@ -43,8 +44,6 @@ void	init_data(t_data *data)
 
 int	set_export_var(t_data *data)
 {
-	data->i = 0;
-	printf("%s\n", data->str);
 	while (data->str[data->i])
 	{
 		if (!ft_isalpha(data->str[data->i]))

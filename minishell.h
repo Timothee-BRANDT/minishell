@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 19:34:14 by mmatthie          #+#    #+#             */
-/*   Updated: 2022/06/22 18:44:00 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/09/22 10:20:16 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ int		ft_isspace(int c);
 int		get_quotes(char	*buffer, t_data	*data, int count);
 void	ft_manage(void	*to_add);
 void	ft_free_list(t_list	**lst);
+int		is_built_in(char *str);
 
 //main.c
 int		make_second(char	*buffer, t_data	*data, int count);
@@ -75,6 +76,9 @@ int		get_word(char	*buffer, t_data	*data, int count);
 int		get_join(char	*str, int count, int j, t_data	*data);
 int		get_without_quotes(char	*buffer, t_data	*data, int count);
 
+// executor
+char	**get_all_path(t_data *data);
+
 //export.c
 t_list	*env_to_list(char **env);
 int		is_in_list(t_list **list, char *name);
@@ -84,7 +88,7 @@ void	exec_export(t_data *data);
 int		export_name(t_list **cmd, t_data *data, int code);
 void	unset_name_env(t_list **env, t_list **cmd);
 void	unset_name_export(t_list **export, t_list **cmd);
-void	ft_export(t_list **cmd, t_data	*data);
+void	built_in_analyzer(t_list **cmd, t_data	*data);
 char	*ft_strjoin_export(char const *s1, char const *s2);
 int		is_token(char *str);
 void	init_data(t_data *data);
@@ -95,6 +99,7 @@ char	*ft_get_key(char *str);
 void	ft_print_env(t_list	*lst);
 void	free_all(t_data *data);
 void	free_two_string(char *s1, char *s2);
+char    **list_to_tab(t_list *cmd);
 void	free_three_string(char *s1, char *s2, char *s3, char *s4);
 
 #endif

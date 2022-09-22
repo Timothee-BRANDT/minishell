@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 13:12:18 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/09/21 14:24:05 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/09/22 10:30:44 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,11 +111,11 @@ void	unset_name_export(t_list **export, t_list **cmd)
 		return (unset_name_export(export, &(*cmd)->next));
 }
 
-void	ft_export(t_list **cmd, t_data	*data)
+void	built_in_analyzer(t_list **cmd, t_data	*data)
 {
 	if (!(*cmd))
 		return ;
-	if (ft_strcmp((char *)(*cmd)->content, "env") == 0)
+	if (ft_strcmp((char *)(*cmd)->content, "env") == 0) // accepter aussi "ENV" "EXPORT ETC dans l'analyxer"
 		ft_print_env(data->env);
 	if (ft_strcmp((char *)(data->cmd)->content, \
 	"export") == 0 && !data->cmd->next)
