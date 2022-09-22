@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 19:34:14 by mmatthie          #+#    #+#             */
-/*   Updated: 2022/09/22 10:20:16 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/09/22 11:11:51 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,13 @@ int		get_word(char	*buffer, t_data	*data, int count);
 int		get_join(char	*str, int count, int j, t_data	*data);
 int		get_without_quotes(char	*buffer, t_data	*data, int count);
 
+//analyzer
+void	built_in_analyzer(t_list **cmd, t_data	*data);
+void	analyzer(t_list **cmd, t_data *data);
+
 // executor
+char	*get_correct_cmd(char **paths, char **cmds);
+void    exec_command(t_list **cmd, t_data *data);
 char	**get_all_path(t_data *data);
 
 //export.c
@@ -88,7 +94,6 @@ void	exec_export(t_data *data);
 int		export_name(t_list **cmd, t_data *data, int code);
 void	unset_name_env(t_list **env, t_list **cmd);
 void	unset_name_export(t_list **export, t_list **cmd);
-void	built_in_analyzer(t_list **cmd, t_data	*data);
 char	*ft_strjoin_export(char const *s1, char const *s2);
 int		is_token(char *str);
 void	init_data(t_data *data);
