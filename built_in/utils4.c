@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 10:12:30 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/09/22 11:06:01 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/09/26 14:15:18 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,21 +33,35 @@ char    **list_to_tab(t_list *cmd)
 	return (tab);
 }
 
-int is_built_in(char *str)
+int is_built_in(void *content)
 {
-    if (ft_strcmp(str, "export") == 0)
+    if (ft_strcmp((char *)content, "export") == 0)
         return (1);
-    else if (ft_strcmp(str, "env") == 0)
+    if (ft_strcmp(content, "env") == 0)
         return (1);
-    else if (ft_strcmp(str, "unset") == 0)
+    if (ft_strcmp(content, "unset") == 0)
         return (1);
-    else if (ft_strcmp(str, "pwd") == 0)
+    if (ft_strcmp(content, "pwd") == 0)
         return (1);
-    else if (ft_strcmp(str, "echo") == 0)
+    if (ft_strcmp(content, "echo") == 0)
         return (1);
-    else if (ft_strcmp(str, "cd") == 0)
+    if (ft_strcmp(content, "cd") == 0)
         return (1);
-    else if (ft_strcmp(str, "exit") == 0)
+    if (ft_strcmp(content, "exit") == 0)
         return (1);
     return (0);
+}
+
+void	free_tab(char **tab)
+{
+	int	i;
+
+	i = 0;
+	while (tab[i])
+	{
+		free(tab[i]);
+		i++;
+	}
+	free(tab[i]);
+	free(tab);
 }

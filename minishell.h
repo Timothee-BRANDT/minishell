@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 19:34:14 by mmatthie          #+#    #+#             */
-/*   Updated: 2022/09/22 11:11:51 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/09/26 14:17:51 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,22 @@
 # include <readline/history.h>
 # include <readline/readline.h>
 
+enum {
+	WORD,
+	TOKEN_REDIR_IN,
+	TOKEN_REDIR_OUT,
+	TOKEN_DELIM,
+	TOKEN_REDIR_APPEND,
+	TOKEN_PIPE,
+	ECHO,
+	CD,
+	PWD,
+	EXPORT,
+	UNSET,
+	ENV,
+	EXIT,
+};
+
 typedef struct s_data
 {
 	char	*first;
@@ -36,8 +52,12 @@ typedef struct s_data
 	int		indicate;
 	int		token;
 	int		i;
+	int		append;
 	int		check;
 	int		plus;
+	char	*infile;
+	char	*outfile;
+	char	*delimitor;
 	char	*str;
 	char	*string;
 	char	*get_key;
@@ -62,7 +82,8 @@ int		ft_isspace(int c);
 int		get_quotes(char	*buffer, t_data	*data, int count);
 void	ft_manage(void	*to_add);
 void	ft_free_list(t_list	**lst);
-int		is_built_in(char *str);
+int		is_built_in(void *content);
+void	free_tab(char **tab);
 
 //main.c
 int		make_second(char	*buffer, t_data	*data, int count);
@@ -78,7 +99,9 @@ int		get_without_quotes(char	*buffer, t_data	*data, int count);
 
 //analyzer
 void	built_in_analyzer(t_list **cmd, t_data	*data);
-void	analyzer(t_list **cmd, t_data *data);
+int		analyzer(t_list **cmd, t_data *data);
+void	redir_tokenisation(t_list *cmd);
+int		get_redir_file(t_data *data);
 
 // executor
 char	*get_correct_cmd(char **paths, char **cmds);
