@@ -6,7 +6,7 @@
 #    By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/09 14:04:53 by tbrandt           #+#    #+#              #
-#    Updated: 2022/09/22 10:41:32 by tbrandt          ###   ########.fr        #
+#    Updated: 2022/09/27 12:17:12 by tbrandt          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,19 +14,21 @@ CC		=	gcc
 CFLAGS	=	-Wall -Wextra -Werror -g #-fsanitize=address
 NAME	=	minishell
 
-SRC		=	main.c				\
-			parsing/utils.c		\
-			parsing/utils2.c	\
-			parsing/check.c		\
-			parsing/check2.c	\
-			analyzer/analyzer.c	\
-			executor/exec.c		\
-			executor/get_path.c	\
-			built_in/export.c	\
-			built_in/utils.c	\
-			built_in/utils2.c	\
-			built_in/utils3.c	\
-			built_in/utils4.c	\
+SRC		=	main.c					\
+			lexer/utils.c			\
+			lexer/utils2.c			\
+			lexer/check.c			\
+			lexer/check2.c			\
+			parser/tokenize.c		\
+			parser/remove_token.c	\
+			executor/exec.c			\
+			executor/get_path.c		\
+			built_in/export.c		\
+			built_in/utils.c		\
+			built_in/utils2.c		\
+			built_in/utils3.c		\
+			built_in/utils4.c		\
+			built_in/utils5.c		\
 
 OBJ		=	$(SRC:%.c=%.o)
 

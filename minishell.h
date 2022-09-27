@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 19:34:14 by mmatthie          #+#    #+#             */
-/*   Updated: 2022/09/26 14:17:51 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/09/27 12:57:12 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,9 @@ typedef struct s_data
 	int		i;
 	int		append;
 	int		check;
+	int		cmd_count;
+	int		pipe_count;
+	int		cmd_size;
 	int		plus;
 	char	*infile;
 	char	*outfile;
@@ -84,7 +87,9 @@ void	ft_manage(void	*to_add);
 void	ft_free_list(t_list	**lst);
 int		is_built_in(void *content);
 void	free_tab(char **tab);
-
+int		is_token(char *str);
+int		is_redir(char *str);
+int		is_pipe(char*str);
 //main.c
 int		make_second(char	*buffer, t_data	*data, int count);
 
@@ -97,11 +102,16 @@ int		get_word(char	*buffer, t_data	*data, int count);
 int		get_join(char	*str, int count, int j, t_data	*data);
 int		get_without_quotes(char	*buffer, t_data	*data, int count);
 
-//analyzer
+//parser
 void	built_in_analyzer(t_list **cmd, t_data	*data);
 int		analyzer(t_list **cmd, t_data *data);
 void	redir_tokenisation(t_list *cmd);
-int		get_redir_file(t_data *data);
+int		get_redir_file(t_list *cmd, t_data *data);
+void	remove_redir(t_list *cmd);
+void	remove_pipe(t_list *cmd);
+void	get_cmd_count(t_list *cmd, t_data *data);
+void	get_cmd_size(t_list *cmd, t_data *data);
+char    **get_cmd_from_list(t_list *cmd, t_data *data);
 
 // executor
 char	*get_correct_cmd(char **paths, char **cmds);
@@ -118,7 +128,6 @@ int		export_name(t_list **cmd, t_data *data, int code);
 void	unset_name_env(t_list **env, t_list **cmd);
 void	unset_name_export(t_list **export, t_list **cmd);
 char	*ft_strjoin_export(char const *s1, char const *s2);
-int		is_token(char *str);
 void	init_data(t_data *data);
 int		set_export_var(t_data *data);
 char	*ft_get_value(char *str);

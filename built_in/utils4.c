@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 10:12:30 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/09/26 14:15:18 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/09/27 11:16:05 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,4 +64,38 @@ void	free_tab(char **tab)
 	}
 	free(tab[i]);
 	free(tab);
+}
+
+int	is_redir(char *str)
+{
+	int		i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[0] == '<' && str[1] == '<')
+			return (1);
+		else if (str[0] == '>' && str[1] == '>')
+			return (1);
+		else if (str[0] == '<')
+			return (1);
+		else if (str[0] == '>')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+int	is_pipe(char *str)
+{
+	int		i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[0] == '|')
+			return (1);
+		i++;
+	}
+	return (0);
 }
