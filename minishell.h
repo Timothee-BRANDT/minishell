@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 19:34:14 by mmatthie          #+#    #+#             */
-/*   Updated: 2022/09/27 12:57:12 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/09/28 13:47:58 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,16 @@
 # include <readline/history.h>
 # include <readline/readline.h>
 
-enum {
+enum e_redir {
 	WORD,
-	TOKEN_REDIR_IN,
-	TOKEN_REDIR_OUT,
-	TOKEN_DELIM,
-	TOKEN_REDIR_APPEND,
-	TOKEN_PIPE,
+	REDIR_IN,
+	REDIR_OUT,
+	DELIM,
+	APPEND,
+	PIPE,
+};
+
+enum e_built_in {
 	ECHO,
 	CD,
 	PWD,
@@ -72,8 +75,14 @@ typedef struct s_data
 	t_list	*env;
 	t_list	*export;
 	t_list	*tmp;
-	t_list	*cmd;
+	t_list	*list;
 }				t_data;
+
+typedef struct s_cmd
+{
+	char	**args;
+	t_list	*redirs;
+}	t_cmd;
 
 //utils.c
 t_list	*get_in_list(char	*buffer, t_data	*data, t_list	*lst);
@@ -103,15 +112,16 @@ int		get_join(char	*str, int count, int j, t_data	*data);
 int		get_without_quotes(char	*buffer, t_data	*data, int count);
 
 //parser
-void	built_in_analyzer(t_list **cmd, t_data	*data);
-int		analyzer(t_list **cmd, t_data *data);
-void	redir_tokenisation(t_list *cmd);
-int		get_redir_file(t_list *cmd, t_data *data);
-void	remove_redir(t_list *cmd);
-void	remove_pipe(t_list *cmd);
-void	get_cmd_count(t_list *cmd, t_data *data);
-void	get_cmd_size(t_list *cmd, t_data *data);
-char    **get_cmd_from_list(t_list *cmd, t_data *data);
+void	built_in_analyzer(t_list **list, t_data	*data);
+int		analyzer(t_data *data, t_cmd *cmd);
+void	redir_tokenisation(t_list *list);
+int		get_redir_file(t_list *list, t_data *data);
+void	remove_redir(t_list **list);
+void	remove_pipe(t_list **list);
+void	get_cmd_count(t_list *list, t_data *data);
+void	get_cmd_size(t_list *list, t_data *data);
+void	free_command(t_list **list, t_data *data);
+void    get_cmd_from_list(t_list* *list, t_data *data, t_cmd *cmd);
 
 // executor
 char	*get_correct_cmd(char **paths, char **cmds);
@@ -124,9 +134,9 @@ int		is_in_list(t_list **list, char *name);
 void	found_and_replace(t_list **export, char *name);
 void	found_and_add(t_list **export, char *name, t_data *data);
 void	exec_export(t_data *data);
-int		export_name(t_list **cmd, t_data *data, int code);
+int		export_name(t_list **list, t_data *data, int code);
 void	unset_name_env(t_list **env, t_list **cmd);
-void	unset_name_export(t_list **export, t_list **cmd);
+void	unset_name_export(t_list **export, t_list **list);
 char	*ft_strjoin_export(char const *s1, char const *s2);
 void	init_data(t_data *data);
 int		set_export_var(t_data *data);
@@ -136,7 +146,7 @@ char	*ft_get_key(char *str);
 void	ft_print_env(t_list	*lst);
 void	free_all(t_data *data);
 void	free_two_string(char *s1, char *s2);
-char    **list_to_tab(t_list *cmd);
+char    **list_to_tab(t_list *list);
 void	free_three_string(char *s1, char *s2, char *s3, char *s4);
 
 #endif

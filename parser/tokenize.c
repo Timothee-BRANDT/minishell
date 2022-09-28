@@ -6,99 +6,101 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 10:42:43 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/09/27 12:45:13 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/09/28 15:06:56 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	redir_tokenisation(t_list *cmd)
+void	redir_tokenisation(t_list *list)
 {
 	t_list *tmp;
 
-	tmp = cmd;
+	tmp = list;
 	while (tmp)
 	{
-		if (ft_strcmp((char *)cmd->content, "<") == 0)
-			cmd->token = TOKEN_REDIR_IN;
-		if (ft_strcmp((char *)cmd->content, ">") == 0)
-			cmd->token = TOKEN_REDIR_OUT;
-		if (ft_strcmp((char *)cmd->content, "<<") == 0)
-			cmd->token = TOKEN_DELIM;
-		if (ft_strcmp((char *)cmd->content, ">>") == 0)
-			cmd->token = TOKEN_REDIR_APPEND;
-		if (ft_strcmp((char *)cmd->content, "|") == 0)
-			cmd->token = TOKEN_PIPE;
-		cmd = cmd->next;
-		tmp = cmd;
+		if (ft_strcmp((char *)list->content, "<") == 0)
+			list->token = REDIR_IN;
+		if (ft_strcmp((char *)list->content, ">") == 0)
+			list->token = REDIR_OUT;
+		if (ft_strcmp((char *)list->content, "<<") == 0)
+			list->token = DELIM;
+		if (ft_strcmp((char *)list->content, ">>") == 0)
+			list->token = APPEND;
+		if (ft_strcmp((char *)list->content, "|") == 0)
+			list->token = PIPE;
+		list = list->next;
+		tmp = list;
 	}
 }
 
-int	get_redir_file(t_list *cmd, t_data *data)
+int	get_redir_file(t_list *list, t_data *data)
 {
 	t_list *tmp;
 
-	tmp = cmd;
+	tmp = list;
 	while (tmp)
 	{
-		if (is_token((char *)cmd->content) && !cmd->next)
+		if (is_token((char *)list->content) && !list->next)
 			return (1);
-		if (!ft_strcmp((char *)cmd->content, "<"))
-			data->infile = (char *)data->cmd->next->content;
-		if (!ft_strcmp((char *)cmd->content, ">"))
-			data->outfile = (char *)data->cmd->next->content;
-		if (!ft_strcmp((char *)cmd->content, "<<"))
-			data->delimitor = (char *)data->cmd->next->content;
-		if (!ft_strcmp((char *)cmd->content, ">>"))
+		if (!ft_strcmp((char *)list->content, "<"))
+			data->infile = (char *)data->list->next->content;
+		if (!ft_strcmp((char *)list->content, ">"))
+			data->outfile = (char *)data->list->next->content;
+		if (!ft_strcmp((char *)list->content, "<<"))
+			data->delimitor = (char *)data->list->next->content;
+		if (!ft_strcmp((char *)list->content, ">>"))
 			data->append = 1;
-		cmd = cmd->next;
-		tmp = cmd;
+		list = list->next;
+		tmp = list;
 	}
 	return (0);
 }
 
-void	built_in_tokenisation(t_list *cmd)
+void	built_in_tokenisation(t_list *list)
 {
 	t_list *tmp;
 
-	tmp = cmd;
+	tmp = list;
 	while (tmp)
 	{
-		if (!ft_strcmp((char *)cmd->content, "echo") || !ft_strcmp((char *)cmd->content, "ECHO"))
-			cmd->token = ECHO;
-		if (!ft_strcmp((char *)cmd->content, "cd") || !ft_strcmp((char *)cmd->content, "CD"))
-			cmd->token = CD;
-		if (!ft_strcmp((char *)cmd->content, "pwd") || !ft_strcmp((char *)cmd->content, "PWD"))
-			cmd->token = PWD;
-		if (!ft_strcmp((char *)cmd->content, "export") || !ft_strcmp((char *)cmd->content, "EXPORT"))
-			cmd->token = EXPORT;
-		if (!ft_strcmp((char *)cmd->content, "unset") || !ft_strcmp((char *)cmd->content, "UNSET"))
-			cmd->token = UNSET;
-		if (!ft_strcmp((char *)cmd->content, "env") || !ft_strcmp((char *)cmd->content, "ENV"))
-			cmd->token = ENV;
-		if (!ft_strcmp((char *)cmd->content, "exit") || !ft_strcmp((char *)cmd->content, "EXIT"))
-			cmd->token = EXIT;
-		cmd = cmd->next;
-		tmp = cmd;
+		if (!ft_strcmp((char *)list->content, "echo") || !ft_strcmp((char *)list->content, "ECHO"))
+			list->token = ECHO;
+		if (!ft_strcmp((char *)list->content, "cd") || !ft_strcmp((char *)list->content, "CD"))
+			list->token = CD;
+		if (!ft_strcmp((char *)list->content, "pwd") || !ft_strcmp((char *)list->content, "PWD"))
+			list->token = PWD;
+		if (!ft_strcmp((char *)list->content, "export") || !ft_strcmp((char *)list->content, "EXPORT"))
+			list->token = EXPORT;
+		if (!ft_strcmp((char *)list->content, "unset") || !ft_strcmp((char *)list->content, "UNSET"))
+			list->token = UNSET;
+		if (!ft_strcmp((char *)list->content, "env") || !ft_strcmp((char *)list->content, "ENV"))
+			list->token = ENV;
+		if (!ft_strcmp((char *)list->content, "exit") || !ft_strcmp((char *)list->content, "EXIT"))
+			list->token = EXIT;
+		list = list->next;
+		tmp = list;
 	}
 }
 
-int	analyzer(t_list **cmd, t_data *data)
+int	analyzer(t_data *data, t_cmd *cmd)
 {
-	if (get_redir_file(data->cmd, data))
+	// 1) do the redirections and remove thems from list
+	// 2) get command before the pipe and stock it in char **args in cmd list;
+	// how to execute the multi pipe???
+	// 3) remove the first pipe
+	// 4) repeat 2 and 3 for each command
+	if (get_redir_file(data->list, data))
 		return (on_error("Minishell: syntax error near unexpected token `newline'\n", 1));
-	redir_tokenisation(data->cmd);
-	built_in_tokenisation(data->cmd);
-	built_in_analyzer(cmd, data);
-	ft_print_list(data->cmd);
-	printf("\n");
-	// faire une boucle du nombre de tokens a retirer dans la liste, si 4 token a retirer, remove_token * 4;
-	// faire une fonction qui recupere la commande dans un char ** avant un token redir ou pipe, pour chqaue commande, dans une boucle du nombre de commandes
-	// 1) stocker la commande 2)analyse des redir et pipe 3)remove les tokens
-	//remove_redir(data->cmd);
-	//remove_pipe(data->cmd);
-	get_cmd_count(data->cmd, data);
-	get_cmd_from_list(data->cmd, data);
-	//exec_command(cmd, data);
+	redir_tokenisation(data->list);
+	built_in_tokenisation(data->list);
+	get_cmd_size(data->list, data);
+	get_cmd_count(data->list, data);
+	// code the redirections before removing thems
+	remove_redir(&data->list);
+	// this function get the command before the pipe
+	get_cmd_from_list(&data->list, data, cmd);
+	remove_pipe(&data->list);
+	//exec_command(cmd, data);*/
 	return (0);
 }

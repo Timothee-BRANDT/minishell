@@ -6,70 +6,70 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/27 11:23:18 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/09/27 12:56:41 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/09/28 10:01:36by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	get_cmd_count(t_list *cmd, t_data *data)
+// this function count the number of commands and the number of pipes in the buffer;
+void	get_cmd_count(t_list *list, t_data *data)
 {
 	t_list	*tmp;
 
 	data->cmd_count = 1;
 	data->pipe_count = 0;
-	tmp = cmd;
-	while (tmp->next)
+	tmp = list;
+	while (tmp)
 	{
 		if (is_pipe((char *)tmp->content))
 		{
 			data->pipe_count++;
 			data->cmd_count++;
 		}
-		cmd = cmd->next;
-		tmp = cmd;
+		list = list->next;
+		tmp = list;
 	}
 }
 
 // quand je recupere le char ** de ma liste pour l'envoyer a execve, j'aurai deja retirer les redirections
-void get_cmd_size(t_list *cmd, t_data *data)
+// this function returns the size of the first commands before the pipe
+// ls -la | grep yo
+// cmd_size = 2;
+void get_cmd_size(t_list *list, t_data *data)
 {
     t_list *tmp;
 
-    tmp = cmd;
+    tmp = list;
     data->cmd_size = 0;
-    while (tmp->next && !is_pipe((char *)cmd->content))
+    while (tmp && !is_pipe((char *)list->content))
     {
-        cmd = cmd->next;
-        tmp = cmd;
+    	list = list->next;
+        tmp = list;
         data->cmd_size++;
     }
 }
 
-char    **get_cmd_from_list(t_list *cmd, t_data *data)
+// function return first command before pipe in a char **, need to pass it to execve
+// ls -la | grep yo
+// returns tab[0] = ls; tab[1] = -la; tab[2] = NULL
+void	get_cmd_from_list(t_list **list, t_data *data, t_cmd *cmd)
 {
 	t_list	*tmp;
-	char	**tab;
 	int		i;
 
-	tmp = cmd;
-	get_cmd_size(data->cmd, data);
-	tab = malloc(sizeof(char *) * data->cmd_size + 1);
+	tmp = *list;
+	get_cmd_size(data->list, data);
+	cmd->args = malloc(sizeof(char *) * data->cmd_size + 1);
 	i = 0;
-	while (tmp && !is_pipe((char *)cmd->content))
+	while (tmp && !is_pipe((char *)(*list)->content))
 	{
-		tab[i] = malloc(sizeof(char) * ft_strlen((char *)cmd->content) + 1);
-		tab[i] = (char *)tmp->content;
-		cmd = cmd->next;
-		tmp = cmd;
+		cmd->args[i] = ft_strdup((char *)tmp->content);
+		free(tmp->content);
+		free(tmp);
+		*list = (*list)->next;
+		tmp = *list;
 		i++;
 	}
-	tab[i] = NULL;
-	i = 0;
-	while(tab[i])
-	{
-		printf("tab[i] :%s\n", tab[i]);
-		i++;
-	}
-	return (tab);
+	cmd->args[i] = NULL;
 }

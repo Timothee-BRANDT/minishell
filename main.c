@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 14:07:48 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/09/26 17:25:19 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/09/28 10:39:58 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,11 @@
 int	main(int ac, char	**av, char	**env)
 {
 	t_data	*data;
+	t_cmd	*cmd;
 
 	(void) ac;
 	(void) av;
+	cmd = malloc(sizeof(t_cmd));
 	data = malloc(sizeof(t_data));
 	data->env = env_to_list(env);
 	data->export = env_to_list(env);
@@ -29,12 +31,12 @@ int	main(int ac, char	**av, char	**env)
 			ft_putstr_fd("error, quotes not closed.\n", 2);
 			exit(EXIT_FAILURE);
 		}
-		data->cmd = get_word_in_list(data->buffer, data);
+		data->list = get_word_in_list(data->buffer, data);
 	//	ft_print_list(data->cmd);
-		analyzer(&data->cmd, data);
+		analyzer(data, cmd);
 		add_history(data->buffer);
 		free(data->buffer);
-		ft_free_list(&data->cmd);
+		ft_free_list(&data->list);
 	}
 	free(data->buffer);
 	return (0);
