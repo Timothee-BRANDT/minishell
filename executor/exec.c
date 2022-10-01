@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 15:20:28 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/09/28 10:37:57 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/10/01 16:55:01 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,24 +32,22 @@ void	built_in_analyzer(t_list **list, t_data	*data)
 	}
 }
 
-void	exec_command(t_list	**cmd, t_data	*data)
+void	exec_command(t_cmd *cmd, t_data	*data)
 {
 	char	**paths;
-	char	**cmds;
 	char	*good_cmd;
 	char	**env;
 
 	paths = get_all_path(data);
-	cmds = list_to_tab(*cmd);
 	env = list_to_tab(data->env);
-	good_cmd = get_correct_cmd(paths, cmds);
+	good_cmd = get_correct_cmd(paths, cmd->args);
 	if (!good_cmd)
 	{
-		free_tab(cmds);
+		free_tab(cmd->args);
 		free_tab(paths);
 		printf("Shell: command not found.\n");
 		return ;
 	}
-	if (execve(good_cmd, cmds, env) == -1)
+	if (execve(good_cmd, cmd->args, env) == -1)
 		write(2, "Command execution failed\n", 25);
 }

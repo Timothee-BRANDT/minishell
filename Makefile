@@ -6,7 +6,7 @@
 #    By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/09 14:04:53 by tbrandt           #+#    #+#              #
-#    Updated: 2022/09/27 12:17:12 by tbrandt          ###   ########.fr        #
+#    Updated: 2022/10/01 16:29:48 by tbrandt          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ SRC		=	main.c					\
 			lexer/check2.c			\
 			parser/tokenize.c		\
 			parser/remove_token.c	\
+			parser/redirections.c	\
 			executor/exec.c			\
 			executor/get_path.c		\
 			built_in/export.c		\

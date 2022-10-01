@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 19:34:14 by mmatthie          #+#    #+#             */
-/*   Updated: 2022/09/28 13:47:58 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/10/01 16:29:22 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 # define MINISHELL_H
 
 # include <stdio.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdio.h>
@@ -99,8 +102,6 @@ void	free_tab(char **tab);
 int		is_token(char *str);
 int		is_redir(char *str);
 int		is_pipe(char*str);
-//main.c
-int		make_second(char	*buffer, t_data	*data, int count);
 
 //check.c 
 t_list	*ft_list(t_list	*lst, t_data *data);
@@ -110,23 +111,28 @@ char	*ft_join_free_ss(char *s1, char *s2);
 int		get_word(char	*buffer, t_data	*data, int count);
 int		get_join(char	*str, int count, int j, t_data	*data);
 int		get_without_quotes(char	*buffer, t_data	*data, int count);
+int		make_second(char	*buffer, t_data	*data, int count);
 
 //parser
 void	built_in_analyzer(t_list **list, t_data	*data);
 int		analyzer(t_data *data, t_cmd *cmd);
 void	redir_tokenisation(t_list *list);
-int		get_redir_file(t_list *list, t_data *data);
+int		get_redir_file(t_list **list, t_data *data);
 void	remove_redir(t_list **list);
 void	remove_pipe(t_list **list);
 void	get_cmd_count(t_list *list, t_data *data);
 void	get_cmd_size(t_list *list, t_data *data);
 void	free_command(t_list **list, t_data *data);
-void    get_cmd_from_list(t_list* *list, t_data *data, t_cmd *cmd);
+void    get_cmd_from_list(t_list**list, t_data *data, t_cmd *cmd);
+
+// redirections
+int	redirect_in(t_data *data);
 
 // executor
 char	*get_correct_cmd(char **paths, char **cmds);
-void    exec_command(t_list **cmd, t_data *data);
+void    exec_command(t_cmd *cmd, t_data *data);
 char	**get_all_path(t_data *data);
+
 
 //export.c
 t_list	*env_to_list(char **env);
