@@ -6,31 +6,60 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 09:55:00 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/10/01 16:30:27 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/10/02 15:14:42brandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+int	check_in_redirections(t_list *list, t_data *data)
+{
+	t_list *tmp;
+
+	tmp = list;
+	while (tmp->next)
+	{
+		if (tmp->token == 1)
+		{
+			data->restore_redir = 1;
+			if (redirect_in(data) == 1)
+				return (1);
+			remove_redir(&data->list);
+			break ;
+		}
+		//if (tmp->next)
+		tmp = tmp->next;
+	}
+	 return (0);
+}
+
 int	redirect_in(t_data *data)
 {
 	int	fd_in;
-	int	tmp_in;
-	int	tmp_out;
 
-	tmp_in = dup(0);
-	tmp_out = dup(1);
+	data->tmp_in = dup(0);
+	data->tmp_out = dup(1);
+	fd_in = 0;
 	if (data->infile)
 	{
 		fd_in = open(data->infile, O_RDONLY);
+		if (fd_in == -1)
+			return (1);
 	}
 	else
-		fd_in = dup(tmp_in);
-	dup2(0, fd_in);
-	printf("let's do the in redirection\n");
+		fd_in = dup(data->tmp_in);
+	dup2(fd_in, 0);
+	close(fd_in);
 	return (0);
 }
 
+void	restore_redir(t_data *data)
+{
+	dup2(data->tmp_in, 0);
+	dup2(data->tmp_out, 1);
+	close(data->tmp_in);
+	close(data->tmp_out);
+}
 /*void	redirect_out(t_data *data)
 {
 	printf("let's do the out redirection\n");

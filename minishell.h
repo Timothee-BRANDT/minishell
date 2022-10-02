@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 19:34:14 by mmatthie          #+#    #+#             */
-/*   Updated: 2022/10/01 16:29:22 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/10/02 16:51:30 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,9 @@ typedef struct s_data
 	int		pipe_count;
 	int		cmd_size;
 	int		plus;
+	int		tmp_in;
+	int		tmp_out;
+	int		restore_redir;
 	char	*infile;
 	char	*outfile;
 	char	*delimitor;
@@ -118,15 +121,17 @@ void	built_in_analyzer(t_list **list, t_data	*data);
 int		analyzer(t_data *data, t_cmd *cmd);
 void	redir_tokenisation(t_list *list);
 int		get_redir_file(t_list **list, t_data *data);
-void	remove_redir(t_list **list);
 void	remove_pipe(t_list **list);
+void	remove_redir(t_list **list);
 void	get_cmd_count(t_list *list, t_data *data);
 void	get_cmd_size(t_list *list, t_data *data);
 void	free_command(t_list **list, t_data *data);
 void    get_cmd_from_list(t_list**list, t_data *data, t_cmd *cmd);
 
 // redirections
-int	redirect_in(t_data *data);
+void	restore_redir(t_data *data);
+int		check_in_redirections(t_list *list, t_data *data);
+int		redirect_in(t_data *data);
 
 // executor
 char	*get_correct_cmd(char **paths, char **cmds);

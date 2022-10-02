@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 10:42:43 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/10/01 18:16:52 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/10/02 16:54:00 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ int	get_redir_file(t_list **list, t_data *data)
 	t_list *tmp;
 
 	tmp = *list;
+	if (!list)
+		return (0);
 	while (tmp->next)
 	{
 		if (is_token((char *)tmp->next->content) && !tmp->next->next)
@@ -84,6 +86,16 @@ void	built_in_tokenisation(t_list *list)
 	}
 }
 
+void	forking(t_cmd *cmd, t_data *data)
+{
+	pid_t pid;
+	
+	pid = fork();
+	if (pid == 0)
+		exec_command(cmd, data);
+	waitpid(pid, NULL, 0);
+}
+
 int	analyzer(t_data *data, t_cmd *cmd)
 {
 	if (get_redir_file(&data->list, data))
@@ -93,18 +105,14 @@ int	analyzer(t_data *data, t_cmd *cmd)
 	get_cmd_size(data->list, data);
 	get_cmd_count(data->list, data);
 	// code the redirections before removing thems
-	//redirect_in(data);
-	ft_print_list(data->list);
-	printf("-----------\n");
 	// boucler du nombre de redirection trouver pour toutes les remoove
-	remove_redir(&data->list);
-	printf("-----------\n");
-	ft_print_list(data->list);
+	check_in_redirections(data->list, data);
 	// boucler du nombre de commandes => get_cmd puis remove first pipe found, repeat for each cmd
 	get_cmd_from_list(&data->list, data, cmd);
 	remove_pipe(&data->list);
-	printf("-----------\n");
-	ft_print_list(data->list);
-	exec_command(cmd, data);
+	forking(cmd, data);
+	// data->restore_redir for restore ONLY if i found a redirection in the command line
+	if (data->restore_redir)
+		restore_redir(data);
 	return (0);
 }

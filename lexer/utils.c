@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 17:12:32 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/09/22 16:43:41 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/10/02 13:38:49 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ void	ft_print_list(t_list	*lst)
 		printf("Empty List\n");
 	while (lst != NULL)
 	{
-		printf("List:%s\n", (char *)(lst->content));
+		printf("content :%s\n", (char *)(lst->content));
+		//printf("token :%d\n", lst->token);
 		lst = lst->next;
 	}
 }
