@@ -6,12 +6,12 @@
 #    By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/09 14:04:53 by tbrandt           #+#    #+#              #
-#    Updated: 2022/10/01 16:29:48 by tbrandt          ###   ########.fr        #
+#    Updated: 2022/10/03 16:32:53 by tbrandt          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC		=	gcc
-CFLAGS	=	-Wall -Wextra -Werror -g #-fsanitize=address
+CFLAGS	=	-Wall -Wextra -Werror -g # -fsanitize=address
 NAME	=	minishell
 
 SRC		=	main.c					\

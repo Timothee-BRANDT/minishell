@@ -17,17 +17,16 @@ int	check_in_redirections(t_list *list, t_data *data)
 	t_list *tmp;
 
 	tmp = list;
-	while (tmp->next)
+	while (tmp && tmp->next)
 	{
 		if (tmp->token == 1)
 		{
-			data->restore_redir = 1;
-			if (redirect_in(data) == 1)
+			data->restore_in_redir = 1;
+			remove_redir(data->list);
+			if (redirect_in(data))
 				return (1);
-			remove_redir(&data->list);
 			break ;
 		}
-		//if (tmp->next)
 		tmp = tmp->next;
 	}
 	 return (0);
@@ -53,12 +52,10 @@ int	redirect_in(t_data *data)
 	return (0);
 }
 
-void	restore_redir(t_data *data)
+void	restore_in_redir(t_data *data)
 {
 	dup2(data->tmp_in, 0);
-	dup2(data->tmp_out, 1);
 	close(data->tmp_in);
-	close(data->tmp_out);
 }
 /*void	redirect_out(t_data *data)
 {

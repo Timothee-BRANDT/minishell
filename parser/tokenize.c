@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 10:42:43 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/10/02 16:54:00 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/10/03 16:55:58 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	redir_tokenisation(t_list *list)
 	t_list *tmp;
 
 	tmp = list;
-	while (tmp->next)
+	while (tmp && tmp->next)
 	{
 		if (ft_strcmp((char *)list->content, "<") == 0)
 			list->token = REDIR_IN;
@@ -34,25 +34,25 @@ void	redir_tokenisation(t_list *list)
 	}
 }
 
-int	get_redir_file(t_list **list, t_data *data)
+int	get_redir_file(t_list *list, t_data *data)
 {
 	t_list *tmp;
 
-	tmp = *list;
 	if (!list)
 		return (0);
-	while (tmp->next)
+	tmp = list;
+	while (tmp && tmp->next)
 	{
 		if (is_token((char *)tmp->next->content) && !tmp->next->next)
 			return (1);
 		if (is_token((char *)tmp->content) && is_token((char *)tmp->next->content))
 			return (1);
 		if (ft_strcmp((char *)tmp->content, "<") == 0)
-			data->infile = (char *)tmp->next->content;
+			data->infile = ft_strdup((char *)tmp->next->content);
 		if (!ft_strcmp((char *)tmp->content, ">"))
-			data->outfile = (char *)tmp->next->content;
+			data->outfile = ft_strdup((char *)tmp->next->content);
 		if (!ft_strcmp((char *)tmp->content, "<<"))
-			data->delimitor = (char *)tmp->next->content;
+			data->delimitor = ft_strdup((char *)tmp->next->content);
 		if (!ft_strcmp((char *)tmp->content, ">>"))
 			data->append = 1;
 		tmp = tmp->next;
@@ -65,7 +65,7 @@ void	built_in_tokenisation(t_list *list)
 	t_list *tmp;
 
 	tmp = list;
-	while (tmp)
+	while (tmp && tmp->next)
 	{
 		if (!ft_strcmp((char *)list->content, "echo") || !ft_strcmp((char *)list->content, "ECHO"))
 			list->token = ECHO;
@@ -98,21 +98,21 @@ void	forking(t_cmd *cmd, t_data *data)
 
 int	analyzer(t_data *data, t_cmd *cmd)
 {
-	if (get_redir_file(&data->list, data))
+	if (get_redir_file(data->list, data))
 		return (on_error("Minishell: syntax error near unexpected token\n", 1));
 	redir_tokenisation(data->list);
 	built_in_tokenisation(data->list);
 	get_cmd_size(data->list, data);
 	get_cmd_count(data->list, data);
+	if (check_in_redirections(data->list, data))
+		return (open_error(data->infile));
 	// code the redirections before removing thems
 	// boucler du nombre de redirection trouver pour toutes les remoove
-	check_in_redirections(data->list, data);
 	// boucler du nombre de commandes => get_cmd puis remove first pipe found, repeat for each cmd
-	get_cmd_from_list(&data->list, data, cmd);
-	remove_pipe(&data->list);
+	get_cmd_from_list(data->list, data, cmd);
+	remove_pipe(data->list);
 	forking(cmd, data);
-	// data->restore_redir for restore ONLY if i found a redirection in the command line
-	if (data->restore_redir)
-		restore_redir(data);
+	if (data->restore_in_redir)
+		restore_in_redir(data);
 	return (0);
 }

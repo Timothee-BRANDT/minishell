@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 10:12:30 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/10/02 16:16:25 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/10/03 15:46:17 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char    **list_to_tab(t_list *cmd)
 {
-	t_list *tmp;
+	t_list	*tmp;
     char	**tab;
 	int		i;
 
@@ -25,8 +25,7 @@ char    **list_to_tab(t_list *cmd)
 	{
 		tab[i] = malloc(sizeof(char) * ft_strlen((char *)tmp->content) + 1);
 		tab[i] = (char *)tmp->content;
-		cmd = cmd->next;
-		tmp = cmd;
+		tmp = tmp->next;
 		i++;
 	}
     tab[i] = NULL;
@@ -71,7 +70,7 @@ int	is_redir(char *str)
 	int		i;
 
 	i = 0;
-	while (str[i])
+	while (str && str[i])
 	{
 		if (str[0] == '<' && str[1] == '<')
 			return (1);
@@ -91,7 +90,7 @@ int	is_pipe(char *str)
 	int		i;
 
 	i = 0;
-	while (str[i])
+	while (str && str[i])
 	{
 		if (str[0] == '|')
 			return (1);

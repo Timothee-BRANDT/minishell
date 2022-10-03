@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 14:07:48 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/10/02 16:53:52 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/10/03 16:56:57 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	main(int ac, char	**av, char	**env)
 	data->export = env_to_list(env);
 	while (1)
 	{
-		data->buffer = readline("Minishell>$ ");
+		data->buffer = readline("Bibishell>$ ");
 		if (!check_quote(data->buffer))
 		{
 			ft_putstr_fd("error, quotes not closed.\n", 2);
@@ -35,7 +35,7 @@ int	main(int ac, char	**av, char	**env)
 		analyzer(data, cmd);
 		add_history(data->buffer);
 		free(data->buffer);
-		ft_free_list(&data->list);
+		ft_free_list(data->list);
 		//system("leaks minishell");
 	}
 	free(data->buffer);

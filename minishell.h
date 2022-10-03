@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 19:34:14 by mmatthie          #+#    #+#             */
-/*   Updated: 2022/10/02 16:51:30 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/10/03 15:53:59 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ typedef struct s_data
 	int		plus;
 	int		tmp_in;
 	int		tmp_out;
-	int		restore_redir;
+	int		restore_in_redir;
 	char	*infile;
 	char	*outfile;
 	char	*delimitor;
@@ -93,13 +93,14 @@ typedef struct s_cmd
 //utils.c
 t_list	*get_in_list(char	*buffer, t_data	*data, t_list	*lst);
 int		on_error(char *str, int code);
+int		open_error(char *str);
 char	*ft_strncpy(char *dest, char *src, unsigned int n);
 void	ft_print_list(t_list	*lst);
 int		check_quote(char *buffer);
 int		ft_isspace(int c);
 int		get_quotes(char	*buffer, t_data	*data, int count);
 void	ft_manage(void	*to_add);
-void	ft_free_list(t_list	**lst);
+void	ft_free_list(t_list	*lst);
 int		is_built_in(void *content);
 void	free_tab(char **tab);
 int		is_token(char *str);
@@ -120,18 +121,18 @@ int		make_second(char	*buffer, t_data	*data, int count);
 void	built_in_analyzer(t_list **list, t_data	*data);
 int		analyzer(t_data *data, t_cmd *cmd);
 void	redir_tokenisation(t_list *list);
-int		get_redir_file(t_list **list, t_data *data);
-void	remove_pipe(t_list **list);
-void	remove_redir(t_list **list);
+int		get_redir_file(t_list *list, t_data *data);
+void	remove_pipe(t_list *list);
 void	get_cmd_count(t_list *list, t_data *data);
 void	get_cmd_size(t_list *list, t_data *data);
-void	free_command(t_list **list, t_data *data);
-void    get_cmd_from_list(t_list**list, t_data *data, t_cmd *cmd);
+void	free_command(t_list *list, t_data *data);
+void    get_cmd_from_list(t_list *list, t_data *data, t_cmd *cmd);
 
 // redirections
-void	restore_redir(t_data *data);
+void	restore_in_redir(t_data *data);
 int		check_in_redirections(t_list *list, t_data *data);
 int		redirect_in(t_data *data);
+void	remove_redir(t_list *list);
 
 // executor
 char	*get_correct_cmd(char **paths, char **cmds);

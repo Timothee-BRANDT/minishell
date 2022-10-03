@@ -53,22 +53,21 @@ void get_cmd_size(t_list *list, t_data *data)
 // function return first command before pipe in a char **, need to pass it to execve
 // ls -la | grep yo
 // returns tab[0] = ls; tab[1] = -la; tab[2] = NULL
-void	get_cmd_from_list(t_list **list, t_data *data, t_cmd *cmd)
+void	get_cmd_from_list(t_list *list, t_data *data, t_cmd *cmd)
 {
 	t_list	*tmp;
 	int		i;
 
-	tmp = *list;
+	tmp = list;
 	get_cmd_size(data->list, data);
 	cmd->args = malloc(sizeof(char *) * data->cmd_size + 1);
 	i = 0;
-	while (tmp && !is_pipe((char *)(*list)->content))
+	while (tmp && !is_pipe((char *)tmp->content))
 	{
 		cmd->args[i] = ft_strdup((char *)tmp->content);
-		free(tmp->content);
-		free(tmp);
-		*list = (*list)->next;
-		tmp = *list;
+		//free(tmp->content);
+		//free(tmp);
+		tmp = tmp->next;
 		i++;
 	}
 	cmd->args[i] = NULL;

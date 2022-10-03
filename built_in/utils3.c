@@ -6,11 +6,18 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 18:26:03 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/10/02 15:06:04 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/10/03 16:56:22 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+int	open_error(char *str)
+{
+	printf("Minishell: %s: No such file or directory\n", str);
+	free(str);
+	return (0);
+}
 
 int	on_error(char *str, int code)
 {
