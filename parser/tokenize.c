@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 10:42:43 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/10/03 16:55:58 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/10/04 15:03:28y tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,49 @@ void	forking(t_cmd *cmd, t_data *data)
 	waitpid(pid, NULL, 0);
 }
 
+
+int	start_exec(t_cmd *cmd, t_data *data)
+{
+	int i;
+	int	pipe_fd[2];
+
+	i = -1;
+	while (++i < data->cmd_count)
+	{
+		if (i == data->cmd_count - 1)
+		{
+			if (data->outfile)	
+			{
+				data->fd_out = open(data->outfile, O_RDWR | O_CREAT | O_NOCTTY | \
+				O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+				free(data->outfile);
+				data->outfile = NULL;
+				remove_out_redir(data->list);
+			}
+			else
+				data->fd_out = dup(data->tmp_out);
+		}
+		else
+		{
+			pipe(pipe_fd);
+			data->fd_out = pipe_fd[1];
+			data->fd_in = pipe_fd[0];
+			dup2(data->fd_in, 0);
+			close(data->fd_in);
+		}
+		dup2(data->fd_out, 1);
+		close(data->fd_out);
+		get_cmd_from_list(data->list, data, cmd);
+		remove_pipe(data->list);
+		forking(cmd, data);
+	}
+	dup2(data->tmp_in, 0);
+	close(data->tmp_in);
+	dup2(data->tmp_out, 1);
+	close(data->tmp_out);
+	return (0);
+}
+
 int	analyzer(t_data *data, t_cmd *cmd)
 {
 	if (get_redir_file(data->list, data))
@@ -104,15 +147,12 @@ int	analyzer(t_data *data, t_cmd *cmd)
 	built_in_tokenisation(data->list);
 	get_cmd_size(data->list, data);
 	get_cmd_count(data->list, data);
-	if (check_in_redirections(data->list, data))
+	if (check_in_redirection(data->list, data))
 		return (open_error(data->infile));
-	// code the redirections before removing thems
-	// boucler du nombre de redirection trouver pour toutes les remoove
-	// boucler du nombre de commandes => get_cmd puis remove first pipe found, repeat for each cmd
-	get_cmd_from_list(data->list, data, cmd);
-	remove_pipe(data->list);
-	forking(cmd, data);
-	if (data->restore_in_redir)
-		restore_in_redir(data);
+
+	start_exec(cmd, data);
+	//if (check_out_redirection(data->list, data))
+	//	return (open_error(data->outfile));
+	//forking(cmd, data);
 	return (0);
 }

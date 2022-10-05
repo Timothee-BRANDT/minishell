@@ -48,7 +48,7 @@ void	redir_norm1(t_list *list, t_list *redir, t_list *redir_arg, t_list *tmp)
 	}
 }
 
-void    remove_redir(t_list *list)
+void    remove_in_redir(t_list *list)
 {
 	t_list	*tmp;
 	t_list	*redir;
@@ -61,19 +61,47 @@ void    remove_redir(t_list *list)
 	i = 0;
 	while(tmp && tmp->next)
 	{
-		if (is_redir((char *)tmp->content) && tmp->next && i == 0)
+		if ((is_redir((char *)tmp->content) == 3) && tmp->next && i == 0)
 		{
 			redir_norm1(tmp, redir, redir_arg, tmp);
 			i = 1;
 			break ;
 		}
-		else if (is_redir((char *)tmp->next->content) && tmp->next->next)
+		else if ((is_redir((char *)tmp->next->content) == 3) && tmp->next->next)
 		{
 			redir_norm(tmp, redir, redir_arg);
 			break ;
 		}
 		tmp = tmp->next;
     }
+}
+
+void    remove_out_redir(t_list *list)
+{
+	t_list	*tmp;
+	t_list	*redir;
+	t_list	*redir_arg;
+	int i;
+
+	tmp = list;
+	redir = NULL;
+	redir_arg = NULL;
+	i = 0;
+	while(tmp && tmp->next)
+	{
+		if ((is_redir((char *)tmp->content) == 4) && tmp->next && i == 0)
+		{
+			redir_norm1(tmp, redir, redir_arg, tmp);
+			i = 1;
+			break ;
+		}
+		else if ((is_redir((char *)tmp->next->content) == 4) && tmp->next->next)
+		{
+			redir_norm(tmp, redir, redir_arg);
+			break ;
+		}
+		tmp = tmp->next;
+	}
 }
 
 void    remove_pipe(t_list *list)

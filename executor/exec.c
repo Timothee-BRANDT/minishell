@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 15:20:28 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/10/03 16:58:10 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/10/05 08:33:46 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,12 @@ void	exec_command(t_cmd *cmd, t_data	*data)
 	paths = get_all_path(data);
 	env = list_to_tab(data->env);
 	good_cmd = get_correct_cmd(paths, cmd->args);
+	int i = 0;
+	while(cmd->args[i])
+	{
+		dprintf(data->tmp_in, "Args :%s\n", cmd->args[i]);
+		i++;
+	}
 	if (!good_cmd)
 	{
 		free_tab(cmd->args);

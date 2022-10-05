@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 19:34:14 by mmatthie          #+#    #+#             */
-/*   Updated: 2022/10/03 15:53:59 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/10/04 15:45:02 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,12 @@ typedef struct s_data
 	int		pipe_count;
 	int		cmd_size;
 	int		plus;
+	int		fd_in;
+	int		fd_out;
 	int		tmp_in;
 	int		tmp_out;
 	int		restore_in_redir;
+	int		restore_out_redir;
 	char	*infile;
 	char	*outfile;
 	char	*delimitor;
@@ -129,15 +132,19 @@ void	free_command(t_list *list, t_data *data);
 void    get_cmd_from_list(t_list *list, t_data *data, t_cmd *cmd);
 
 // redirections
-void	restore_in_redir(t_data *data);
-int		check_in_redirections(t_list *list, t_data *data);
+void	restore_redir(t_data *data, int code);
+int		check_in_redirection(t_list *list, t_data *data);
+int		check_out_redirection(t_list *list, t_data *data);
 int		redirect_in(t_data *data);
-void	remove_redir(t_list *list);
+int		redirect_out(t_data *data);
+void	remove_in_redir(t_list *list);
+void	remove_out_redir(t_list *list);
 
 // executor
 char	*get_correct_cmd(char **paths, char **cmds);
 void    exec_command(t_cmd *cmd, t_data *data);
 char	**get_all_path(t_data *data);
+int	start_exec(t_cmd *cmd, t_data *data);
 
 
 //export.c

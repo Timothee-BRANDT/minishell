@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 10:12:30 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/10/03 15:46:17 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/10/04 08:38:12 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,11 +75,11 @@ int	is_redir(char *str)
 		if (str[0] == '<' && str[1] == '<')
 			return (1);
 		else if (str[0] == '>' && str[1] == '>')
-			return (1);
+			return (2);
 		else if (str[0] == '<')
-			return (1);
+			return (3);
 		else if (str[0] == '>')
-			return (1);
+			return (4);
 		i++;
 	}
 	return (0);

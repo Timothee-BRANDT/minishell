@@ -65,8 +65,9 @@ void	get_cmd_from_list(t_list *list, t_data *data, t_cmd *cmd)
 	while (tmp && !is_pipe((char *)tmp->content))
 	{
 		cmd->args[i] = ft_strdup((char *)tmp->content);
-		//free(tmp->content);
-		//free(tmp);
+	// fonction qui remove ls -la
+	//	free(tmp->content);
+	//	free(tmp);
 		tmp = tmp->next;
 		i++;
 	}
