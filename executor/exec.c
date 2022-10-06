@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 15:20:28 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/10/05 08:33:46 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/10/06 07:36:11 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	exec_command(t_cmd *cmd, t_data	*data)
 		dprintf(data->tmp_in, "Args :%s\n", cmd->args[i]);
 		i++;
 	}
+	dprintf(data->tmp_out, "\n");
 	if (!good_cmd)
 	{
 		free_tab(cmd->args);

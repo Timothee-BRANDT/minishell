@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 19:34:14 by mmatthie          #+#    #+#             */
-/*   Updated: 2022/10/04 15:45:02 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/10/06 08:17:25 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,7 @@ int		get_word(char	*buffer, t_data	*data, int count);
 int		get_join(char	*str, int count, int j, t_data	*data);
 int		get_without_quotes(char	*buffer, t_data	*data, int count);
 int		make_second(char	*buffer, t_data	*data, int count);
+char	*get_env(char *key, t_list *env);
 
 //parser
 void	built_in_analyzer(t_list **list, t_data	*data);
@@ -126,6 +127,7 @@ int		analyzer(t_data *data, t_cmd *cmd);
 void	redir_tokenisation(t_list *list);
 int		get_redir_file(t_list *list, t_data *data);
 void	remove_pipe(t_list *list);
+void	remove_args(t_list *list);
 void	get_cmd_count(t_list *list, t_data *data);
 void	get_cmd_size(t_list *list, t_data *data);
 void	free_command(t_list *list, t_data *data);
@@ -144,7 +146,9 @@ void	remove_out_redir(t_list *list);
 char	*get_correct_cmd(char **paths, char **cmds);
 void    exec_command(t_cmd *cmd, t_data *data);
 char	**get_all_path(t_data *data);
-int	start_exec(t_cmd *cmd, t_data *data);
+int		start_exec(t_cmd *cmd, t_data *data);
+void	forking(t_cmd *cmd, t_data *data, int pipe_fd0, int pipe_fd1);
+void    restore_fd(t_data *data);
 
 
 //export.c

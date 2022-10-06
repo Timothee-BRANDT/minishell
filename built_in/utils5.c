@@ -12,6 +12,27 @@
 
 #include "../minishell.h"
 
+char	*get_env(char *key, t_list *env)
+{
+	t_list	*tmp;
+	int		len;
+	char	*tab;
+
+	tmp = env;
+	ft_print_list(env);
+	len = ft_strlen(key);
+	while (tmp->next)
+	{
+		if (!ft_strncmp((char *)tmp->content, key, len))
+		{
+			tab = ft_get_value((char *)tmp->content);
+			return (tab);
+		}
+		tmp = tmp->next;
+	}
+	return (NULL);
+}
+
 // this function count the number of commands and the number of pipes in the buffer;
 void	get_cmd_count(t_list *list, t_data *data)
 {

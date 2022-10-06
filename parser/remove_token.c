@@ -109,11 +109,29 @@ void    remove_pipe(t_list *list)
 	t_list	*tmp;
 
 	tmp = list;
-	while (tmp->next)
+	while (tmp && tmp->next)
 	{
 		if (is_pipe((char *)tmp->content) && tmp->next)
 		{
-			list = tmp->next;
+			(*list) = *tmp;
+			break ;
+		}
+		if (tmp->next == NULL)
+			break ;
+		tmp = tmp->next;
+	}
+}
+
+void	remove_args(t_list *list)
+{
+	t_list	*tmp;
+
+	tmp = list;
+	while (tmp->next)
+	{
+		if (is_pipe((char *)tmp->next->content))
+		{
+			(*list) = *tmp->next->next;
 			break ;
 		}
 		if (tmp->next == NULL)

@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 18:26:03 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/10/03 16:56:22 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/10/05 09:43:08 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	open_error(char *str)
 {
 	printf("Minishell: %s: No such file or directory\n", str);
 	free(str);
+	str = NULL;
 	return (0);
 }
 

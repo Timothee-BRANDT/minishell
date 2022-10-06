@@ -86,21 +86,35 @@ void	built_in_tokenisation(t_list *list)
 	}
 }
 
-void	forking(t_cmd *cmd, t_data *data)
+/*void	forking(t_cmd *cmd, t_data *data, int fd_in, int fd_out)
 {
 	pid_t pid;
-	
-	pid = fork();
-	if (pid == 0)
+	int fdd = 0;
+
+	if ((pid = fork()) == -1)
+		exit(EXIT_FAILURE);
+	else if (pid == 0)
+	{
+		dup2(fdd, 0);
+		dup2(fd_out, 1);
 		exec_command(cmd, data);
-	waitpid(pid, NULL, 0);
-}
+		exit(1);
+	}
+	else
+	{
+		wait(NULL);
+		close(fd_out);
+		fdd = fd_in;
+	}
+}*/
 
 
 int	start_exec(t_cmd *cmd, t_data *data)
 {
 	int i;
 	int	pipe_fd[2];
+	pid_t pid;
+	int fdd = 0;
 
 	i = -1;
 	while (++i < data->cmd_count)
@@ -109,7 +123,7 @@ int	start_exec(t_cmd *cmd, t_data *data)
 		{
 			if (data->outfile)	
 			{
-				data->fd_out = open(data->outfile, O_RDWR | O_CREAT | O_NOCTTY | \
+				data->fd_out = open(data->outfile, O_WRONLY | O_CREAT | O_NOCTTY | \
 				O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 				free(data->outfile);
 				data->outfile = NULL;
@@ -123,19 +137,26 @@ int	start_exec(t_cmd *cmd, t_data *data)
 			pipe(pipe_fd);
 			data->fd_out = pipe_fd[1];
 			data->fd_in = pipe_fd[0];
-			dup2(data->fd_in, 0);
-			close(data->fd_in);
 		}
-		dup2(data->fd_out, 1);
-		close(data->fd_out);
 		get_cmd_from_list(data->list, data, cmd);
-		remove_pipe(data->list);
-		forking(cmd, data);
+		if ((pid = fork()) == -1)
+			exit(EXIT_FAILURE);
+		else if (pid == 0)
+		{
+			dup2(fdd, 0);
+			dup2(data->fd_out, 1);
+			exec_command(cmd, data);
+			exit(1);
+		}
+		else
+		{
+			wait(NULL);
+			close(data->fd_out);
+			fdd = data->fd_in;
+		}
+		remove_args(data->list);
 	}
-	dup2(data->tmp_in, 0);
-	close(data->tmp_in);
-	dup2(data->tmp_out, 1);
-	close(data->tmp_out);
+	restore_fd(data);
 	return (0);
 }
 
@@ -149,10 +170,6 @@ int	analyzer(t_data *data, t_cmd *cmd)
 	get_cmd_count(data->list, data);
 	if (check_in_redirection(data->list, data))
 		return (open_error(data->infile));
-
 	start_exec(cmd, data);
-	//if (check_out_redirection(data->list, data))
-	//	return (open_error(data->outfile));
-	//forking(cmd, data);
 	return (0);
 }

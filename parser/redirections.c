@@ -73,7 +73,7 @@ int	redirect_in(t_data *data)
 	return (0);
 }
 
-int check_out_redirection(t_list *list, t_data *data)
+/*int check_out_redirection(t_list *list, t_data *data)
 {
 	t_list *tmp;
 
@@ -93,6 +93,7 @@ int check_out_redirection(t_list *list, t_data *data)
 	return (0);
 }
 
+ useless function i guess
 int	redirect_out(t_data *data)
 {
 	int	fd_out;
@@ -102,7 +103,6 @@ int	redirect_out(t_data *data)
 	fd_out = 0;
 	if (data->outfile)
 	{
-		printf("outfile: %s\n", data->outfile);
 		fd_out = open(data->outfile, O_RDWR | O_CREAT | O_NOCTTY | \
 		O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 		if (fd_out == -1)
@@ -113,7 +113,7 @@ int	redirect_out(t_data *data)
 	dup2(fd_out, 1);
 	close(fd_out);
 	return (0);
-}
+}*/
 
 void	restore_redir(t_data *data, int code)
 {
