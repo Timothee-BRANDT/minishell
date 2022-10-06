@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 15:20:28 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/10/06 07:36:11 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/10/06 12:22:47 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,6 @@ void	exec_command(t_cmd *cmd, t_data	*data)
 	paths = get_all_path(data);
 	env = list_to_tab(data->env);
 	good_cmd = get_correct_cmd(paths, cmd->args);
-	int i = 0;
-	while(cmd->args[i])
-	{
-		dprintf(data->tmp_in, "Args :%s\n", cmd->args[i]);
-		i++;
-	}
-	dprintf(data->tmp_out, "\n");
 	if (!good_cmd)
 	{
 		free_tab(cmd->args);
@@ -57,4 +50,29 @@ void	exec_command(t_cmd *cmd, t_data	*data)
 	}
 	if (execve(good_cmd, cmd->args, env) == -1)
 		write(2, "Command execution failed\n", 25);
+}
+
+int	start_exec(t_cmd *cmd, t_data *data)
+{
+	int i;
+	pid_t pid;
+
+	i = -1;
+	while (++i < data->cmd_count)
+	{
+		if (i == data->cmd_count - 1)
+			redir_fd_out(data);
+		else
+			create_pipe(data);
+		get_cmd_from_list(data->list, data, cmd);
+		if ((pid = fork()) == -1)
+			exit(EXIT_FAILURE);
+		else if (pid == 0)
+			dup_child_exec(cmd, data);
+		else
+			dup_parent(data);
+		remove_args(data->list);
+	}
+	restore_fd(data);
+	return (0);
 }

@@ -122,6 +122,7 @@ void    remove_pipe(t_list *list)
 	}
 }
 
+// need to free the link i skipped
 void	remove_args(t_list *list)
 {
 	t_list	*tmp;

@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 19:34:14 by mmatthie          #+#    #+#             */
-/*   Updated: 2022/10/06 08:17:25 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/10/06 12:21:28 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ typedef struct s_data
 	int		plus;
 	int		fd_in;
 	int		fd_out;
+	int		fdd;
 	int		tmp_in;
 	int		tmp_out;
 	int		restore_in_redir;
@@ -149,6 +150,10 @@ char	**get_all_path(t_data *data);
 int		start_exec(t_cmd *cmd, t_data *data);
 void	forking(t_cmd *cmd, t_data *data, int pipe_fd0, int pipe_fd1);
 void    restore_fd(t_data *data);
+void    dup_child_exec(t_cmd *cmd, t_data *data);
+void	dup_parent(t_data *data);
+void	create_pipe(t_data *data);
+void	redir_fd_out(t_data *data);
 
 
 //export.c

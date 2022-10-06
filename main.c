@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 14:07:48 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/10/05 14:35:19 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/10/06 11:59:47 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,10 @@ int	main(int ac, char	**av, char	**env)
 		if (!check_quote(data->buffer))
 		{
 			ft_putstr_fd("error, quotes not closed.\n", 2);
-			exit(EXIT_FAILURE);
+		    add_history(data->buffer);
+		    free(data->buffer);
+		    ft_free_list(data->list);
+            continue ;
 		}
 		data->list = get_word_in_list(data->buffer, data);
 		analyzer(data, cmd);
