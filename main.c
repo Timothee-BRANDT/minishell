@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 14:07:48 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/10/06 11:59:47 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/10/06 12:26:07 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ int	main(int ac, char	**av, char	**env)
 		data->buffer = readline("Bibishell>$ ");
 		if (!check_quote(data->buffer))
 		{
-			ft_putstr_fd("error, quotes not closed.\n", 2);
+			ft_putstr_fd("Error, quotes not closed.\n", 2);
 		    add_history(data->buffer);
-		    free(data->buffer);
+		    //free(data->buffer);
 		    ft_free_list(data->list);
             continue ;
 		}
