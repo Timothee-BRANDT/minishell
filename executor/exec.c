@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 15:20:28 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/10/06 12:22:47 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/10/07 15:47:47 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,23 +56,27 @@ int	start_exec(t_cmd *cmd, t_data *data)
 {
 	int i;
 	pid_t pid;
+	int	status;
 
 	i = -1;
+	status = 0;
 	while (++i < data->cmd_count)
 	{
 		if (i == data->cmd_count - 1)
 			redir_fd_out(data);
 		else
 			create_pipe(data);
-		get_cmd_from_list(data->list, data, cmd);
-		if ((pid = fork()) == -1)
-			exit(EXIT_FAILURE);
-		else if (pid == 0)
+        get_cmd_from_list(data->list, data, cmd);
+		remove_args(data->list);
+		pid = fork();
+		if (pid == 0)
 			dup_child_exec(cmd, data);
 		else
 			dup_parent(data);
-		remove_args(data->list);
 	}
+	i = -1;
+	while (++i < data->cmd_count)
+		waitpid(0 , &status, 0);
 	restore_fd(data);
 	return (0);
 }

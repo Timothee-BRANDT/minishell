@@ -1,0 +1,9 @@
+cat lol | head -c 10 | wc
+
+extract all cmd
+re-parse each cmd in their own fork
+
+reparsing : 
+    check pipe (spoiler, there's none)
+    check redir
+    exec (normal, already existing exec, with it's own fork)

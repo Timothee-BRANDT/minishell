@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 08:16:10 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/10/06 12:21:45 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/10/07 11:34:42by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void    restore_fd(t_data *data)
 	dup2(data->tmp_in, 0);
 	close(data->tmp_in);
 	dup2(data->tmp_out, 1);
-	close(data->tmp_out);
 	data->fdd = 0;
 }
 
@@ -35,12 +34,11 @@ void    dup_child_exec(t_cmd *cmd, t_data *data)
 	dup2(data->fdd, 0);
 	dup2(data->fd_out, 1);
     exec_command(cmd, data);
-	exit(1);
+	exit(0);
 }
 
 void	dup_parent(t_data *data)
 {
-	wait(NULL);
 	close(data->fd_out);
 	data->fdd = data->fd_in;
 }

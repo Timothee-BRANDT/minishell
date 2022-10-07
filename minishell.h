@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 19:34:14 by mmatthie          #+#    #+#             */
-/*   Updated: 2022/10/06 12:21:28 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/10/07 13:00:27 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ typedef struct s_data
 	char	*get_key_name;
 	char	*get_value_export;
 	char	*get_value_name;
+	pid_t	last_pid;
 	t_list	*env;
 	t_list	*export;
 	t_list	*tmp;
