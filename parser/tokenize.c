@@ -41,7 +41,9 @@ int	get_redir_file(t_list *list, t_data *data)
 	if (!list)
 		return (0);
 	tmp = list;
-	if (is_token((char *)tmp->content))
+	if (is_token((char *)tmp->content) && !tmp->next)
+		return (1);
+	if (is_token((char *)tmp->content) && tmp->next && !tmp->next->next)
 		return (1);
 	while (tmp && tmp->next)
 	{
@@ -100,7 +102,7 @@ int	analyzer(t_data *data, t_cmd *cmd)
 	//printf("-----before remove redir-----\n");
 	//ft_print_list(data->list);
 	if (check_in_redirection(data->list, data))
-		return (open_error(data->infile));
+		return (open_error(data->infile, data->outfile));
 	//printf("-----after remove redir-----\n");
 	//ft_print_list(data->list);
 	start_exec(cmd, data);

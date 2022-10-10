@@ -21,8 +21,11 @@
 	free(redir_arg);
 }*/
 
-void	redir_norm(t_list *tmp, t_list *redir, t_list *redir_arg)
+void	redir_norm(t_list *tmp)
 {
+	t_list *redir;
+	t_list *redir_arg;
+
 	redir = tmp->next;
 	redir_arg = tmp->next->next;
 	if (tmp->next->next->next != NULL)
@@ -32,49 +35,52 @@ void	redir_norm(t_list *tmp, t_list *redir, t_list *redir_arg)
 		free(redir);
 		free(redir_arg->content);
 		free(redir_arg);
-		//free_redir(redir, redir_arg);
 	}
 	else
+	{
 		tmp->next = NULL;
+		free(redir->content);
+		free(redir);
+		free(redir_arg->content);
+		free(redir_arg);
+	}
 }
 
-void	redir_norm1(t_list *list, t_list *redir, t_list *redir_arg, t_list *tmp)
+void	redir_norm1(t_list *tmp)
 {
-	redir = tmp;
-	redir_arg = tmp->next;
+	t_list *redir;
+	t_list *redir_arg;
+
+	redir = tmp->next;
+	redir_arg = tmp->next->next;
 	if (tmp->next != NULL)
 	{
-		list = tmp->next->next;
+		tmp = tmp->next->next;
 		free(redir->content);		
 		free(redir);
 		free(redir_arg->content);
 		free(redir_arg);
-		//free_redir(redir, redir_arg);
 	}
 }
 
 void    remove_in_redir(t_list *list)
 {
 	t_list	*tmp;
-	t_list	*redir;
-	t_list	*redir_arg;
 	int i;
 
 	tmp = list;
-	redir = NULL;
-	redir_arg = NULL;
 	i = 0;
 	while(tmp && tmp->next)
 	{
 		if ((is_redir((char *)tmp->content) == 3) && tmp->next && i == 0)
 		{
-			redir_norm1(tmp, redir, redir_arg, tmp);
+			redir_norm1(tmp);
 			i = 1;
 			break ;
 		}
 		else if ((is_redir((char *)tmp->next->content) == 3) && tmp->next->next)
 		{
-			redir_norm(tmp, redir, redir_arg);
+			redir_norm(tmp);
 			break ;
 		}
 		tmp = tmp->next;
@@ -84,26 +90,21 @@ void    remove_in_redir(t_list *list)
 void    remove_out_redir(t_list *list)
 {
 	t_list	*tmp;
-	t_list	*redir;
-	t_list	*redir_arg;
 	int i;
 
 	tmp = list;
-	redir = NULL;
-	redir_arg = NULL;
 	i = 0;
-	ft_print_list(list);
 	while(tmp && tmp->next)
 	{
 		if ((is_redir((char *)tmp->content) == 4) && tmp->next && i == 0)
 		{
-			redir_norm1(tmp, redir, redir_arg, tmp);
+			redir_norm1(tmp);
 			i = 1;
 			break ;
 		}
 		else if ((is_redir((char *)tmp->next->content) == 4) && tmp->next->next)
 		{
-			redir_norm(tmp, redir, redir_arg);
+			redir_norm(tmp);
 			break ;
 		}
 		tmp = tmp->next;

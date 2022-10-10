@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 19:34:14 by mmatthie          #+#    #+#             */
-/*   Updated: 2022/10/10 07:45:46 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/10/10 09:00:53 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,13 +84,10 @@ typedef struct s_data
 	char	*get_key_name;
 	char	*get_value_export;
 	char	*get_value_name;
-	pid_t	last_pid;
 	t_list	*env;
 	t_list	*export;
 	t_list	*tmp;
 	t_list	*list;
-	t_list	*save_list;
-	t_list	*list_modified;
 }				t_data;
 
 typedef struct s_cmd
@@ -102,7 +99,7 @@ typedef struct s_cmd
 //utils.c
 t_list	*get_in_list(char	*buffer, t_data	*data, t_list	*lst);
 int		on_error(char *str, int code);
-int		open_error(char *str);
+int		open_error(char *infile, char *outfile);
 char	*ft_strncpy(char *dest, char *src, unsigned int n);
 void	ft_print_list(t_list	*lst);
 int		check_quote(char *buffer);
