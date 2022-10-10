@@ -13,16 +13,13 @@
 #include "../minishell.h"
 
 
-void	free_redir(t_list *redir, t_list *redir_arg)
+/*void	free_redir(t_list *redir, t_list *redir_arg)
 {
-
-	if (redir->content)
-		free(redir->content);		
-	if (redir_arg->content)
-		free(redir_arg->content);
+	free(redir->content);		
+	free(redir_arg->content);
 	free(redir);
 	free(redir_arg);
-}
+}*/
 
 void	redir_norm(t_list *tmp, t_list *redir, t_list *redir_arg)
 {
@@ -31,7 +28,11 @@ void	redir_norm(t_list *tmp, t_list *redir, t_list *redir_arg)
 	if (tmp->next->next->next != NULL)
 	{
 		tmp->next = tmp->next->next->next;
-		free_redir(redir, redir_arg);
+		free(redir->content);		
+		free(redir);
+		free(redir_arg->content);
+		free(redir_arg);
+		//free_redir(redir, redir_arg);
 	}
 	else
 		tmp->next = NULL;
@@ -44,7 +45,11 @@ void	redir_norm1(t_list *list, t_list *redir, t_list *redir_arg, t_list *tmp)
 	if (tmp->next != NULL)
 	{
 		list = tmp->next->next;
-		free_redir(redir, redir_arg);
+		free(redir->content);		
+		free(redir);
+		free(redir_arg->content);
+		free(redir_arg);
+		//free_redir(redir, redir_arg);
 	}
 }
 
@@ -87,6 +92,7 @@ void    remove_out_redir(t_list *list)
 	redir = NULL;
 	redir_arg = NULL;
 	i = 0;
+	ft_print_list(list);
 	while(tmp && tmp->next)
 	{
 		if ((is_redir((char *)tmp->content) == 4) && tmp->next && i == 0)
@@ -104,39 +110,22 @@ void    remove_out_redir(t_list *list)
 	}
 }
 
-void    remove_pipe(t_list *list)
+/*void	*remove_args(t_list *list, t_data *data)
 {
 	t_list	*tmp;
 
+	(void)data;
+	data->save_list = list;
 	tmp = list;
 	while (tmp && tmp->next)
 	{
-		if (is_pipe((char *)tmp->content) && tmp->next)
-		{
-			(*list) = *tmp;
-			break ;
-		}
-		if (tmp->next == NULL)
-			break ;
-		tmp = tmp->next;
-	}
-}
-
-// need to free the link i skipped
-void	remove_args(t_list *list)
-{
-	t_list	*tmp;
-
-	tmp = list;
-	while (tmp->next)
-	{
 		if (is_pipe((char *)tmp->next->content))
 		{
-			(*list) = *tmp->next->next;
+			tmp = tmp->next->next;
 			break ;
 		}
 		if (tmp->next == NULL)
 			break ;
 		tmp = tmp->next;
 	}
-}
+}*/

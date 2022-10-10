@@ -21,7 +21,7 @@ char	*get_env(char *key, t_list *env)
 	tmp = env;
 	ft_print_list(env);
 	len = ft_strlen(key);
-	while (tmp->next)
+	while (tmp)
 	{
 		if (!ft_strncmp((char *)tmp->content, key, len))
 		{
@@ -48,8 +48,7 @@ void	get_cmd_count(t_list *list, t_data *data)
 			data->pipe_count++;
 			data->cmd_count++;
 		}
-		list = list->next;
-		tmp = list;
+		tmp = tmp->next;
 	}
 }
 
@@ -63,7 +62,7 @@ void get_cmd_size(t_list *list, t_data *data)
 
     tmp = list;
     data->cmd_size = 0;
-    while (tmp && !is_pipe((char *)list->content))
+    while (tmp)
     {
     	list = list->next;
         tmp = list;
@@ -83,14 +82,34 @@ void	get_cmd_from_list(t_list *list, t_data *data, t_cmd *cmd)
 	get_cmd_size(data->list, data);
 	cmd->args = malloc(sizeof(char *) * data->cmd_size + 1);
 	i = 0;
-	while (tmp && !is_pipe((char *)tmp->content))
+	while (tmp)
 	{
 		cmd->args[i] = ft_strdup((char *)tmp->content);
-	// fonction qui remove ls -la
-	//	free(tmp->content);
-	//	free(tmp);
 		tmp = tmp->next;
 		i++;
 	}
 	cmd->args[i] = NULL;
+}
+
+char	**extract_cmd(char **cmd, t_data *data)
+{
+	int	i;
+	static	int	j = 0;
+	char **final_cmd;
+
+	final_cmd = malloc(sizeof(char *) * 500);
+	i = 0;
+	(void)data;
+	while (cmd[j] && ft_strcmp(cmd[j], "|") != 0)
+	{
+		final_cmd[i] = ft_strdup(cmd[j]);
+		i++;
+		j++;
+	}
+	if (cmd[j] && ft_strcmp(cmd[j], "|") == 0)
+		j++;
+	final_cmd[i] = NULL;
+	if(j == ft_strlen2d(cmd))
+		ft_bzero(&j, sizeof(int));
+	return (final_cmd);
 }

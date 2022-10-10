@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 15:20:28 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/10/07 15:47:47 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/10/08 17:25:56y tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	built_in_analyzer(t_list **list, t_data	*data)
 	}
 }
 
-void	exec_command(t_cmd *cmd, t_data	*data)
+void	exec_command(char **cmds, t_data	*data)
 {
 	char	**paths;
 	char	*good_cmd;
@@ -40,16 +40,28 @@ void	exec_command(t_cmd *cmd, t_data	*data)
 
 	paths = get_all_path(data);
 	env = list_to_tab(data->env);
-	good_cmd = get_correct_cmd(paths, cmd->args);
+	good_cmd = get_correct_cmd(paths, cmds);
 	if (!good_cmd)
 	{
-		free_tab(cmd->args);
+		free_tab(cmds);
 		free_tab(paths);
 		printf("Shell: command not found.\n");
 		return ;
 	}
-	if (execve(good_cmd, cmd->args, env) == -1)
+	if (execve(good_cmd, cmds, env) == -1)
 		write(2, "Command execution failed\n", 25);
+}
+
+void	ft_print_tab(char **tab)
+{
+	int	i;
+
+	i = 0;
+	while (tab[i])
+	{
+		printf("tab[i] : %s\n", tab[i]);
+		i++;
+	}
 }
 
 int	start_exec(t_cmd *cmd, t_data *data)
@@ -57,6 +69,7 @@ int	start_exec(t_cmd *cmd, t_data *data)
 	int i;
 	pid_t pid;
 	int	status;
+	char **cmds;
 
 	i = -1;
 	status = 0;
@@ -66,13 +79,15 @@ int	start_exec(t_cmd *cmd, t_data *data)
 			redir_fd_out(data);
 		else
 			create_pipe(data);
-        get_cmd_from_list(data->list, data, cmd);
-		remove_args(data->list);
+    	get_cmd_from_list(data->list, data, cmd);
+		cmds = extract_cmd(cmd->args, data);
 		pid = fork();
 		if (pid == 0)
-			dup_child_exec(cmd, data);
+			dup_child_exec(cmds, data);
 		else
 			dup_parent(data);
+		free_tab(cmd->args);
+		free_tab(cmds);
 	}
 	i = -1;
 	while (++i < data->cmd_count)

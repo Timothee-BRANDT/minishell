@@ -29,11 +29,11 @@ void	create_pipe(t_data *data)
 	data->fd_in = pipe_fd[0];
 }
 
-void    dup_child_exec(t_cmd *cmd, t_data *data)
+void    dup_child_exec(char **cmds, t_data *data)
 {
 	dup2(data->fdd, 0);
 	dup2(data->fd_out, 1);
-    exec_command(cmd, data);
+    exec_command(cmds, data);
 	exit(0);
 }
 

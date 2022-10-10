@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 15:08:29 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/10/03 15:53:31 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/10/08 16:41:13 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ void	ft_free_list(t_list	*lst)
 	while (tmp)
 	{
 		tmp2 = tmp->next;
+		free(tmp->content);
 		free(tmp);
 		tmp = tmp2;
 	}

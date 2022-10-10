@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 14:07:48 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/10/06 14:19:23 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/10/10 07:53:14 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ int	main(int ac, char	**av, char	**env)
 		analyzer(data, cmd);
 		add_history(data->buffer);
 		free(data->buffer);
-		ft_free_list(data->list);
+		ft_lstclear(&data->save_list, &free_list);
 		//system("lsof -w -c minishell");
-		//system("leaks minishell");
+		system("leaks minishell");
 	}
 	free(data->buffer);
 	return (0);

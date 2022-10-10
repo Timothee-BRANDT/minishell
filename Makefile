@@ -6,7 +6,7 @@
 #    By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/09 14:04:53 by tbrandt           #+#    #+#              #
-#    Updated: 2022/10/06 08:17:48 by tbrandt          ###   ########.fr        #
+#    Updated: 2022/10/08 16:36:19 by tbrandt          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,7 @@ SRC		=	main.c					\
 			parser/remove_token.c	\
 			parser/redirections.c	\
 			parser/utils.c			\
+			parser/utils1.c			\
 			executor/exec.c			\
 			executor/get_path.c		\
 			built_in/export.c		\

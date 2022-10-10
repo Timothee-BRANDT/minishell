@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 19:34:14 by mmatthie          #+#    #+#             */
-/*   Updated: 2022/10/07 13:00:27 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/10/10 07:45:46 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ typedef struct s_data
 	int		indicate;
 	int		token;
 	int		i;
+	int		statique;
 	int		append;
 	int		check;
 	int		cmd_count;
@@ -71,6 +72,7 @@ typedef struct s_data
 	int		tmp_out;
 	int		restore_in_redir;
 	int		restore_out_redir;
+	int		tamere;
 	char	*infile;
 	char	*outfile;
 	char	*delimitor;
@@ -87,6 +89,8 @@ typedef struct s_data
 	t_list	*export;
 	t_list	*tmp;
 	t_list	*list;
+	t_list	*save_list;
+	t_list	*list_modified;
 }				t_data;
 
 typedef struct s_cmd
@@ -111,6 +115,7 @@ void	free_tab(char **tab);
 int		is_token(char *str);
 int		is_redir(char *str);
 int		is_pipe(char*str);
+void	print_tab(char **tab);
 
 //check.c 
 t_list	*ft_list(t_list	*lst, t_data *data);
@@ -129,11 +134,13 @@ int		analyzer(t_data *data, t_cmd *cmd);
 void	redir_tokenisation(t_list *list);
 int		get_redir_file(t_list *list, t_data *data);
 void	remove_pipe(t_list *list);
-void	remove_args(t_list *list);
+t_list	*remove_args(t_list *list, t_data *data);
 void	get_cmd_count(t_list *list, t_data *data);
 void	get_cmd_size(t_list *list, t_data *data);
 void	free_command(t_list *list, t_data *data);
 void    get_cmd_from_list(t_list *list, t_data *data, t_cmd *cmd);
+char	**extract_cmd(char **cmd, t_data *data);
+void	free_list(void *ptr);
 
 // redirections
 void	restore_redir(t_data *data, int code);
@@ -146,15 +153,16 @@ void	remove_out_redir(t_list *list);
 
 // executor
 char	*get_correct_cmd(char **paths, char **cmds);
-void    exec_command(t_cmd *cmd, t_data *data);
+void    exec_command(char **cmds, t_data *data);
 char	**get_all_path(t_data *data);
 int		start_exec(t_cmd *cmd, t_data *data);
 void	forking(t_cmd *cmd, t_data *data, int pipe_fd0, int pipe_fd1);
 void    restore_fd(t_data *data);
-void    dup_child_exec(t_cmd *cmd, t_data *data);
+void    dup_child_exec(char **cmd, t_data *data);
 void	dup_parent(t_data *data);
 void	create_pipe(t_data *data);
 void	redir_fd_out(t_data *data);
+char 	**get_last_cmd(char **tab);
 
 
 //export.c

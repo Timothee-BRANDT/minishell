@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 17:12:32 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/10/02 13:38:49 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/10/08 14:50:13 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	ft_print_list(t_list	*lst)
 	while (lst != NULL)
 	{
 		printf("content :%s\n", (char *)(lst->content));
-		//printf("token :%d\n", lst->token);
+		printf("PTR IN LIST : %p\n", lst);
 		lst = lst->next;
 	}
 }
