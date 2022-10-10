@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 19:34:14 by mmatthie          #+#    #+#             */
-/*   Updated: 2022/10/10 09:00:53 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/10/10 11:41:39 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,6 @@ char	**extract_cmd(char **cmd, t_data *data);
 void	free_list(void *ptr);
 
 // redirections
-void	restore_redir(t_data *data, int code);
 int		check_in_redirection(t_list *list, t_data *data);
 int		check_out_redirection(t_list *list, t_data *data);
 int		redirect_in(t_data *data);

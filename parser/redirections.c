@@ -43,7 +43,12 @@ int	check_in_redirection(t_list *list, t_data *data)
 	{
 		if (tmp->token == 1)
 		{
-			data->restore_in_redir = 1;
+			if (ft_lstsize(list) == 2)
+			{
+				if (redirect_in(data))
+					return (1);
+				break ;
+			}
 			while (++j < i)
 				remove_in_redir(data->list);
 			if (redirect_in(data))
@@ -115,21 +120,6 @@ int	redirect_out(t_data *data)
 	return (0);
 }*/
 
-void	restore_redir(t_data *data, int code)
-{
-	if (code == REDIR_IN)
-	{
-		dup2(data->tmp_in, 0);
-		close(data->tmp_in);
-		data->restore_in_redir = 0;
-	}
-	else if (code == REDIR_OUT)
-	{
-		dup2(data->tmp_out, 1);
-		close(data->tmp_out);
-		data->restore_out_redir = 0;
-	}
-}
 /*
 void	redirect_in_delim(t_data *data)
 {

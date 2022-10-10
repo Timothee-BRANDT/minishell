@@ -43,15 +43,41 @@ void	dup_parent(t_data *data)
 	data->fdd = data->fd_in;
 }
 
+int	get_redir_count(t_list *list)
+{
+	t_list 	*tmp;
+	int		redir_out_count;
+
+	tmp = list;
+	redir_out_count = 0;
+	while (tmp && tmp->next)
+	{
+		if (ft_strcmp((char *)tmp->content, ">") == 0)
+			redir_out_count++;
+		tmp = tmp->next;
+	}
+	return (redir_out_count);
+}
+
 void	redir_fd_out(t_data *data)
 {
+	int	redir_count;
+	int	i;
+
+	redir_count = get_redir_count(data->list);
+	i = 0;
 	if (data->outfile)	
 	{
-		data->fd_out = open(data->outfile, O_WRONLY | O_CREAT | O_NOCTTY | \
-		O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
-		free(data->outfile);
-		data->outfile = NULL;
-		remove_out_redir(data->list);
+		while (i < redir_count)
+		{
+			data->fd_out = open(data->outfile, O_WRONLY | O_CREAT | O_NOCTTY | \
+			O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+			free(data->outfile);
+			data->outfile = NULL;
+			remove_out_redir(data->list);
+			get_redir_file(data->list, data);
+			i++;
+		}
 	}
 	else
 		data->fd_out = dup(data->tmp_out);

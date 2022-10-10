@@ -43,8 +43,6 @@ int	get_redir_file(t_list *list, t_data *data)
 	tmp = list;
 	if (is_token((char *)tmp->content) && !tmp->next)
 		return (1);
-	if (is_token((char *)tmp->content) && tmp->next && !tmp->next->next)
-		return (1);
 	while (tmp && tmp->next)
 	{
 		if (is_token((char *)tmp->next->content) && !tmp->next->next)
