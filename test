@@ -1,0 +1,2 @@
+      62
+< main.c | grep a < Makefile | wc -l > tg

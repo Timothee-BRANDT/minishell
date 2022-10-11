@@ -31,25 +31,20 @@ int	count_redir_in(t_list *list)
 int	check_in_redirection(t_list *list, t_data *data)
 {
 	t_list *tmp;
-	int		i;
+	int		redir_count;
 	int		j;
 
 	tmp = list;
-	i = count_redir_in(list);
+	redir_count = count_redir_in(list);
 	j = -1;
 	data->tmp_in = dup(0);
 	data->tmp_out = dup(1);
+	get_first_redir_in(list, data);
 	while (tmp && tmp->next)
 	{
 		if (tmp->token == 1)
 		{
-			if (ft_lstsize(list) == 2)
-			{
-				if (redirect_in(data))
-					return (1);
-				break ;
-			}
-			while (++j < i)
+			while (++j < redir_count)
 				remove_in_redir(data->list);
 			if (redirect_in(data))
 				return (1);
@@ -60,12 +55,53 @@ int	check_in_redirection(t_list *list, t_data *data)
 	 return (0);
 }
 
+int	get_first_redirection(t_list *list, t_data *data)
+{
+	t_list *tmp;
+
+	tmp = list;
+	while (tmp && tmp->next && ft_strcmp((char *)tmp->content, "|") != 0)
+	{
+		if (!ft_strcmp((char *)tmp->content, ">") && tmp->next->next && !ft_strcmp((char *)tmp->next->next->content, "|"))
+			data->first_outfile = ft_strdup((char *)tmp->next->content);
+		if (!tmp->next)
+			break ;
+		tmp = tmp->next;
+	}
+	return (0);
+}
+
+int	check_out_redirection(t_list *list, t_data *data)
+{
+	t_list *tmp;
+
+	tmp = list;
+	while (tmp && tmp->next && ft_strcmp((char *)tmp->content, "|") != 0)
+	{
+		if (ft_strcmp((char *)tmp->content, ">") == 0)
+		{
+			data->fd_out = open(data->first_outfile, O_WRONLY | O_CREAT | O_NOCTTY | \
+			O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+			free(data->first_outfile);
+			data->first_outfile = NULL;
+			remove_out_redir(data->list);
+			data->first_redir_check = 1;
+			break ;
+		}
+		if (!tmp->next)
+			break ;
+		tmp = tmp->next;
+	}
+	return (0);
+}
+
 int	redirect_in(t_data *data)
 {
 	data->fd_in = 0;
 	if (data->infile)
 	{
 		data->fd_in = open(data->infile, O_RDONLY);
+		printf("infile: %s\n", data->infile);
 		free(data->infile);
 		data->infile = NULL;
 		if (data->fd_in == -1)
@@ -77,56 +113,3 @@ int	redirect_in(t_data *data)
 	close(data->fd_in);
 	return (0);
 }
-
-/*int check_out_redirection(t_list *list, t_data *data)
-{
-	t_list *tmp;
-
-	tmp = list;
-	while (tmp && tmp->next)
-	{
-		if (tmp->token == 2)
-		{
-			data->restore_out_redir = 1;
-			remove_out_redir(data->list);
-			if (redirect_out(data))
-				return (1);
-			break ;
-		}
-		tmp = tmp->next;
-	}
-	return (0);
-}
-
- useless function i guess
-int	redirect_out(t_data *data)
-{
-	int	fd_out;
-
-	data->tmp_in = dup(0);
-	data->tmp_out = dup(1);	
-	fd_out = 0;
-	if (data->outfile)
-	{
-		fd_out = open(data->outfile, O_RDWR | O_CREAT | O_NOCTTY | \
-		O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
-		if (fd_out == -1)
-			return (1);
-	}
-	else
-		fd_out = dup(data->tmp_out);
-	dup2(fd_out, 1);
-	close(fd_out);
-	return (0);
-}*/
-
-/*
-void	redirect_in_delim(t_data *data)
-{
-	printf("let's do the in_delimitor redirection\n");
-}
-
-void	redirect_out_append(t_data *data)
-{
-	printf("let's do the out_append redirection\n");
-}*/

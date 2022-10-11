@@ -49,10 +49,6 @@ int	get_redir_file(t_list *list, t_data *data)
 			return (1);
 		if (is_token((char *)tmp->content) && is_token((char *)tmp->next->content))
 			return (1);
-		if (ft_strcmp((char *)tmp->content, "<") == 0)
-			data->infile = ft_strdup((char *)tmp->next->content);
-		if (!ft_strcmp((char *)tmp->content, ">"))
-			data->outfile = ft_strdup((char *)tmp->next->content);
 		if (!ft_strcmp((char *)tmp->content, "<<"))
 			data->delimitor = ft_strdup((char *)tmp->next->content);
 		if (!ft_strcmp((char *)tmp->content, ">>"))
@@ -60,6 +56,37 @@ int	get_redir_file(t_list *list, t_data *data)
 		tmp = tmp->next;
 	}
 	return (0);
+}
+
+int	get_first_redir_in(t_list *list, t_data *data)
+{
+	t_list *tmp;
+
+	tmp = list;
+	while (tmp && tmp->next)
+	{
+		if (!ft_strcmp((char *)tmp->content, "<"))
+			data->infile = ft_strdup((char *)tmp->next->content);
+		tmp = tmp->next;
+	}
+	return (0);	
+}
+
+int	get_first_redir_out(t_list *list, t_data *data)
+{
+	t_list *tmp;
+
+	tmp = list;
+	while (tmp && tmp->next)
+	{
+		if (!ft_strcmp((char *)tmp->content, ">"))
+		{
+			data->outfile = ft_strdup((char *)tmp->next->content);
+			break ;
+		}
+		tmp = tmp->next;
+	}
+	return (0);	
 }
 
 void	built_in_tokenisation(t_list *list)
@@ -97,12 +124,10 @@ int	analyzer(t_data *data, t_cmd *cmd)
 	built_in_tokenisation(data->list);
 	get_cmd_size(data->list, data);
 	get_cmd_count(data->list, data);
-	//printf("-----before remove redir-----\n");
-	//ft_print_list(data->list);
 	if (check_in_redirection(data->list, data))
 		return (open_error(data->infile, data->outfile));
-	//printf("-----after remove redir-----\n");
-	//ft_print_list(data->list);
+	if (get_first_redirection(data->list, data))
+		check_out_redirection(data->list, data);
 	start_exec(cmd, data);
 	return (0);
 }

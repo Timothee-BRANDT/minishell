@@ -68,11 +68,9 @@ int	start_exec(t_cmd *cmd, t_data *data)
 {
 	int i;
 	pid_t pid;
-	int	status;
 	char **cmds;
 
 	i = -1;
-	status = 0;
 	while (++i < data->cmd_count)
 	{
 		if (i == data->cmd_count - 1)
@@ -86,12 +84,10 @@ int	start_exec(t_cmd *cmd, t_data *data)
 			dup_child_exec(cmds, data);
 		else
 			dup_parent(data);
-		free_tab(cmd->args);
-		free_tab(cmds);
+		data->first_redir_check = 0;
+		free_2_tab(cmd->args, cmds);
 	}
-	i = -1;
-	while (++i < data->cmd_count)
-		waitpid(0 , &status, 0);
+	wait_my_childs(data);
 	restore_fd(data);
 	return (0);
 }

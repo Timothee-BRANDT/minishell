@@ -97,6 +97,7 @@ char	**extract_cmd(char **cmd, t_data *data)
 	static	int	j = 0;
 	char **final_cmd;
 
+	// function that malloc ok
 	final_cmd = malloc(sizeof(char *) * 500);
 	i = 0;
 	(void)data;
