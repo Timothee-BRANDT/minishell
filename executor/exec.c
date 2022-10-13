@@ -84,7 +84,6 @@ int	start_exec(t_cmd *cmd, t_data *data)
 			dup_child_exec(cmds, data);
 		else
 			dup_parent(data);
-		data->first_redir_check = 0;
 		free_2_tab(cmd->args, cmds);
 	}
 	wait_my_childs(data);

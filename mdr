@@ -1,0 +1,19 @@
+total 160
+drwxr-xr-x   18 tbrandt  2021_nice    612 Oct 13 15:59 .
+drwxr-xr-x   12 tbrandt  2021_nice    408 Oct 12 08:40 ..
+drwxr-xr-x   15 tbrandt  2021_nice    510 Oct 11 17:08 .git
+drwxr-xr-x    3 tbrandt  2021_nice    102 Oct 11 16:57 .vscode
+-rw-r--r--    1 tbrandt  2021_nice   1891 Oct 12 11:25 Makefile
+-rw-r--r--    1 tbrandt  2021_nice    393 Sep 21 13:37 README.
+drwxr-xr-x   15 tbrandt  2021_nice    510 Oct 13 15:58 built_in
+drwxr-xr-x    6 tbrandt  2021_nice    204 Oct 13 15:58 executor
+drwxr-xr-x   10 tbrandt  2021_nice    340 Oct 13 15:58 lexer
+drwxr-xr-x  109 tbrandt  2021_nice   3706 Oct 13 15:58 libft
+-rw-r--r--    1 tbrandt  2021_nice   1774 Oct 13 09:33 main.c
+-rw-r--r--    1 tbrandt  2021_nice   4636 Oct 13 15:58 main.o
+-rw-r--r--    1 tbrandt  2021_nice      0 Oct 13 15:59 mdr
+-rwxr-xr-x    1 tbrandt  2021_nice  43356 Oct 13 15:58 minishell
+-rw-r--r--    1 tbrandt  2021_nice   5706 Oct 13 13:34 minishell.h
+drwxr-xr-x   13 tbrandt  2021_nice    442 Oct 13 15:58 parser
+-rw-r--r--    1 tbrandt  2021_nice    412 Sep 21 13:37 signals.c
+-rw-r--r--    1 tbrandt  2021_nice    524 Sep 21 13:37 terminos.c

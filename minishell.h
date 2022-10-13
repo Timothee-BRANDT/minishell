@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 19:34:14 by mmatthie          #+#    #+#             */
-/*   Updated: 2022/10/11 14:05:05 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/10/13 13:34:59 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ typedef struct s_data
 	int		tmp_in;
 	int		tmp_out;
 	int		first_redir_check;
+	int		first_redir_check_bis;
 	char	*first_outfile;
 	char	*infile;
 	char	*outfile;
@@ -106,6 +107,7 @@ void	ft_free_list(t_list	*lst);
 void	free_tab(char **tab);
 void	print_tab(char **tab);
 void	free_2_tab(char **tab1, char **tab2);
+char	**lst_to_tab(t_list *list, t_data *data);
 int		on_error(char *str, int code);
 int		open_error(char *infile, char *outfile);
 int		check_quote(char *buffer);
@@ -130,7 +132,7 @@ t_list	*get_word_in_list(char	*buffer, t_data	*data);
 
 //parser
 void	built_in_analyzer(t_list **list, t_data	*data);
-void	remove_pipe(t_list *list);
+void	remove_pipe(t_list *list, t_data *data);
 void	redir_tokenisation(t_list *list);
 void	get_cmd_count(t_list *list, t_data *data);
 void	get_cmd_size(t_list *list, t_data *data);
@@ -147,11 +149,12 @@ t_list	*remove_args(t_list *list, t_data *data);
 // redirections
 void	remove_in_redir(t_list *list);
 void	remove_out_redir(t_list *list);
-int		get_first_redirection(t_list *list, t_data *data);
+int		get_first_redirection_before_pipe(t_data *data);
 int		check_in_redirection(t_list *list, t_data *data);
-int		check_out_redirection(t_list *list, t_data *data);
+int		check_out_redirection_before_pipe(t_list *list, t_data *data);
 int		redirect_in(t_data *data);
 int		redirect_out(t_data *data);
+int		get_redir_count(t_list *list);
 
 // executor
 void    exec_command(char **cmds, t_data *data);

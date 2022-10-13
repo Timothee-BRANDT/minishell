@@ -17,6 +17,7 @@ void    restore_fd(t_data *data)
 	dup2(data->tmp_in, 0);
 	close(data->tmp_in);
 	dup2(data->tmp_out, 1);
+	close(data->fd_out);
 	data->fdd = 0;
 }
 
@@ -80,7 +81,7 @@ int	wait_my_childs(t_data *data)
 	status = 0;
 	i = -1;
 	while (++i < data->cmd_count)
-		waitpid(0 , &status, 0);
+		waitpid(0 , &status, WUNTRACED);
 	return (0);
 }
 
@@ -100,7 +101,7 @@ void	redir_fd_out(t_data *data)
 			O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 			free(data->outfile);
 			data->outfile = NULL;
-			remove_out_redir(data->list);
+			//remove_out_redir(data->list);
 			get_first_redir_out(data->list, data);
 			i++;
 		}

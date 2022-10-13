@@ -48,55 +48,47 @@ void	redir_norm(t_list *tmp)
 
 void	redir_norm1(t_list *tmp)
 {
-	t_list *redir;
-	t_list *redir_arg;
+	t_list	*redir;
+	t_list	*redir_arg;
 
 	redir = tmp;
 	redir_arg = tmp->next;
 	if (tmp->next && tmp->next->next)
 	{
 		tmp = tmp->next->next;
-		free(redir->content);		
-		free(redir);
-		free(redir_arg->content);
-		free(redir_arg);
+		ft_print_list(tmp);
+		//free(redir->content);		
+		//free(redir);
+		//free(redir_arg->content);
+		//free(redir_arg);
 	}
 }
 
-void    remove_in_redir(t_list *list)
+void	remove_in_redir(t_list *list)
 {
 	t_list	*tmp;
 	int i;
 
 	tmp = list;
 	i = 0;
-	printf("1\n");
 	while(tmp && tmp->next)
 	{
-		printf("2\n");
 		if ((is_redir((char *)tmp->content) == 3) && tmp->next && i == 0)
 		{
-			
-			ft_print_list(tmp);
-			printf("3\n");
 			redir_norm1(tmp);
-			printf("4\n");
-			ft_print_list(tmp);
 			i = 1;
 			break ;
 		}
 		else if ((tmp->next && is_redir((char *)tmp->next->content) == 3) && tmp->next->next)
 		{
-			printf("5\n");
 			redir_norm(tmp);
 			break ;
 		}
-		printf("6\n");
 		tmp = tmp->next;
     }
 }
 
-void    remove_out_redir(t_list *list)
+void	remove_out_redir(t_list *list)
 {
 	t_list	*tmp;
 	int i;
@@ -107,6 +99,7 @@ void    remove_out_redir(t_list *list)
 	{
 		if ((is_redir((char *)tmp->content) == 4) && tmp->next && i == 0)
 		{
+			printf("here\n");
 			redir_norm1(tmp);
 			i = 1;
 			break ;

@@ -19,7 +19,6 @@ char	*get_env(char *key, t_list *env)
 	char	*tab;
 
 	tmp = env;
-	ft_print_list(env);
 	len = ft_strlen(key);
 	while (tmp)
 	{
@@ -64,8 +63,7 @@ void get_cmd_size(t_list *list, t_data *data)
     data->cmd_size = 0;
     while (tmp)
     {
-    	list = list->next;
-        tmp = list;
+        tmp = tmp->next;
         data->cmd_size++;
     }
 }
@@ -91,6 +89,26 @@ void	get_cmd_from_list(t_list *list, t_data *data, t_cmd *cmd)
 	cmd->args[i] = NULL;
 }
 
+char	**lst_to_tab(t_list *list, t_data *data)
+{
+	t_list	*tmp;
+	char	**tab;
+	int		i;
+
+	tmp = list;
+	get_cmd_size(data->list, data);
+	tab = malloc(sizeof(char *) * data->cmd_size + 1);
+	i = 0;
+	while (tmp)
+	{
+		tab[i] = ft_strdup((char *)tmp->content);
+		tmp = tmp->next;
+		i++;
+	}
+	tab[i] = NULL;
+	return (tab);
+}
+
 char	**extract_cmd(char **cmd, t_data *data)
 {
 	int	i;
@@ -100,9 +118,16 @@ char	**extract_cmd(char **cmd, t_data *data)
 	// function that malloc ok
 	final_cmd = malloc(sizeof(char *) * 500);
 	i = 0;
-	(void)data;
 	while (cmd[j] && ft_strcmp(cmd[j], "|") != 0)
 	{
+		if (!ft_strcmp(cmd[j], ">"))
+		{
+			data->fd_out = open(cmd[j + 1], O_WRONLY | O_CREAT | O_NOCTTY | \
+			O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+			j = j + 2;
+			if (!cmd[j] || !ft_strcmp(cmd[j], "|"))
+				break ;
+		}
 		final_cmd[i] = ft_strdup(cmd[j]);
 		i++;
 		j++;

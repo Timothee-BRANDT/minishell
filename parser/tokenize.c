@@ -76,6 +76,8 @@ int	get_first_redir_out(t_list *list, t_data *data)
 {
 	t_list *tmp;
 
+	if (!list)
+		return (0);
 	tmp = list;
 	while (tmp && tmp->next)
 	{
@@ -126,8 +128,6 @@ int	analyzer(t_data *data, t_cmd *cmd)
 	get_cmd_count(data->list, data);
 	if (check_in_redirection(data->list, data))
 		return (open_error(data->infile, data->outfile));
-	if (get_first_redirection(data->list, data))
-		check_out_redirection(data->list, data);
 	start_exec(cmd, data);
 	return (0);
 }
