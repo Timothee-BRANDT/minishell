@@ -117,7 +117,6 @@ void	built_in_tokenisation(t_list *list)
 	}
 }
 
-
 int	analyzer(t_data *data, t_cmd *cmd)
 {
 	if (get_redir_file(data->list, data))

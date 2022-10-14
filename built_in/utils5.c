@@ -125,6 +125,12 @@ char	**extract_cmd(char **cmd, t_data *data)
 			data->fd_out = open(cmd[j + 1], O_WRONLY | O_CREAT | O_NOCTTY | \
 			O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 			j = j + 2;
+			while (cmd[j] && !ft_strcmp(cmd[j], ">"))
+			{
+				data->fd_out = open(cmd[j + 1], O_WRONLY | O_CREAT | O_NOCTTY | \
+				O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+				j = j + 2;
+			}
 			if (!cmd[j] || !ft_strcmp(cmd[j], "|"))
 				break ;
 		}

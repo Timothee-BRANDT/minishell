@@ -101,7 +101,6 @@ void	redir_fd_out(t_data *data)
 			O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 			free(data->outfile);
 			data->outfile = NULL;
-			//remove_out_redir(data->list);
 			get_first_redir_out(data->list, data);
 			i++;
 		}
