@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 19:34:14 by mmatthie          #+#    #+#             */
-/*   Updated: 2022/10/13 13:34:59 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/10/14 14:32:18 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ typedef struct s_data
 	int		fdd;
 	int		tmp_in;
 	int		tmp_out;
+	int		out_before_pipe;
 	int		first_redir_check;
 	int		first_redir_check_bis;
 	char	*first_outfile;
@@ -169,6 +170,7 @@ int		wait_my_childs(t_data *data);
 char	*get_correct_cmd(char **paths, char **cmds);
 char	**get_all_path(t_data *data);
 char 	**get_last_cmd(char **tab);
+void	extract_cmd_norm(int *j, char **cmd, t_data *data);
 
 
 //export.c

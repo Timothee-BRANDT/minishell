@@ -26,11 +26,10 @@ void	create_pipe(t_data *data)
 	int pipe_fd[2];
 
 	pipe(pipe_fd);
-	if (data->first_redir_check == 1)
+	if (data->out_before_pipe == 1)
 	{
 		dup2(data->fd_out, 1);
 		close(data->fd_out);
-		data->first_redir_check = 0;
 	}
 	else
 		data->fd_out = pipe_fd[1];
@@ -93,7 +92,7 @@ void	redir_fd_out(t_data *data)
 	redir_count = get_redir_count(data->list);
 	i = 0;
 	get_first_redir_out(data->list, data);
-	if (data->outfile)	
+	if (data->outfile)
 	{
 		while (i < redir_count)
 		{

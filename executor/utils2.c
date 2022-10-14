@@ -1,33 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils5.c                                           :+:      :+:    :+:   */
+/*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/27 11:23:18 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/09/28 10:01:36by tbrandt          ###   ########.fr       */
+/*   Created: 2022/10/14 13:01:36 by tbrandt           #+#    #+#             */
+/*   Updated: 2022/10/14 14:41:10 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	*get_env(char *key, t_list *env)
+void    extract_cmd_norm(int *k, char **cmd, t_data *data)
 {
-	t_list	*tmp;
-	int		len;
-	char	*tab;
-
-	tmp = env;
-	len = ft_strlen(key);
-	while (tmp)
+	data->fd_out = open(cmd[*k + 1], O_WRONLY | O_CREAT | O_NOCTTY | \
+	O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+	*k = *k + 2;
+	while (cmd[*k] && !ft_strcmp(cmd[*k], ">"))
 	{
-		if (!ft_strncmp((char *)tmp->content, key, len))
-		{
-			tab = ft_get_value((char *)tmp->content);
-			return (tab);
-		}
-		tmp = tmp->next;
-	}
-	return (NULL);
+		data->fd_out = open(cmd[*k + 1], O_WRONLY | O_CREAT | O_NOCTTY | \
+		O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+		*k = *k + 2;
+    }
 }
