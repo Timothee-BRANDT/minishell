@@ -73,12 +73,12 @@ int	start_exec(t_cmd *cmd, t_data *data)
 	i = -1;
 	while (++i < data->cmd_count)
 	{
+    	get_cmd_from_list(data->list, data, cmd);
+		cmds = extract_cmd(cmd->args, data);
 		if (i == data->cmd_count - 1)
 			redir_fd_out(data);
 		else
 			create_pipe(data);
-    	get_cmd_from_list(data->list, data, cmd);
-		cmds = extract_cmd(cmd->args, data);
 		pid = fork();
 		if (pid == 0)
 			dup_child_exec(cmds, data);

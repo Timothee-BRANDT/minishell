@@ -82,10 +82,7 @@ int	get_first_redir_out(t_list *list, t_data *data)
 	while (tmp && tmp->next)
 	{
 		if (!ft_strcmp((char *)tmp->content, ">"))
-		{
 			data->outfile = ft_strdup((char *)tmp->next->content);
-			break ;
-		}
 		tmp = tmp->next;
 	}
 	return (0);	

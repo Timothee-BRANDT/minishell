@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 19:34:14 by mmatthie          #+#    #+#             */
-/*   Updated: 2022/10/14 14:32:18 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/10/14 16:01:12 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,8 @@ typedef struct s_data
 	int		tmp_in;
 	int		tmp_out;
 	int		out_before_pipe;
-	int		first_redir_check;
-	int		first_redir_check_bis;
+	int		last_redir;
+	int		last_cmd;
 	char	*first_outfile;
 	char	*infile;
 	char	*outfile;

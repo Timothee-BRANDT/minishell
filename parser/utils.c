@@ -30,6 +30,7 @@ void	create_pipe(t_data *data)
 	{
 		dup2(data->fd_out, 1);
 		close(data->fd_out);
+		close(pipe_fd[1]);
 	}
 	else
 		data->fd_out = pipe_fd[1];
@@ -92,7 +93,7 @@ void	redir_fd_out(t_data *data)
 	redir_count = get_redir_count(data->list);
 	i = 0;
 	get_first_redir_out(data->list, data);
-	if (data->outfile)
+	if (data->outfile && data->out_before_pipe == 0)
 	{
 		while (i < redir_count)
 		{
@@ -104,6 +105,15 @@ void	redir_fd_out(t_data *data)
 			i++;
 		}
 	}
+	else if (data->last_cmd)
+	{
+		dprintf(data->tmp_out, "DUP LAST REDIR\n");
+		data->last_cmd = 0;
+		data->fd_out = dup(data->last_redir);
+	}
 	else
+	{
 		data->fd_out = dup(data->tmp_out);
+		data->out_before_pipe = 0;
+	}
 }

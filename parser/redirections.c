@@ -78,7 +78,7 @@ int	check_in_redirection(t_list *list, t_data *data)
 	return (0);
 }*/
 
-int get_first_redirection_before_pipe(t_data *data)
+/*int get_first_redirection_before_pipe(t_data *data)
 {
 	char	**tab;
 	int		i;
@@ -118,7 +118,7 @@ int	check_out_redirection_before_pipe(t_list *list, t_data *data)
 		tmp = tmp->next;
 	}
 	return (0);
-}
+}*/
 
 int	redirect_in(t_data *data)
 {
@@ -126,7 +126,6 @@ int	redirect_in(t_data *data)
 	if (data->infile)
 	{
 		data->fd_in = open(data->infile, O_RDONLY);
-		printf("infile: %s\n", data->infile);
 		free(data->infile);
 		data->infile = NULL;
 		if (data->fd_in == -1)
