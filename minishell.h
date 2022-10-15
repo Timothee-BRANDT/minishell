@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 19:34:14 by mmatthie          #+#    #+#             */
-/*   Updated: 2022/10/14 16:01:12 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/10/15 16:39:02 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,7 +170,7 @@ int		wait_my_childs(t_data *data);
 char	*get_correct_cmd(char **paths, char **cmds);
 char	**get_all_path(t_data *data);
 char 	**get_last_cmd(char **tab);
-void	extract_cmd_norm(int *j, char **cmd, t_data *data);
+void	redir_out_manager(int *j, char **cmd, t_data *data);
 
 
 //export.c

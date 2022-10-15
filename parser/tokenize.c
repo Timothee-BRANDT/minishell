@@ -51,8 +51,8 @@ int	get_redir_file(t_list *list, t_data *data)
 			return (1);
 		if (!ft_strcmp((char *)tmp->content, "<<"))
 			data->delimitor = ft_strdup((char *)tmp->next->content);
-		if (!ft_strcmp((char *)tmp->content, ">>"))
-			data->append = 1;
+	//	if (!ft_strcmp((char *)tmp->content, ">>"))
+	//		data->append = 1;
 		tmp = tmp->next;
 	}
 	return (0);

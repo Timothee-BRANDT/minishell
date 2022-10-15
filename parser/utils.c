@@ -87,12 +87,20 @@ int	wait_my_childs(t_data *data)
 
 void	get_fd_and_free(t_list *list, t_data *data)
 {
-	data->fd_out = open(data->outfile, O_WRONLY | O_CREAT | O_NOCTTY | \
-	O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
-	free(data->outfile);
-	data->outfile = NULL;
-	get_first_redir_out(list, data);
-
+	if (data->append == 1)
+	{
+		data->fd_out = open(data->outfile, O_WRONLY | O_CREAT | O_APPEND | O_NOCTTY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+		free(data->outfile);
+		data->outfile = NULL;
+		get_first_redir_out(list, data);
+	}
+	else
+	{
+		data->fd_out = open(data->outfile, O_WRONLY | O_CREAT | O_NOCTTY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+		free(data->outfile);
+		data->outfile = NULL;
+		get_first_redir_out(list, data);
+	}
 }
 
 void	redir_fd_out(t_data *data)
@@ -112,6 +120,8 @@ void	redir_fd_out(t_data *data)
 	{
 		data->last_cmd = 0;
 		data->fd_out = dup(data->last_redir);
+		//close last_redir ?
+		//close(data->last_redir);
 	}
 	else
 	{

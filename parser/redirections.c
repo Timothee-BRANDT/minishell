@@ -126,6 +126,7 @@ int	redirect_in(t_data *data)
 	if (data->infile)
 	{
 		data->fd_in = open(data->infile, O_RDONLY);
+		dprintf(data->tmp_out, "infile: %s\n", data->infile);
 		free(data->infile);
 		data->infile = NULL;
 		if (data->fd_in == -1)
