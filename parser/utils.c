@@ -85,29 +85,31 @@ int	wait_my_childs(t_data *data)
 	return (0);
 }
 
+void	get_fd_and_free(t_list *list, t_data *data)
+{
+	data->fd_out = open(data->outfile, O_WRONLY | O_CREAT | O_NOCTTY | \
+	O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+	free(data->outfile);
+	data->outfile = NULL;
+	get_first_redir_out(list, data);
+
+}
+
 void	redir_fd_out(t_data *data)
 {
 	int	redir_count;
 	int	i;
 
 	redir_count = get_redir_count(data->list);
-	i = 0;
+	i = -1;
 	get_first_redir_out(data->list, data);
 	if (data->outfile && data->out_before_pipe == 0)
 	{
-		while (i < redir_count)
-		{
-			data->fd_out = open(data->outfile, O_WRONLY | O_CREAT | O_NOCTTY | \
-			O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
-			free(data->outfile);
-			data->outfile = NULL;
-			get_first_redir_out(data->list, data);
-			i++;
-		}
+		while (++i < redir_count)
+			get_fd_and_free(data->list, data);
 	}
 	else if (data->last_cmd)
 	{
-		dprintf(data->tmp_out, "DUP LAST REDIR\n");
 		data->last_cmd = 0;
 		data->fd_out = dup(data->last_redir);
 	}

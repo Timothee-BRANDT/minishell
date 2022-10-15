@@ -66,7 +66,11 @@ int	get_first_redir_in(t_list *list, t_data *data)
 	while (tmp && tmp->next)
 	{
 		if (!ft_strcmp((char *)tmp->content, "<"))
+		{
+			if (data->infile)
+				free(data->infile);
 			data->infile = ft_strdup((char *)tmp->next->content);
+		}
 		tmp = tmp->next;
 	}
 	return (0);	
@@ -82,7 +86,11 @@ int	get_first_redir_out(t_list *list, t_data *data)
 	while (tmp && tmp->next)
 	{
 		if (!ft_strcmp((char *)tmp->content, ">"))
+		{
+			if (data->outfile)
+				free(data->outfile);
 			data->outfile = ft_strdup((char *)tmp->next->content);
+		}
 		tmp = tmp->next;
 	}
 	return (0);	
