@@ -122,6 +122,28 @@ void	built_in_tokenisation(t_list *list)
 	}
 }
 
+int	check_all_infile(t_list *list, t_data *data)
+{
+	t_list *tmp;
+
+	tmp = list;
+	while (tmp && tmp->next)
+	{
+		if (!ft_strcmp((char *)tmp->content, "<"))
+		{
+			data->check_fd = open((char *)tmp->next->content, O_RDONLY);
+			close(data->check_fd);
+			if (data->check_fd == - 1)
+			{
+				data->check_fd = 0;
+				return (1);
+			}
+		}
+		tmp = tmp->next;
+	}
+	return (0);
+}
+
 int	analyzer(t_data *data, t_cmd *cmd)
 {
 	if (get_redir_file(data->list, data))
@@ -130,6 +152,8 @@ int	analyzer(t_data *data, t_cmd *cmd)
 	built_in_tokenisation(data->list);
 	get_cmd_size(data->list, data);
 	get_cmd_count(data->list, data);
+	if (check_all_infile(data->list, data))
+		return (on_error("Infile not found\n", 1));
 	if (check_in_redirection(data->list, data))
 		return (open_error(data->infile, data->outfile));
 	start_exec(cmd, data);
