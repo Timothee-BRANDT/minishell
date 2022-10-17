@@ -12,15 +12,6 @@
 
 #include "../minishell.h"
 
-
-/*void	free_redir(t_list *redir, t_list *redir_arg)
-{
-	free(redir->content);		
-	free(redir_arg->content);
-	free(redir);
-	free(redir_arg);
-}*/
-
 void	redir_norm(t_list *tmp)
 {
 	t_list *redir;
@@ -87,48 +78,3 @@ void	remove_in_redir(t_list *list)
 		tmp = tmp->next;
     }
 }
-
-void	remove_out_redir(t_list *list)
-{
-	t_list	*tmp;
-	int i;
-
-	tmp = list;
-	i = 0;
-	while(tmp && tmp->next)
-	{
-		if ((is_redir((char *)tmp->content) == 4) && tmp->next && i == 0)
-		{
-			printf("here\n");
-			redir_norm1(tmp);
-			i = 1;
-			break ;
-		}
-		else if ((is_redir((char *)tmp->next->content) == 4) && tmp->next->next)
-		{
-			redir_norm(tmp);
-			break ;
-		}
-		tmp = tmp->next;
-	}
-}
-
-/*void	*remove_args(t_list *list, t_data *data)
-{
-	t_list	*tmp;
-
-	(void)data;
-	data->save_list = list;
-	tmp = list;
-	while (tmp && tmp->next)
-	{
-		if (is_pipe((char *)tmp->next->content))
-		{
-			tmp = tmp->next->next;
-			break ;
-		}
-		if (tmp->next == NULL)
-			break ;
-		tmp = tmp->next;
-	}
-}*/

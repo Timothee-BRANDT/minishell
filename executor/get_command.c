@@ -1,16 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   get_command.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 12:59:25 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/10/16 14:51:55 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/10/17 11:36:39 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+int	skip_hd(char **cmd, int *k)
+{
+	if (!ft_strcmp(cmd[*k], "<<"))	
+		*k = *k + 2;
+	while(cmd[*k] && !ft_strcmp(cmd[*k], "<<"))
+		*k = *k + 2;
+	if (!cmd[*k])
+		return (1);
+	return (0);
+}
 
 char	**extract_cmd(char **cmd, t_data *data)
 {
@@ -24,6 +35,8 @@ char	**extract_cmd(char **cmd, t_data *data)
 	i = 0;
 	while (cmd[j] && ft_strcmp(cmd[j], "|") != 0)
 	{
+		if (skip_hd(cmd, k))
+			break;
 		if (!ft_strcmp(cmd[j], ">") || !ft_strcmp(cmd[j], ">>"))
 			redir_out_manager(k, cmd, data);
 		if (!cmd[j] || !ft_strcmp(cmd[j], "|"))
@@ -39,7 +52,6 @@ char	**extract_cmd(char **cmd, t_data *data)
 	return (final_cmd);
 }
 
-// this function count the number of commands and the number of pipes in the buffer;
 void	get_cmd_count(t_list *list, t_data *data)
 {
 	t_list	*tmp;
@@ -58,10 +70,6 @@ void	get_cmd_count(t_list *list, t_data *data)
 	}
 }
 
-// quand je recupere le char ** de ma liste pour l'envoyer a execve, j'aurai deja retirer les redirections
-// this function returns the size of the first commands before the pipe
-// ls -la | grep yo
-// cmd_size = 2;
 void get_cmd_size(t_list *list, t_data *data)
 {
     t_list *tmp;
@@ -75,9 +83,6 @@ void get_cmd_size(t_list *list, t_data *data)
     }
 }
 
-// function return first command before pipe in a char **, need to pass it to execve
-// ls -la | grep yo
-// returns tab[0] = ls; tab[1] = -la; tab[2] = NULL
 void	get_cmd_from_list(t_list *list, t_data *data, t_cmd *cmd)
 {
 	t_list	*tmp;

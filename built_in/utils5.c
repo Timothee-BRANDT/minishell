@@ -31,3 +31,41 @@ char	*get_env(char *key, t_list *env)
 	}
 	return (NULL);
 }
+
+void	free_list(void *ptr)
+{
+	t_list	*list;
+
+	list = ptr;
+	free(list);
+}
+
+void	print_tab(char **tab)
+{
+	int	i;
+
+	i = 0;
+	while (tab[i])
+	{
+		printf("tab[i]: %s\n", tab[i]);
+		i++;
+	}
+}
+
+void	free_2_tab(char **tab1, char **tab2)
+{
+	free_tab(tab1);
+	free_tab(tab2);
+}
+
+void	ft_print_tab(char **tab)
+{
+	int	i;
+
+	i = 0;
+	while (tab[i])
+	{
+		printf("tab[i] : %s\n", tab[i]);
+		i++;
+	}
+}

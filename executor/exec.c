@@ -52,17 +52,6 @@ void	exec_command(char **cmds, t_data	*data)
 		write(2, "Command execution failed\n", 25);
 }
 
-void	ft_print_tab(char **tab)
-{
-	int	i;
-
-	i = 0;
-	while (tab[i])
-	{
-		printf("tab[i] : %s\n", tab[i]);
-		i++;
-	}
-}
 
 int	start_exec(t_cmd *cmd, t_data *data)
 {

@@ -34,7 +34,7 @@ void	redir_tokenisation(t_list *list)
 	}
 }
 
-int	get_redir_file(t_list *list, t_data *data)
+int	token_error(t_list *list)
 {
 	t_list *tmp;
 
@@ -49,51 +49,9 @@ int	get_redir_file(t_list *list, t_data *data)
 			return (1);
 		if (is_token((char *)tmp->content) && is_token((char *)tmp->next->content))
 			return (1);
-		if (!ft_strcmp((char *)tmp->content, "<<"))
-			data->delimitor = ft_strdup((char *)tmp->next->content);
-	//	if (!ft_strcmp((char *)tmp->content, ">>"))
-	//		data->append = 1;
 		tmp = tmp->next;
 	}
 	return (0);
-}
-
-int	get_first_redir_in(t_list *list, t_data *data)
-{
-	t_list *tmp;
-
-	tmp = list;
-	while (tmp && tmp->next)
-	{
-		if (!ft_strcmp((char *)tmp->content, "<"))
-		{
-			if (data->infile)
-				free(data->infile);
-			data->infile = ft_strdup((char *)tmp->next->content);
-		}
-		tmp = tmp->next;
-	}
-	return (0);	
-}
-
-int	get_first_redir_out(t_list *list, t_data *data)
-{
-	t_list *tmp;
-
-	if (!list)
-		return (0);
-	tmp = list;
-	while (tmp && tmp->next)
-	{
-		if (!ft_strcmp((char *)tmp->content, ">"))
-		{
-			if (data->outfile)
-				free(data->outfile);
-			data->outfile = ft_strdup((char *)tmp->next->content);
-		}
-		tmp = tmp->next;
-	}
-	return (0);	
 }
 
 void	built_in_tokenisation(t_list *list)
@@ -122,31 +80,9 @@ void	built_in_tokenisation(t_list *list)
 	}
 }
 
-int	check_all_infile(t_list *list, t_data *data)
-{
-	t_list *tmp;
-
-	tmp = list;
-	while (tmp && tmp->next)
-	{
-		if (!ft_strcmp((char *)tmp->content, "<"))
-		{
-			data->check_fd = open((char *)tmp->next->content, O_RDONLY);
-			close(data->check_fd);
-			if (data->check_fd == - 1)
-			{
-				data->check_fd = 0;
-				return (1);
-			}
-		}
-		tmp = tmp->next;
-	}
-	return (0);
-}
-
 int	analyzer(t_data *data, t_cmd *cmd)
 {
-	if (get_redir_file(data->list, data))
+	if (token_error(data->list))
 		return (on_error("Minishell: syntax error near unexpected token\n", 1));
 	redir_tokenisation(data->list);
 	built_in_tokenisation(data->list);
@@ -156,6 +92,8 @@ int	analyzer(t_data *data, t_cmd *cmd)
 		return (on_error("Infile not found\n", 1));
 	if (check_in_redirection(data->list, data))
 		return (open_error(data->infile, data->outfile));
+	if (count_heredoc(data->list))
+		start_heredoc(data);
 	start_exec(cmd, data);
 	return (0);
 }
