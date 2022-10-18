@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 19:34:14 by mmatthie          #+#    #+#             */
-/*   Updated: 2022/10/17 11:31:53 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/10/18 18:21:27 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,11 @@ typedef struct s_data
 	int		tmp_in;
 	int		tmp_out;
 	int		out_before_pipe;
+	int		in_before_pipe;
 	int		last_redir;
 	int		last_cmd;
 	int		check_fd;
+	int		check_fd_in;
 	char	*first_outfile;
 	char	*infile;
 	char	*outfile;
@@ -163,6 +165,8 @@ int		get_redir_count(t_list *list);
 int		start_heredoc(t_data *data);
 int		count_heredoc(t_list *list);
 char	**stock_delimitors(t_list *list, t_data *data);
+void	redir_out_manager(int *j, char **cmd, t_data *data);
+int		redir_in_manager(int *k, char **cmd, t_data *data);
 
 // executor
 void    exec_command(char **cmds, t_data *data);
@@ -177,7 +181,6 @@ int		wait_my_childs(t_data *data);
 char	*get_correct_cmd(char **paths, char **cmds);
 char	**get_all_path(t_data *data);
 char 	**get_last_cmd(char **tab);
-void	redir_out_manager(int *j, char **cmd, t_data *data);
 
 
 //export.c

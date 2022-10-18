@@ -37,8 +37,6 @@ int	check_in_redirection(t_list *list, t_data *data)
 	tmp = list;
 	redir_count = count_redir_in(list);
 	j = -1;
-	data->tmp_in = dup(0);
-	data->tmp_out = dup(1);
 	get_first_redir_in(list, data);
 	while (tmp && tmp->next)
 	{

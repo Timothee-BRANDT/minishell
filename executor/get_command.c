@@ -6,37 +6,28 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 12:59:25 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/10/17 11:36:39 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/10/18 13:49:08 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	skip_hd(char **cmd, int *k)
-{
-	if (!ft_strcmp(cmd[*k], "<<"))	
-		*k = *k + 2;
-	while(cmd[*k] && !ft_strcmp(cmd[*k], "<<"))
-		*k = *k + 2;
-	if (!cmd[*k])
-		return (1);
-	return (0);
-}
-
 char	**extract_cmd(char **cmd, t_data *data)
 {
-	int	i;
 	static	int	j = 0;
-	int	*k;
-	char **final_cmd;
+	char		**final_cmd;
+	int			i;
+	int			*k;
 
 	final_cmd = malloc(sizeof(char *) * 500);
 	k = &j;
 	i = 0;
 	while (cmd[j] && ft_strcmp(cmd[j], "|") != 0)
 	{
-		if (skip_hd(cmd, k))
-			break;
+		if (!ft_strcmp(cmd[j], "<") || !ft_strcmp(cmd[j], "<<"))
+			redir_in_manager(k, cmd, data);
+		if (!cmd[j] || !ft_strcmp(cmd[j], "|"))
+			break ;
 		if (!ft_strcmp(cmd[j], ">") || !ft_strcmp(cmd[j], ">>"))
 			redir_out_manager(k, cmd, data);
 		if (!cmd[j] || !ft_strcmp(cmd[j], "|"))

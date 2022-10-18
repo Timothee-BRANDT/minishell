@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 08:16:10 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/10/16 15:50:25 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/10/18 18:29:17 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,14 @@ void	create_pipe(t_data *data)
 	}
 	else
 		data->fd_out = pipe_fd[1];
-	data->fd_in = pipe_fd[0];
+	if (data->check_fd_in == 0)
+		data->fd_in = pipe_fd[0];
+	data->check_fd_in = 0;
 }
 
 void    dup_child_exec(char **cmds, t_data *data)
 {
-	dup2(data->fdd, 0);
+	dup2(data->fd_in , 0);
 	dup2(data->fd_out, 1);
 	exec_command(cmds, data);
 	exit(0);
@@ -39,7 +41,7 @@ void    dup_child_exec(char **cmds, t_data *data)
 void	dup_parent(t_data *data)
 {
 	close(data->fd_out);
-	data->fdd = data->fd_in;
+//	data->fdd = data->fd_in;
 }
 
 

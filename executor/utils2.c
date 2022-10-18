@@ -50,8 +50,8 @@ void    redir_out_manager(int *k, char **cmd, t_data *data)
 		data->append = 1;
 	if (!cmd[*k] && *k == ft_strlen2d(cmd))
 	{
-		dprintf(data->tmp_out, "open last_redir\n");
 		data->last_cmd = 1;
+		dprintf(data->tmp_out, "redir last command\n");
 		append_or_not(k, cmd, data, 1);
 	}
 	while (cmd[*k] && (!ft_strcmp(cmd[*k], ">") || !ft_strcmp(cmd[*k], ">>")))
@@ -63,4 +63,28 @@ void    redir_out_manager(int *k, char **cmd, t_data *data)
 		else
 			data->append = 0;
     }
+}
+
+int	redir_in_manager(int	*k, char **cmd, t_data *data)
+{
+	data->check_fd_in = 1;
+	if (!ft_strcmp(cmd[*k], "<"))
+	{
+		data->fd_in = open(cmd[*k + 1], O_RDONLY);
+		//dprintf(data->tmp_out, "file opened: %s, the FD is :%d\n", cmd[*k + 1], data->fd_in);
+		*k = *k +2;
+	}
+	// faire une fonction qui check si je trouve une pipe apres la redirection
+	if (cmd[*k] && !ft_strcmp(cmd[*k], "|"))
+		data->in_before_pipe = 1;
+	while (cmd[*k] && (!ft_strcmp(cmd[*k], "<")))
+	{
+		data->fd_in = open(cmd[*k + 1], O_RDONLY);
+		//dprintf(data->tmp_out, "file opened: %s, the FD is :%d\n", cmd[*k + 1], data->fd_in);
+		//dprintf(data->tmp_out, "dup fd_in to stdin\n");
+		*k = *k +2;
+	}
+	/*if (!ft_strcmp(cmd[*k], "<<"))
+		redir in heredocfile*/
+	return (0);
 }

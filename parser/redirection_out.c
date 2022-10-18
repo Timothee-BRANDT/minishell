@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   redir_utils.c                                      :+:      :+:    :+:   */
+/*   redirection_out.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 15:39:09 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/10/16 15:49:45 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/10/18 14:28:13 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	get_redir_count(t_list *list)
 	redir_out_count = 0;
 	while (tmp && tmp->next)
 	{
-		if (ft_strcmp((char *)tmp->content, ">") == 0)
+		if (!ft_strcmp((char *)tmp->content, ">") || !ft_strcmp((char *)tmp->content, ">"))
 			redir_out_count++;
 		tmp = tmp->next;
 	}
