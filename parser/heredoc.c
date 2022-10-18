@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 09:48:14 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/10/17 11:20:20 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/10/18 11:38:03 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,26 +52,50 @@ char	**stock_delimitors(t_list *list, t_data *data)
 	return (tab);
 }
 
+int	*create_files(t_list *list)
+{
+	int	i;
+	int	j;
+	int	*fd;
+	
+	i = 1;
+	j = 0;
+	fd = malloc(sizeof(int) * count_heredoc(list));
+	while (i < count_heredoc(list) + 1)
+	{
+		fd[j] = open(ft_itoa(i), O_RDONLY | O_WRONLY | O_CREAT, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+		i++;
+		j++;
+	}
+	return (fd);
+}
+
+// when should i free my fd tab ???
 int	start_heredoc(t_data *data)
 {
 	char	**tab;
 	char	*str;
-	int		fd;
+	int		*fd;
 	int		i;
+	int		j;
 
-	i = 0;
 	tab = stock_delimitors(data->list, data);
-	fd = open(".h_doc", O_RDONLY | O_WRONLY | O_CREAT, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
-	if (fd == -1)
-		return (on_error("Open heredocfile failed\n", 1));
-	while (1)
+	fd = create_files(data->list);
+	i = 0;
+	j = 0;
+	while (i < count_heredoc(data->list))
 	{
-		str = readline("> ");
-		ft_putstr_fd(str, fd);
-		if (!ft_strcmp(str, tab[i]))
-			i++;
+		while (1)
+		{
+			str = readline("> ");
+			if (!ft_strcmp(str, tab[i]))
+				break;
+			ft_putstr_fd(str, fd[j]);
+		}
 		if (i == ft_strlen2d(tab))
 			break;
+		j++;
+		i++;
 	}
 	return (0);
 }
