@@ -6,7 +6,7 @@
 #    By: mmatthie <mmatthie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/09 14:04:53 by tbrandt           #+#    #+#              #
-#    Updated: 2022/06/23 17:20:03 by mmatthie         ###   ########.fr        #
+#    Updated: 2022/10/10 09:49:43 by mmatthie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,16 +14,18 @@ CC		=	gcc
 CFLAGS	=	-Wall -Wextra -Werror -g #-fsanitize=address
 NAME	=	minishell
 
-SRC		=	main.c				\
-			parsing/utils.c		\
-			parsing/utils2.c	\
-			parsing/check.c		\
-			parsing/check2.c	\
-			parsing/expend.c	\
-			built_in/export.c	\
-			built_in/utils.c	\
-			built_in/utils2.c	\
-			built_in/utils3.c	\
+SRC		=	main.c					\
+			parsing/add_space.c		\
+			parsing/get_word.c		\
+			parsing/word_in_list.c	\
+			parsing/join_and_free.c		\
+			parsing/expend.c		\
+			parsing/parsing2.c		\
+			parsing/parsing.c		\
+			built_in/export.c		\
+			built_in/utils.c		\
+			built_in/utils2.c		\
+			built_in/utils3.c		\
 
 OBJ		=	$(SRC:%.c=%.o)
 

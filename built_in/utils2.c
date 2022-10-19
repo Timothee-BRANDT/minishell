@@ -94,8 +94,10 @@ void	found_and_add(t_list **export, char *name, t_data *data)
 			data->get_value_name = ft_get_value(name);
 			data->string = ft_strjoin_export \
 			(data->get_key_name, data->get_value_export);
+			//free_two_string(data->get_key_name, data->get_key_export);
 			data->result = ft_strjoin(data->string, data->get_value_name);
 			free_all(data);
+			//free_three_string(data->get_value_export, data->get_value_name, data->string, data->result);
 			data->tmp = ptr->next->next;
 			free(ptr->next);
 			ptr->next = ft_lstnew(data->result);

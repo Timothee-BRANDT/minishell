@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmatthie <mmatthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 17:12:32 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/06/24 18:15:39 by mmatthie         ###   ########.fr       */
+/*   Updated: 2022/10/13 13:41:06by mmatthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,14 @@
 
 void	ft_print_list(t_list	*lst)
 {
+	int	i;
+
+	i = 0;
 	if (!lst)
 		printf("Empty List\n");
 	while (lst != NULL)
 	{
-		printf("List:%s\n", (char *)(lst->content));
+		printf("List %d:%s\n", i += 1, (char *)(lst->content));
 		lst = lst->next;
 	}
 }
@@ -28,12 +31,16 @@ char	*ft_strncpy(char *dest, char *src, unsigned int n)
 	unsigned int	i;
 
 	i = 0;
-	while ((src[i] != '\0') && (i < n))
+	while (src && src[i] && (i < n))
 	{
 		dest[i] = src[i];
 		i++;
 	}
-	dest[i] = '\0';
+	while (i < n)
+	{
+		dest[i] = '\0';
+		i++;
+	}
 	return (dest);
 }
 
@@ -74,28 +81,8 @@ int	ft_isspace(int c)
 	return (0);
 }
 
-int	get_quotes(char	*buffer, t_data	*data, int count)
+void	free_it(char	*str)
 {
-	int	i;
-	int	j;
-
-	j = 0;
-	data->token = buffer[count];
-	i = count;
-	count++;
-	while (buffer[++i] != data->token && buffer[i] != '\0')
-		j++;
-	data->first = ft_calloc(1, j);
-	data->first = ft_strncpy(data->first, &buffer[count], j);
-	i++;
-	if (buffer[i] != ' ' || buffer[i] != '\0')
-		count = get_join(buffer, count, i, data);
-	else
-	{
-		data->get_word = ft_calloc(1, ft_strlen(data->first));
-		data->get_word = ft_strncpy \
-		(data->get_word, data->first, ft_strlen(data->first));
-		count = i;
-	}
-	return (count);
+	free (str);
+	//str = NULL;
 }

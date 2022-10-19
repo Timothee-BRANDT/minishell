@@ -6,7 +6,7 @@
 /*   By: mmatthie <mmatthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 19:34:14 by mmatthie          #+#    #+#             */
-/*   Updated: 2022/06/24 14:39:41 by mmatthie         ###   ########.fr       */
+/*   Updated: 2022/10/18 10:42:32 by mmatthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,36 +26,57 @@
 
 typedef struct s_data
 {
+	int		i_space;
+	int		j_space;
 	char	*first;
 	char	*second;
 	char	*join;
 	char	*buffer;
 	char	*get_word;
-	int		step;
 	int		count;
-	int		indicate;
 	int		token;
 	int		i;
 	int		check;
 	int		plus;
+	int		res_space;
+	int		index_space;
+	int		space_len;
+	int		indicate_expend;
+	int		indicate;
 	char	*str;
 	char	*string;
 	char	*get_key;
+	char	*expend;
+	char	*dollarplusquotes;
 	char	*result;
 	char	*get_key_export;
 	char	*get_key_name;
 	char	*get_value_export;
 	char	*get_value_name;
-	char	*get_str_env;
-	char	*get_env;
-	char	*add_space2buffer;
-	int		i_space;
-	int		j_space;
 	t_list	*env;
 	t_list	*export;
 	t_list	*tmp;
 	t_list	*cmd;
 }				t_data;
+
+int		first_expend(char	*str, int count, t_data	*data);
+void	print_it(char	*ptr);
+void	check_token(char	*buffer, int count, t_data	*data);
+int		get_second_simple(char	*str, int count, t_data	*data);
+int		get_second_double(char	*str, int count, t_data	*data);
+int		get_second_with_token(char	*str, int count, t_data	*data);
+int		get_second_without_token(char	*str, int count, t_data	*data);
+int		get_expend_with_token(char	*str, int j, int count, t_data	*data);
+char	*get_env(char *key, t_list *env);
+
+//add_space.c
+char	*ft_add_space(char	*buffer, t_data	*data);
+
+//parsing.c
+void	free_it(char	*str);
+
+//parsing2.c
+void	set_data(t_data	*data);
 
 //utils.c
 t_list	*get_in_list(char	*buffer, t_data	*data, t_list	*lst);
@@ -65,6 +86,8 @@ void	ft_print_list(t_list	*lst);
 int		check_quote(char *buffer);
 int		ft_isspace(int c);
 int		get_quotes(char	*buffer, t_data	*data, int count);
+int		get_double_quotes(char	*buffer, t_data	*data, int count);
+int		get_simple_quotes(char	*buffer, int count, t_data *data);
 void	ft_manage(void	*to_add);
 void	ft_free_list(t_list	**lst);
 
@@ -75,9 +98,8 @@ int		make_second(char	*buffer, t_data	*data, int count);
 t_list	*ft_list(t_list	*lst, t_data *data);
 t_list	*get_word_in_list(char	*buffer, t_data	*data);
 int		get_second_word(char	*buffer, int count, t_data	*data);
-char	*ft_join_free_ss(char *s1, char *s2);
 int		get_word(char	*buffer, t_data	*data, int count);
-int		get_join(char	*str, int count, int j, t_data	*data);
+int		get_join(char	*str, int j, t_data	*data);
 int		get_without_quotes(char	*buffer, t_data	*data, int count);
 
 //export.c
@@ -102,15 +124,15 @@ void	free_all(t_data *data);
 void	free_two_string(char *s1, char *s2);
 void	free_three_string(char *s1, char *s2, char *s3, char *s4);
 
+//expend.c
+int		make_expend(char	*str, int j, int content, t_data	*data);
+int		get_expend(char	*str, int j, int count, t_data	*data);
+void	expend_it(t_data	*data, char	*str, int j);
+int		fill_quotes(char *dest, char	*buffer, t_data	*data);
 
-//get_expend
+//join_and_free
+char	*ft_join_free_s2(char *s1, char *s2);
+char	*ft_join_free_s1(char *s1, char *s2);
+char	*ft_join_free_ss(char *s1, char *s2);
 
-int	get_expend(char	*str, int count, t_data	*data);
-int	get_double(char	*str, int count, t_data	*data);
-
-//utils2.c
-void	add_space(t_data	*data);
-int		ft_check_token(char	c);
-int		get_len4addspace(t_data	*data);
-int		skip_it(t_data	*data);
 #endif
