@@ -45,18 +45,22 @@ void    redir_out_manager(int *k, char **cmd, t_data *data)
 		data->append = 1;
 	append_or_not(k, cmd, data, 0);
 	*k = *k + 2;
-	if (cmd[*k] && cmd[*k][1] == '>')
-		data->append = 1;
 	if (!cmd[*k] && *k == ft_strlen2d(cmd))
 	{
 		data->last_cmd = 1;
-		dprintf(data->tmp_out, "redir last command\n");
 		append_or_not(k, cmd, data, 1);
 	}
+	if (cmd[*k] && cmd[*k][1] == '>')
+		data->append = 1;
 	while (cmd[*k] && (!ft_strcmp(cmd[*k], ">") || !ft_strcmp(cmd[*k], ">>")))
 	{
 		append_or_not(k, cmd, data, 0);
 		*k = *k + 2;
+		if (!cmd[*k] && *k == ft_strlen2d(cmd))
+		{
+			data->last_cmd = 1;
+			append_or_not(k, cmd, data, 1);
+		}
 		if (cmd[*k] && cmd[*k][1] == '>')
 			data->append = 1;
 		else

@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 15:39:09 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/10/21 10:00:01 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/10/21 11:27:27 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,14 +75,7 @@ void	redir_fd_out(t_data *data)
 	//int	redir_count;
 	//int	i;
 
-	//redir_count = get_redir_count(data->list);
-	//i = -1;
-	//get_first_redir_out(data->list, data);
-/*	if (data->outfile && data->out_before_pipe == 0)
-	{
-		while (++i < redir_count)
-			get_fd_and_free(data->list, data);
-	}*/
+	
 	if (data->last_cmd)
 	{
 		data->last_cmd = 0;
@@ -90,8 +83,8 @@ void	redir_fd_out(t_data *data)
 	}
 	else
 	{
+		dprintf(data->tmp_out, "RESTORE OUT TO TERMINAL\n");
 		data->fd_out = dup(data->tmp_out);
-		data->check_fd_out = 0;
 	}
 }
 
