@@ -1,17 +1,24 @@
-1
-2
-3
-4
-Makefile
-README.
-built_in
-executor
-lexer
-libft
-main.c
-main.o
-minishell
-minishell.h
-parser
-signals.c
-terminos.c
+/*   main.c                                             :+:      :+:    :+:   */
+/*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
+/*   Created: 2022/06/09 14:07:48 by tbrandt           #+#    #+#             */
+/*   Updated: 2022/10/21 09:52:08 by tbrandt          ###   ########.fr       */
+int	main(int ac, char	**av, char	**env)
+	t_data	*data;
+	(void) ac;
+	(void) av;
+	cmd = malloc(sizeof(t_cmd));
+	data = malloc(sizeof(t_data));
+	data->env = env_to_list(env);
+	data->export = env_to_list(env);
+		data->buffer = readline("Bibishell>$ ");
+		if (!check_quote(data->buffer))
+		    add_history(data->buffer);
+		    //free(data->buffer);
+		    ft_free_list(data->list);
+		data->list = get_word_in_list(data->buffer, data);
+		analyzer(data, cmd);
+		add_history(data->buffer);
+		free(data->buffer);
+		ft_lstclear(&data->list, &free_list);
+		//system("leaks minishell");
+	free(data->buffer);

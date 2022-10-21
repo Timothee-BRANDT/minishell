@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 15:39:09 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/10/21 11:27:27 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/10/21 12:19:57 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,20 +72,13 @@ int	get_redir_count(t_list *list)
 
 void	redir_fd_out(t_data *data)
 {
-	//int	redir_count;
-	//int	i;
-
-	
 	if (data->last_cmd)
 	{
 		data->last_cmd = 0;
 		data->fd_out = dup(data->last_redir);
 	}
 	else
-	{
-		dprintf(data->tmp_out, "RESTORE OUT TO TERMINAL\n");
 		data->fd_out = dup(data->tmp_out);
-	}
 }
 
 void	get_fd_and_free(t_list *list, t_data *data)

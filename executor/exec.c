@@ -75,9 +75,9 @@ int	start_exec(t_cmd *cmd, t_data *data)
 		else
 			dup_parent(data, data->cmd_count);
 		free_2_tab(cmd->args, cmds);
+		data->check_fd_out = 0;
+		data->check_fd_in = 0;
 	}
-	data->check_fd_out = 0;
-	data->check_fd_in = 0;
 	wait_my_childs(data);
 	restore_fd(data);
 	return (0);

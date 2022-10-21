@@ -17,31 +17,19 @@ void	create_pipe(t_data *data)
 	int pipe_fd[2];
 
 	pipe(pipe_fd);
-	/*if (data->out_before_pipe == 1)
-	{
-		data->out_before_pipe = 0;
-		dup2(data->fd_out, 1);
-		close(data->fd_out);
-		close(pipe_fd[1]);
-	}*/
-	//else
-		data->pipe_1 = pipe_fd[1]; // output
-	//if (data->check_fd_in == 0)
-		data->pipe_0 = pipe_fd[0]; // input
+	data->pipe_1 = pipe_fd[1]; // output
+	data->pipe_0 = pipe_fd[0]; // input
 }
 
 void    dup_child_exec(char **cmds, t_data *data, int cmd_count)
 {
 	if (data->check_fd_in == 1)
 	{
-		dprintf(data->tmp_out, "in child fd_in : %d\n", data->fd_in);
 		dup2(data->fd_in, 0);
 		close(data->fd_in);
 	}
 	if (data->check_fd_out == 1)
 	{
-		dprintf(data->tmp_out, "in child fd_out : %d\n", data->fd_out);
-		//close(data->pipe_0);
 		dup2(data->fd_out, 1);
 		close(data->fd_out);
 	}
@@ -57,16 +45,8 @@ void    dup_child_exec(char **cmds, t_data *data, int cmd_count)
 
 void	dup_parent(t_data *data, int cmd_count)
 {
-	/*if (data->check_fd_in == 1)
-	{
-		//close(data->pipe_1);
-		dup2(data->fd_in, 0);
-		close(data->fd_in);
-	}*/
 	if (cmd_count > 1)
 	{
-		dprintf(data->tmp_out, "MORE THAN 1 COMMAND\n");
-		//close(data->pipe_1);
 		dup2(data->pipe_0, 0);
 		close(data->pipe_0);
 	}

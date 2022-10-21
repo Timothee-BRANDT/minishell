@@ -1,47 +1,26 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/09 14:07:48 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/10/15 15:31:26 by tbrandt          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-#include "minishell.h"
-
-int	main(int ac, char	**av, char	**env)
-{
-	t_data	*data;
-	t_cmd	*cmd;
-
-	(void) ac;
-	(void) av;
-	cmd = malloc(sizeof(t_cmd));
-	data = malloc(sizeof(t_data));
-	data->env = env_to_list(env);
-	data->export = env_to_list(env);
-	while (1)
-	{
-		data->buffer = readline("Bibishell>$ ");
-		if (!check_quote(data->buffer))
-		{
-			ft_putstr_fd("Error, quotes not closed.\n", 2);
-		    add_history(data->buffer);
-		    //free(data->buffer);
-		    ft_free_list(data->list);
-            continue ;
-		}
-		data->list = get_word_in_list(data->buffer, data);
-		analyzer(data, cmd);
-		add_history(data->buffer);
-		free(data->buffer);
-		ft_lstclear(&data->list, &free_list);
-		//system("lsof -w -c minishell");
-		//system("leaks minishell");
-	}
-	free(data->buffer);
-	return (0);
-}
+#    Makefile                                           :+:      :+:    :+:    #
+#    By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+         #
+#    Created: 2022/06/09 14:04:53 by tbrandt           #+#    #+#              #
+#    Updated: 2022/10/19 13:47:20 by tbrandt          ###   ########.fr        #
+CFLAGS	=	-Wall -Wextra -Werror -g # -fsanitize=address
+SRC		=	main.c						\
+			parser/tokenize.c			\
+			parser/redirection_in.c		\
+			parser/redirection_out.c	\
+			parser/heredoc.c			\
+			parser/free_redirections.c	\
+			parser/pipe_and_fork.c		\
+			executor/get_path.c			\
+			executor/get_command.c		\
+LIBS    =   -L/Users/tbrandt/.brew/opt/readline/lib -lreadline
+HEADERS =   -I/Users/tbrandt/.brew/opt/readline/include
+all: $(NAME)
+$(NAME): libft/libft.a $(OBJ)
+libft/libft.a:
+	make -j -C libft
+clean:
+	make clean -C libft
+fclean: clean
+	make fclean -C libft
+re: fclean all
+.PHONY: all run clean fclean re make_libft
