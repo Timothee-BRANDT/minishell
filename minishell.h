@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 19:34:14 by mmatthie          #+#    #+#             */
-/*   Updated: 2022/10/18 18:21:27 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/10/21 09:59:46 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,12 +74,13 @@ typedef struct s_data
 	int		fdd;
 	int		tmp_in;
 	int		tmp_out;
-	int		out_before_pipe;
-	int		in_before_pipe;
+	int		pipe_0;
+	int		pipe_1;
 	int		last_redir;
 	int		last_cmd;
 	int		check_fd;
 	int		check_fd_in;
+	int		check_fd_out;
 	char	*first_outfile;
 	char	*infile;
 	char	*outfile;
@@ -172,8 +173,8 @@ int		redir_in_manager(int *k, char **cmd, t_data *data);
 void    exec_command(char **cmds, t_data *data);
 void	forking(t_cmd *cmd, t_data *data, int pipe_fd0, int pipe_fd1);
 void    restore_fd(t_data *data);
-void    dup_child_exec(char **cmd, t_data *data);
-void	dup_parent(t_data *data);
+void    dup_child_exec(char **cmd, t_data *data, int cmd_count);
+void	dup_parent(t_data *data, int cmd_count);
 void	create_pipe(t_data *data);
 void	redir_fd_out(t_data *data);
 int		start_exec(t_cmd *cmd, t_data *data);

@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 15:39:09 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/10/18 14:28:13 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/10/21 10:00:01 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,18 +72,18 @@ int	get_redir_count(t_list *list)
 
 void	redir_fd_out(t_data *data)
 {
-	int	redir_count;
-	int	i;
+	//int	redir_count;
+	//int	i;
 
-	redir_count = get_redir_count(data->list);
-	i = -1;
-	get_first_redir_out(data->list, data);
-	if (data->outfile && data->out_before_pipe == 0)
+	//redir_count = get_redir_count(data->list);
+	//i = -1;
+	//get_first_redir_out(data->list, data);
+/*	if (data->outfile && data->out_before_pipe == 0)
 	{
 		while (++i < redir_count)
 			get_fd_and_free(data->list, data);
-	}
-	else if (data->last_cmd)
+	}*/
+	if (data->last_cmd)
 	{
 		data->last_cmd = 0;
 		data->fd_out = dup(data->last_redir);
@@ -91,7 +91,7 @@ void	redir_fd_out(t_data *data)
 	else
 	{
 		data->fd_out = dup(data->tmp_out);
-		data->out_before_pipe = 0;
+		data->check_fd_out = 0;
 	}
 }
 

@@ -17,14 +17,14 @@ void	append_or_not(int	*k, char **cmd, t_data *data, int code)
 	if (code == 0)
 	{
 		if (data->append == 1)
-		{
-			dprintf(data->tmp_out, "open in append mode\n");
 			data->fd_out = open(cmd[*k + 1], O_WRONLY | O_CREAT | O_APPEND | O_NOCTTY , \
 			S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
-		}
 		else
+		{
 			data->fd_out = open(cmd[*k + 1], O_WRONLY | O_CREAT | O_NOCTTY , \
 			S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+			dprintf(data->tmp_out, "manager fd_out: %d\n", data->fd_out);
+		}
 	}
 	else
 	{
@@ -39,13 +39,12 @@ void	append_or_not(int	*k, char **cmd, t_data *data, int code)
 
 void    redir_out_manager(int *k, char **cmd, t_data *data)
 {
+	data->check_fd_out = 1;
 	data->append = 0;
 	if (cmd[*k] && cmd[*k][1] == '>')
 		data->append = 1;
 	append_or_not(k, cmd, data, 0);
 	*k = *k + 2;
-	if (cmd[*k] && !ft_strcmp(cmd[*k], "|"))
-		data->out_before_pipe = 1;
 	if (cmd[*k] && cmd[*k][1] == '>')
 		data->append = 1;
 	if (!cmd[*k] && *k == ft_strlen2d(cmd))
@@ -71,12 +70,11 @@ int	redir_in_manager(int	*k, char **cmd, t_data *data)
 	if (!ft_strcmp(cmd[*k], "<"))
 	{
 		data->fd_in = open(cmd[*k + 1], O_RDONLY);
+		dprintf(data->tmp_out, "manager fd_in: %d\n", data->fd_in);
 		//dprintf(data->tmp_out, "file opened: %s, the FD is :%d\n", cmd[*k + 1], data->fd_in);
 		*k = *k +2;
 	}
 	// faire une fonction qui check si je trouve une pipe apres la redirection
-	if (cmd[*k] && !ft_strcmp(cmd[*k], "|"))
-		data->in_before_pipe = 1;
 	while (cmd[*k] && (!ft_strcmp(cmd[*k], "<")))
 	{
 		data->fd_in = open(cmd[*k + 1], O_RDONLY);

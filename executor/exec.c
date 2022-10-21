@@ -62,6 +62,7 @@ int	start_exec(t_cmd *cmd, t_data *data)
 	i = -1;
 	while (++i < data->cmd_count)
 	{
+		data->check_fd_in = 0;
     	get_cmd_from_list(data->list, data, cmd);
 		cmds = extract_cmd(cmd->args, data);
 		if (i == data->cmd_count - 1)
@@ -70,9 +71,9 @@ int	start_exec(t_cmd *cmd, t_data *data)
 			create_pipe(data);
 		pid = fork();
 		if (pid == 0)
-			dup_child_exec(cmds, data);
+			dup_child_exec(cmds, data, data->cmd_count);
 		else
-			dup_parent(data);
+			dup_parent(data, data->cmd_count);
 		free_2_tab(cmd->args, cmds);
 	}
 	wait_my_childs(data);
