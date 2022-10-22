@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 15:39:09 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/10/21 12:19:57 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/10/22 13:26:30 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,11 @@ void	redir_fd_out(t_data *data)
 		data->last_cmd = 0;
 		data->fd_out = dup(data->last_redir);
 	}
-	else
+	else if (!data->check_fd_out)
+	{
 		data->fd_out = dup(data->tmp_out);
+		close(data->tmp_out);
+	}
 }
 
 void	get_fd_and_free(t_list *list, t_data *data)

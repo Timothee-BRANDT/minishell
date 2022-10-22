@@ -52,6 +52,16 @@ void	exec_command(char **cmds, t_data	*data)
 		write(2, "Command execution failed\n", 25);
 }
 
+void	close_and_reset(t_data *data, int i)
+{
+	if (i >= 1)
+	{
+		close(data->fd_in);
+		close(data->fd_out);
+	}
+	data->check_fd_out = 0;
+	data->check_fd_in = 0;
+}
 
 int	start_exec(t_cmd *cmd, t_data *data)
 {
@@ -75,10 +85,9 @@ int	start_exec(t_cmd *cmd, t_data *data)
 		else
 			dup_parent(data, data->cmd_count);
 		free_2_tab(cmd->args, cmds);
-		data->check_fd_out = 0;
-		data->check_fd_in = 0;
+		close_and_reset(data, data->reset_prompt);
 	}
-	wait_my_childs(data);
 	restore_fd(data);
+	wait_my_childs(data);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 19:34:14 by mmatthie          #+#    #+#             */
-/*   Updated: 2022/10/21 09:59:46 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/10/22 13:14:10 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ typedef struct s_data
 	int		check_fd;
 	int		check_fd_in;
 	int		check_fd_out;
+	int		reset_prompt;
 	char	*first_outfile;
 	char	*infile;
 	char	*outfile;
@@ -168,6 +169,7 @@ int		count_heredoc(t_list *list);
 char	**stock_delimitors(t_list *list, t_data *data);
 void	redir_out_manager(int *j, char **cmd, t_data *data);
 int		redir_in_manager(int *k, char **cmd, t_data *data);
+int		check_if_another_redir_in(int	*k, char **cmd, t_data *data);
 
 // executor
 void    exec_command(char **cmds, t_data *data);
