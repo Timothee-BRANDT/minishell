@@ -92,8 +92,6 @@ int	analyzer(t_data *data, t_cmd *cmd)
 	get_cmd_count(data->list, data);
 	if (check_all_infile(data->list, data))
 		return (on_error("Infile not found\n", 1));
-	//if (check_in_redirection(data->list, data))
-	//	return (open_error(data->infile, data->outfile));
 	if (count_heredoc(data->list))
 		start_heredoc(data);
 	start_exec(cmd, data);

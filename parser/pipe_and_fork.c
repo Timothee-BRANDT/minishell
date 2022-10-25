@@ -23,17 +23,15 @@ void	create_pipe(t_data *data)
 
 void    dup_child_exec(char **cmds, t_data *data, int cmd_count)
 {
+	
 	if (data->check_fd_in == 1)
 	{
 		dup2(data->fd_in, 0);
-		dprintf(data->tmp_out, "IN CHILD ------fd_in: %d\n", data->fd_in);
 		close(data->fd_in);
-		dprintf(data->tmp_out, "IN CHILD AFTER CLOSING ------fd_in: %d\n", data->fd_in);
 	}
 	if (data->check_fd_out == 1)
 	{
 		dup2(data->fd_out, 1);
-		dprintf(data->tmp_out, "----------------------IN CHILD ------fd_out: %d\n", data->fd_out);
 		close(data->fd_out);
 	}
 	else if (cmd_count > 1)
@@ -55,7 +53,6 @@ void	dup_parent(t_data *data, int cmd_count)
 	}
 	close(data->pipe_1);
 }
-
 
 int	wait_my_childs(t_data *data)
 {

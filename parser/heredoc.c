@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 09:48:14 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/10/18 11:38:03 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/10/25 11:30:00 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,22 +52,24 @@ char	**stock_delimitors(t_list *list, t_data *data)
 	return (tab);
 }
 
-int	*create_files(t_list *list)
+void	create_files(t_list *list, t_data *data)
 {
 	int	i;
 	int	j;
-	int	*fd;
+	char **tab;
 	
-	i = 1;
+	i = 0;
 	j = 0;
-	fd = malloc(sizeof(int) * count_heredoc(list));
-	while (i < count_heredoc(list) + 1)
+	tab = stock_delimitors(data->list, data);
+	data->fd = malloc(sizeof(int) * count_heredoc(list));
+	while (i < count_heredoc(list))
 	{
-		fd[j] = open(ft_itoa(i), O_RDONLY | O_WRONLY | O_CREAT, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+		printf("file name: %s\n", tab[i]);
+		data->fd[j] = open(tab[i], O_RDONLY | O_WRONLY | O_TRUNC | O_CREAT, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 		i++;
 		j++;
 	}
-	return (fd);
+	free_tab(tab);
 }
 
 // when should i free my fd tab ???
@@ -75,12 +77,11 @@ int	start_heredoc(t_data *data)
 {
 	char	**tab;
 	char	*str;
-	int		*fd;
 	int		i;
 	int		j;
 
 	tab = stock_delimitors(data->list, data);
-	fd = create_files(data->list);
+	create_files(data->list, data);
 	i = 0;
 	j = 0;
 	while (i < count_heredoc(data->list))
@@ -90,12 +91,13 @@ int	start_heredoc(t_data *data)
 			str = readline("> ");
 			if (!ft_strcmp(str, tab[i]))
 				break;
-			ft_putstr_fd(str, fd[j]);
+			ft_putstr_fd(str, data->fd[j]);
 		}
 		if (i == ft_strlen2d(tab))
 			break;
 		j++;
 		i++;
 	}
+	free_tab(tab);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/21 15:11:13 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/10/18 10:45:23 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/10/24 12:04:16 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	*ft_itoa(int n)
 	char	*str;
 	int		i;
 
-	str = malloc(sizeof(char) * len(n) + 1);
+	str = malloc(sizeof(char) * len(n) + 4);
 	if (!str)
 		return (NULL);
 	if (n == 0)

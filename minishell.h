@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 19:34:14 by mmatthie          #+#    #+#             */
-/*   Updated: 2022/10/22 13:14:10 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/10/24 14:49:05 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ typedef struct s_data
 	int		check_fd_in;
 	int		check_fd_out;
 	int		reset_prompt;
+	int		*fd;
 	char	*first_outfile;
 	char	*infile;
 	char	*outfile;
