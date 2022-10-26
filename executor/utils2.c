@@ -20,13 +20,11 @@ void	append_or_not(int	*k, char **cmd, t_data *data, int code)
 		{
 			data->fd_out = open(cmd[*k + 1], O_WRONLY | O_CREAT | O_APPEND | O_NOCTTY , \
 			S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
-			dprintf(data->tmp_out, "data->fd_out APPEND: %d\n", data->fd_out);
 		}
 		else
 		{
 			data->fd_out = open(cmd[*k + 1], O_WRONLY | O_CREAT | O_NOCTTY , \
 			S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
-			dprintf(data->tmp_out, "data->fd_out NOT APPEND: %d\n", data->fd_out);
 		}
 	}
 	else
@@ -42,8 +40,8 @@ void	append_or_not(int	*k, char **cmd, t_data *data, int code)
 
 void    redir_out_manager(int *k, char **cmd, t_data *data)
 {
-	if (data->fd_out)
-		close(data->fd_out);
+//	if (data->fd_out)
+//		close(data->fd_out);
 	data->check_fd_out = 1;
 	data->append = 0;
 	if (cmd[*k] && cmd[*k][1] == '>')
@@ -76,54 +74,57 @@ void    redir_out_manager(int *k, char **cmd, t_data *data)
     }
 }
 
-int	check_if_another_redir_in(int	*k, char **cmd, t_data *data)
-{
-	int	i;
-
-	i = *k;
-	(void)data;
-	while (cmd[i])
-	{
-		if (!ft_strcmp(cmd[i], "<"))
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
 int	redir_in_manager(int	*k, char **cmd, t_data *data)
 {	
-	static int j;
+	static int j = 0;
 	char **tab;
+	int i;
 
-	j = 0;
+	i = *k;
 	data->check_fd_in = 1;
 	tab = stock_delimitors(data->list, data);
-	if (cmd[*k] && !ft_strcmp(cmd[*k], "<"))
+	/*if (cmd[*k] && !ft_strcmp(cmd[*k], "<"))
 	{
 		data->fd_in = open(cmd[*k + 1], O_RDONLY);
 		*k = *k +2;
-	}
+	}*/
 	while (cmd[*k] && !ft_strcmp(cmd[*k], "<"))
 	{
-		close(data->fd_in);
 		data->fd_in = open(cmd[*k + 1], O_RDONLY);
 		*k = *k +2;
+		while(cmd[i] && !ft_strcmp(cmd[i], "|"))
+		{
+			if (!ft_strcmp(cmd[*k], "<"))
+				close(data->fd_in);
+				i++;
+		}
 	}
-	if (cmd[*k] && !ft_strcmp(cmd[*k], "<<"))
+	/*if (cmd[*k] && !ft_strcmp(cmd[*k], "<<"))
 	{
 		data->fd_in = open(tab[j], O_RDONLY);
+		dprintf(data->tmp_out, "Unlink the file : %s\n", tab[j]);
 		unlink(tab[j]);
 		*k = *k + 2;
 		j++;
-	}
+	}*/
 	while (cmd[*k] && !ft_strcmp(cmd[*k], "<<"))
 	{
-		close(data->fd_in);
 		data->fd_in = open(tab[j], O_RDONLY);
+		printf("data->fd_in : %d\n", data->fd_in);
+		printf("j: %d\n", j);
+		dprintf(data->tmp_out, "Unlink the file : %s\n", tab[j]);
 		unlink(tab[j]);
 		*k = *k +2;
+	/*	i = *k;
+		while(cmd[i] && !ft_strcmp(cmd[i], "|"))
+		{
+			if (!ft_strcmp(cmd[*k], "<<"))
+				close(data->fd_in);
+				i++;
+		}*/
 		j++;
 	}	
+	if (j == count_heredoc(data->list))
+		ft_bzero(&j, sizeof(int));
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 09:48:14 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/10/25 11:30:00 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/10/26 12:32:58 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,9 @@ void	create_files(t_list *list, t_data *data)
 	data->fd = malloc(sizeof(int) * count_heredoc(list));
 	while (i < count_heredoc(list))
 	{
-		printf("file name: %s\n", tab[i]);
+		// printf("file name: %s\n", tab[i]);
 		data->fd[j] = open(tab[i], O_RDONLY | O_WRONLY | O_TRUNC | O_CREAT, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+		// printf("data->fd[j] :%d\n", data->fd[j]);
 		i++;
 		j++;
 	}
@@ -93,6 +94,7 @@ int	start_heredoc(t_data *data)
 				break;
 			ft_putstr_fd(str, data->fd[j]);
 		}
+		close(data->fd[j]);
 		if (i == ft_strlen2d(tab))
 			break;
 		j++;
