@@ -25,7 +25,6 @@ void    dup_child_exec(char **cmds, t_data *data, int cmd_count)
 {
 	if (data->check_fd_in == 1)
 	{
-		dprintf(data->tmp_out, "dup fd number : %d\n", data->fd_in);
 		dup2(data->fd_in, 0);
 		close(data->fd_in);
 	}
@@ -33,6 +32,7 @@ void    dup_child_exec(char **cmds, t_data *data, int cmd_count)
 	{
 		dup2(data->fd_out, 1);
 		close(data->fd_out);
+
 	}
 	else if (cmd_count > 1)
 	{
@@ -51,6 +51,10 @@ void	dup_parent(t_data *data, int cmd_count)
 		dup2(data->pipe_0, 0);
 		close(data->pipe_0);
 	}
+	if (data->fd_in)
+		close(data->fd_in);
+	if (data->fd_out)
+		close(data->fd_out);
 	close(data->pipe_1);
 }
 
@@ -69,7 +73,7 @@ int	wait_my_childs(t_data *data)
 void    restore_fd(t_data *data)
 {
 	close(data->last_redir);
-	// close(data->fd_in);
+	close(data->fd_in);
 	close(data->fd_out);
 	dup2(data->tmp_in, 0);
 	close(data->tmp_in);
