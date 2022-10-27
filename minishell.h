@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 19:34:14 by mmatthie          #+#    #+#             */
-/*   Updated: 2022/10/24 14:49:05 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/10/27 12:50:01 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,42 +139,25 @@ t_list	*get_word_in_list(char	*buffer, t_data	*data);
 
 //parser
 void	built_in_analyzer(t_list **list, t_data	*data);
-void	remove_pipe(t_list *list, t_data *data);
 void	redir_tokenisation(t_list *list);
 void	get_cmd_count(t_list *list, t_data *data);
 void	get_cmd_size(t_list *list, t_data *data);
-void	free_command(t_list *list, t_data *data);
 void    get_cmd_from_list(t_list *list, t_data *data, t_cmd *cmd);
 void	free_list(void *ptr);
 int		analyzer(t_data *data, t_cmd *cmd);
 int		token_error(t_list *list);
-int		get_first_redir_out(t_list *list, t_data *data);
-int		get_first_redir_in(t_list *list, t_data *data);
 int		check_all_infile(t_list *list, t_data *data);
-void	get_fd_and_free(t_list *list, t_data *data);
 char	**extract_cmd(char **cmd, t_data *data);
-t_list	*remove_args(t_list *list, t_data *data);
 
 // redirections
-void	remove_in_redir(t_list *list);
-int		skip_hd(char **cmd, int *k);
-void	remove_out_redir(t_list *list);
-int		get_first_redirection_before_pipe(t_data *data);
-int		check_in_redirection(t_list *list, t_data *data);
-int		check_out_redirection_before_pipe(t_list *list, t_data *data);
-int		redirect_in(t_data *data);
-int		redirect_out(t_data *data);
-int		get_redir_count(t_list *list);
 int		start_heredoc(t_data *data);
 int		count_heredoc(t_list *list);
 char	**stock_delimitors(t_list *list, t_data *data);
 void	redir_out_manager(int *j, char **cmd, t_data *data);
 int		redir_in_manager(int *k, char **cmd, t_data *data);
-int		check_if_another_redir_in(int	*k, char **cmd, t_data *data);
 
 // executor
 void    exec_command(char **cmds, t_data *data);
-void	forking(t_cmd *cmd, t_data *data, int pipe_fd0, int pipe_fd1);
 void    restore_fd(t_data *data);
 void    dup_child_exec(char **cmd, t_data *data, int cmd_count);
 void	dup_parent(t_data *data, int cmd_count);

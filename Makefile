@@ -6,7 +6,7 @@
 #    By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/09 14:04:53 by tbrandt           #+#    #+#              #
-#    Updated: 2022/10/19 13:47:20 by tbrandt          ###   ########.fr        #
+#    Updated: 2022/10/27 12:45:07 by tbrandt          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,10 +20,8 @@ SRC		=	main.c						\
 			lexer/check.c				\
 			lexer/check2.c				\
 			parser/tokenize.c			\
-			parser/redirection_in.c		\
 			parser/redirection_out.c	\
 			parser/heredoc.c			\
-			parser/free_redirections.c	\
 			parser/pipe_and_fork.c		\
 			executor/exec.c				\
 			executor/get_path.c			\

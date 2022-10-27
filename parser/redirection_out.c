@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 15:39:09 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/10/22 13:26:30 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/10/27 12:47:46 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,42 +34,6 @@ int	check_all_infile(t_list *list, t_data *data)
 	return (0);
 }
 
-int	get_first_redir_out(t_list *list, t_data *data)
-{
-	t_list *tmp;
-
-	if (!list)
-		return (0);
-	tmp = list;
-	while (tmp && tmp->next)
-	{
-		if (!ft_strcmp((char *)tmp->content, ">"))
-		{
-			if (data->outfile)
-				free(data->outfile);
-			data->outfile = ft_strdup((char *)tmp->next->content);
-		}
-		tmp = tmp->next;
-	}
-	return (0);	
-}
-
-int	get_redir_count(t_list *list)
-{
-	t_list 	*tmp;
-	int		redir_out_count;
-
-	tmp = list;
-	redir_out_count = 0;
-	while (tmp && tmp->next)
-	{
-		if (!ft_strcmp((char *)tmp->content, ">") || !ft_strcmp((char *)tmp->content, ">"))
-			redir_out_count++;
-		tmp = tmp->next;
-	}
-	return (redir_out_count);
-}
-
 void	redir_fd_out(t_data *data)
 {
 	if (data->last_cmd)
@@ -81,23 +45,5 @@ void	redir_fd_out(t_data *data)
 	{
 		data->fd_out = dup(data->tmp_out);
 		close(data->tmp_out);
-	}
-}
-
-void	get_fd_and_free(t_list *list, t_data *data)
-{
-	if (data->append == 1)
-	{
-		data->fd_out = open(data->outfile, O_WRONLY | O_CREAT | O_APPEND | O_NOCTTY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
-		free(data->outfile);
-		data->outfile = NULL;
-		get_first_redir_out(list, data);
-	}
-	else
-	{
-		data->fd_out = open(data->outfile, O_WRONLY | O_CREAT | O_NOCTTY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
-		free(data->outfile);
-		data->outfile = NULL;
-		get_first_redir_out(list, data);
 	}
 }
