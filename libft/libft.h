@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 14:40:13 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/10/08 16:29:56 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/10/27 15:53:57 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ char		*ft_strjoin(char const *s1, char const *s2);
 size_t		ft_strlen(const char *str);
 int			ft_strlen2d(char **str);
 int			ft_strncmp(const char *s1, const char *s2, size_t n);
+int			ft_strncmp_v2(const char *s1, const char *s2, size_t n);
 char		*ft_strnstr(const char *s1, const char *s2, size_t n);
 char		*ft_strrchr(const char *s, int c);
 void		ft_putchar_fd(char c, int fd);

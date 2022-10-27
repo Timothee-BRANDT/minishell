@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/21 15:11:13 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/10/24 12:04:16 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/10/27 16:46:37 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	*ft_itoa(int n)
 	char	*str;
 	int		i;
 
-	str = malloc(sizeof(char) * len(n) + 4);
+	str = malloc(sizeof(char) * len(n) + 1);
 	if (!str)
 		return (NULL);
 	if (n == 0)
@@ -55,6 +55,5 @@ char	*ft_itoa(int n)
 		n = n / 10;
 		i--;
 	}
-	str[i] = '.';
 	return (str);
 }

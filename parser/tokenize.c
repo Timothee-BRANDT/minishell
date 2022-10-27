@@ -94,6 +94,9 @@ int	analyzer(t_data *data, t_cmd *cmd)
 		return (on_error("Infile not found\n", 1));
 	if (count_heredoc(data->list))
 		start_heredoc(data);
+	// printf("\n");
+	// ft_print_list(data->env);
+	// printf("\n");
 	start_exec(cmd, data);
 	return (0);
 }

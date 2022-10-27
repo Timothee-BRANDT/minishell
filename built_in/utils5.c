@@ -12,7 +12,7 @@
 
 #include "../minishell.h"
 
-char	*get_env(char *key, t_list *env)
+char	*get_env_v2(char *key, t_list *env)
 {
 	t_list	*tmp;
 	int		len;

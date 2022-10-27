@@ -1,31 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_strncmp_v2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/20 14:56:12 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/10/27 15:17:05 by tbrandt          ###   ########.fr       */
+/*   Created: 2022/10/27 15:52:34 by tbrandt           #+#    #+#             */
+/*   Updated: 2022/10/27 15:53:07 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strdup(const char *str)
+int	ft_strncmp_v2(const char *s1, const char *s2, size_t n)
 {
-	char	*ptr;
-	int		i;
+	size_t			i;
+	unsigned char	src;
+	unsigned char	dest;
 
-	ptr = malloc(sizeof(char) * (ft_strlen(str) + 1));
-	if (!ptr || !str)
-		return (NULL);
 	i = 0;
-	while (str[i])
+	if (!n)
+		return (n);
+	src = (unsigned char)s1[i];
+	dest = (unsigned char)s2[i];
+	while ((src && dest) && (i < n))
 	{
-		ptr[i] = str[i];
+		src = (unsigned char)s1[i];
+		dest = (unsigned char)s2[i];
+		if (src != dest)
+			return (src - dest);
 		i++;
 	}
-	ptr[i] = '\0';
-	return (ptr);
+	return (src - dest);
 }

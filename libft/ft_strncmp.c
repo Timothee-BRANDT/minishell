@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbrandt <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 17:49:37 by tbrandt           #+#    #+#             */
-/*   Updated: 2021/10/20 10:50:02 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/10/27 15:16:03 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,29 +15,21 @@
 int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
 	size_t			i;
-	unsigned char	src;
-	unsigned char	dest;
-
+	
 	i = 0;
 	if (!n)
 		return (n);
-	src = (unsigned char)s1[i];
-	dest = (unsigned char)s2[i];
-	while ((src && dest) && (i < n))
+	while ((s1[i] && s2[i]) && (i < n))
 	{
-		src = (unsigned char)s1[i];
-		dest = (unsigned char)s2[i];
-		if (src != dest)
-			return (src - dest);
+		if (s1[i + 1] && !s2[i + 1] && s1[i + 1] != '=')
+			return (1);
+		if (s1[i] == '=' && !s2[i])
+			return (0);
+		else if (s1[i] == '=' && s2[i])
+			return (1);
+		else if (s1[i] != s2[i])
+			return (1);
 		i++;
 	}
-	return (src - dest);
+	return (0);
 }
-/*
-#include <stdio.h>
-int main()
-{
-	char s1[] = "sonsoir";
-	char s2[] = "salut";
-	printf("%d", ft_strncmp(s1, s2, 2));
-}*/

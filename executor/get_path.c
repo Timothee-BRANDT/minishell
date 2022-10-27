@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 15:22:43 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/10/09 13:01:23 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/10/27 15:50:41 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	**get_all_path(t_data *data)
     t_list  *tmp;
 
     tmp = data->env;
-	while (tmp->next != NULL && ft_strncmp((char *)tmp->content, "PATH=", 5) != 0)
+	while (tmp->next != NULL && ft_strncmp_v2((char *)tmp->content, "PATH=", 5) != 0)
     {
         data->env = data->env->next;
         tmp = data->env;

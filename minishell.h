@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 19:34:14 by mmatthie          #+#    #+#             */
-/*   Updated: 2022/10/27 12:50:01 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/10/27 16:20:14 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@
 # include "libft/libft.h"
 # include <readline/history.h>
 # include <readline/readline.h>
+
+extern int global_signum;
 
 enum e_redir {
 	WORD,
@@ -49,22 +51,28 @@ enum e_built_in {
 typedef struct s_data
 {
 	// parsing manu
+	int	i_space;
+	int		j_space;
 	char	*first;
 	char	*second;
 	char	*join;
 	char	*buffer;
 	char	*get_word;
-	char	*str;
-	char	*string;
-	int		step;
+	char	*buffer_save;
 	int		count;
-	int		indicate;
-	int		plus;
 	int		token;
 	int		i;
-	int		statique;
-	int		append;
 	int		check;
+	int		plus;
+	int		res_space;
+	int		index_space;
+	int		space_len;
+	int		indicate_expend;
+	int		indicate;
+	char	*str;
+	char	*string;
+	char	*expend;
+	char	*dollarplusquotes;
 	// redirections
 	int		cmd_count;
 	int		pipe_count;
@@ -80,6 +88,7 @@ typedef struct s_data
 	int		last_cmd;
 	int		check_fd;
 	int		check_fd_in;
+	int		append;
 	int		check_fd_out;
 	int		reset_prompt;
 	int		*fd;
@@ -110,7 +119,7 @@ typedef struct s_cmd
 t_list	*get_in_list(char	*buffer, t_data	*data, t_list	*lst);
 void	ft_print_list(t_list	*lst);
 void	ft_manage(void	*to_add);
-void	ft_free_list(t_list	*lst);
+void	ft_free_split(char **tab);
 void	free_tab(char **tab);
 void	print_tab(char **tab);
 void	free_2_tab(char **tab1, char **tab2);
@@ -126,16 +135,52 @@ int		is_redir(char *str);
 int		is_pipe(char*str);
 char	*ft_strncpy(char *dest, char *src, unsigned int n);
 
-//check.c 
-int		get_second_word(char	*buffer, int count, t_data	*data);
-int		get_word(char	*buffer, t_data	*data, int count);
-int		get_join(char	*str, int count, int j, t_data	*data);
-int		get_without_quotes(char	*buffer, t_data	*data, int count);
-int		make_second(char	*buffer, t_data	*data, int count);
+//need to list
+void	little_one(t_data	*data);
+int		get_expend_without_first(char	*str, int count, t_data	*data);
+void	do_else(t_data	*data);
+char	*ft_join_free_s1(char *s1, char *s2);
+int		make_expend(char	*str, int j, int content, t_data	*data);
+int		last_token(int count, t_data	*data);
+int		ft_check_token(char c);
+int		fill_quotes(char *dest, char	*buffer, t_data	*data);
+void	expend_it(t_data	*data, char	*str, int j);
+void	set_redir(t_data	*data, char	*str, char	*buffer);
+void	set_redir(t_data	*data, char	*str, char	*buffer);
+int		reset_indicate(int count, t_data	*data);
+int		get_next(char	*str, int i, t_data	*data, int tmp);
+int		get_token(t_data	*data, char	*buffer, int count);
+int		first_expend(char	*str, int count, t_data	*data);
+void	print_it(char	*ptr);
 char	*ft_join_free_ss(char *s1, char *s2);
+int		get_expend(char	*str, int j, int count, t_data	*data);
+void	check_token(char	*buffer, int count, t_data	*data);
+int		get_second_simple(char	*str, int count, t_data	*data);
+int		get_second_double(char	*str, int count, t_data	*data);
+int		get_second_with_token(char	*str, int count, t_data	*data);
+int		get_second_without_token(char	*str, int count, t_data	*data);
+int		get_expend_with_token(char	*str, int j, int count, t_data	*data);
 char	*get_env(char *key, t_list *env);
+char	*ft_add_space(char	*buffer, t_data	*data);
+void	free_it(char	*str);
+void	set_data(t_data	*data);
+t_list	*get_in_list(char	*buffer, t_data	*data, t_list	*lst);
+int		on_error(char *str, int code);
+char	*ft_strncpy(char *dest, char *src, unsigned int n);
+void	ft_print_list(t_list	*lst);
+int		check_quote(char *buffer);
+int		ft_isspace(int c);
+int		get_quotes(char	*buffer, t_data	*data, int count);
+int		get_double_quotes(char	*buffer, t_data	*data, int count);
+int		get_simple_quotes(char	*buffer, int count, t_data *data);
+void	ft_manage(void	*to_add);
+int		make_second(char	*buffer, t_data	*data, int count);
 t_list	*ft_list(t_list	*lst, t_data *data);
 t_list	*get_word_in_list(char	*buffer, t_data	*data);
+int		get_second_word(char	*buffer, int count, t_data	*data);
+int		get_word(char	*buffer, t_data	*data, int count);
+int		get_join(char	*str, int j, t_data	*data);
+int		get_without_quotes(char	*buffer, t_data	*data, int count);
 
 //parser
 void	built_in_analyzer(t_list **list, t_data	*data);
@@ -184,6 +229,7 @@ void	free_two_string(char *s1, char *s2);
 void	free_three_string(char *s1, char *s2, char *s3, char *s4);
 int		export_name(t_list **list, t_data *data, int code);
 int		is_in_list(t_list **list, char *name);
+char	*get_env_v2(char *key, t_list *env);
 int		set_export_var(t_data *data);
 char	*ft_strjoin_export(char const *s1, char const *s2);
 char	*ft_get_value(char *str);

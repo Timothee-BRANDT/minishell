@@ -6,7 +6,7 @@
 #    By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/09 14:04:53 by tbrandt           #+#    #+#              #
-#    Updated: 2022/10/27 12:45:07 by tbrandt          ###   ########.fr        #
+#    Updated: 2022/10/27 15:06:32 by tbrandt          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,10 +15,17 @@ CFLAGS	=	-Wall -Wextra -Werror -g # -fsanitize=address
 NAME	=	minishell
 
 SRC		=	main.c						\
+			lexer/echoctl.c				\
+			lexer/add_space.c			\
+			lexer/add_space2.c			\
+			lexer/expend2.c				\
+			lexer/get_word.c			\
+			lexer/word_in_list.c		\
+			lexer/join_and_free.c		\
+			lexer/expend.c				\
+			lexer/parsing2.c			\
+			lexer/parsing.c				\
 			lexer/utils.c				\
-			lexer/utils2.c				\
-			lexer/check.c				\
-			lexer/check2.c				\
 			parser/tokenize.c			\
 			parser/redirection_out.c	\
 			parser/heredoc.c			\
