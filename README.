@@ -1,9 +1,0 @@
-Git commit on branch :
-
-- git branch -a;
-- git checkout "the name branch";
-- doing some stuff;
-- git add .;
-- git commit -am "commit message"
-- git merge (will merge everything from commit)
-

@@ -6,23 +6,40 @@
 #    By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/09 14:04:53 by tbrandt           #+#    #+#              #
-#    Updated: 2022/06/22 15:14:02 by tbrandt          ###   ########.fr        #
+#    Updated: 2022/10/27 15:06:32 by tbrandt          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC		=	gcc
-CFLAGS	=	-Wall -Wextra -Werror -g #-fsanitize=address
+CFLAGS	=	-Wall -Wextra -Werror -g # -fsanitize=address
 NAME	=	minishell
 
-SRC		=	main.c				\
-			parsing/utils.c		\
-			parsing/utils2.c	\
-			parsing/check.c		\
-			parsing/check2.c	\
-			built_in/export.c	\
-			built_in/utils.c	\
-			built_in/utils2.c	\
-			built_in/utils3.c	\
+SRC		=	main.c						\
+			lexer/echoctl.c				\
+			lexer/add_space.c			\
+			lexer/add_space2.c			\
+			lexer/expend2.c				\
+			lexer/get_word.c			\
+			lexer/word_in_list.c		\
+			lexer/join_and_free.c		\
+			lexer/expend.c				\
+			lexer/parsing2.c			\
+			lexer/parsing.c				\
+			lexer/utils.c				\
+			parser/tokenize.c			\
+			parser/redirection_out.c	\
+			parser/heredoc.c			\
+			parser/pipe_and_fork.c		\
+			executor/exec.c				\
+			executor/get_path.c			\
+			executor/get_command.c		\
+			executor/utils2.c			\
+			built_in/export.c			\
+			built_in/utils.c			\
+			built_in/utils2.c			\
+			built_in/utils3.c			\
+			built_in/utils4.c			\
+			built_in/utils5.c			\
 
 OBJ		=	$(SRC:%.c=%.o)
 

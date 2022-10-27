@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmatthie <mmatthie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 14:40:13 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/06/13 00:07:32 by mmatthie         ###   ########.fr       */
+/*   Updated: 2022/10/27 15:53:57 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 typedef struct s_list
 {
 	struct s_list	*next;
+	int				token;
 	void			*content;
 }					t_list;
 
@@ -47,6 +48,7 @@ char		*ft_strjoin(char const *s1, char const *s2);
 size_t		ft_strlen(const char *str);
 int			ft_strlen2d(char **str);
 int			ft_strncmp(const char *s1, const char *s2, size_t n);
+int			ft_strncmp_v2(const char *s1, const char *s2, size_t n);
 char		*ft_strnstr(const char *s1, const char *s2, size_t n);
 char		*ft_strrchr(const char *s, int c);
 void		ft_putchar_fd(char c, int fd);
@@ -73,4 +75,5 @@ void		ft_putchar(char c);
 int			ft_strcmp(char *s1, char *s2);
 int			size(char *str);
 long long	ft_atoll(const char *str);
+void		ft_lstclear(t_list **lst, void (*del)(void*));
 #endif
