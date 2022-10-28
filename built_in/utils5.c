@@ -40,14 +40,14 @@ void	free_list(void *ptr)
 	free(list);
 }
 
-void	print_tab(char **tab)
+void	print_tab(char **tab, t_data *data)
 {
 	int	i;
 
 	i = 0;
 	while (tab[i])
 	{
-		printf("tab[i]: %s\n", tab[i]);
+		dprintf(data->tmp_out, "tab[i]: %s\n", tab[i]);
 		i++;
 	}
 }

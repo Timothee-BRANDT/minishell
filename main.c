@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 14:07:48 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/10/27 16:21:03 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/10/28 14:33:39 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,6 @@ int	main(int ac, char	**av, char	**env)
 	cmd = malloc(sizeof(t_cmd));
 	data = malloc(sizeof(t_data));
 	data->env = env_to_list(env);
-	// printf("main\n");
-	// ft_print_list(data->env);
-	// printf("\n");
 	data->export = env_to_list(env);
 	while (1)
 	{
@@ -42,7 +39,6 @@ int	main(int ac, char	**av, char	**env)
 		}
 		data->buffer = ft_add_space(data->buffer, data);
 		data->list = get_word_in_list(data->buffer, data);
-		ft_print_list(data->list);
 		analyzer(data, cmd);
 		add_history(data->buffer_save);
 		free(data->buffer);

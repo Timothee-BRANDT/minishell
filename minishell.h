@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 19:34:14 by mmatthie          #+#    #+#             */
-/*   Updated: 2022/10/27 16:20:14 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/10/28 15:01:38 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ void	ft_print_list(t_list	*lst);
 void	ft_manage(void	*to_add);
 void	ft_free_split(char **tab);
 void	free_tab(char **tab);
-void	print_tab(char **tab);
+void	print_tab(char **tab, t_data *data);
 void	free_2_tab(char **tab1, char **tab2);
 char	**lst_to_tab(t_list *list, t_data *data);
 int		on_error(char *str, int code);

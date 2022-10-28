@@ -38,6 +38,8 @@ void	exec_command(char **cmds, t_data	*data)
 	char	*good_cmd;
 	char	**env;
 
+	if (cmds[0][0] == '\0')
+		return ;
 	paths = get_all_path(data);
 	env = list_to_tab(data->env);
 	good_cmd = get_correct_cmd(paths, cmds);
@@ -48,6 +50,11 @@ void	exec_command(char **cmds, t_data	*data)
 		printf("Shell: command not found.\n");
 		return ;
 	}
+	// faire le check if built-in ici
+	// if (is_built_in(cmds[0]))
+	// exec_built_in
+	// else
+	// execve
 	if (execve(good_cmd, cmds, env) == -1)
 		write(2, "Command execution failed\n", 25);
 }
@@ -69,6 +76,8 @@ int	start_exec(t_cmd *cmd, t_data *data)
 	{
     	get_cmd_from_list(data->list, data, cmd);
 		cmds = extract_cmd(cmd->args, data);
+		// print_tab(cmds, data);
+		printf("\n");
 		if (i == data->cmd_count - 1)
 			redir_fd_out(data);
 		else

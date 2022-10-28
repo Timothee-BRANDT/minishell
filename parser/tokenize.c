@@ -85,7 +85,11 @@ int	analyzer(t_data *data, t_cmd *cmd)
 	data->tmp_in = dup(0);
 	data->tmp_out = dup(1);
 	if (token_error(data->list))
+	{
+		close(data->tmp_in);
+		close(data->tmp_out);
 		return (on_error("Minishell: syntax error near unexpected token\n", 1));
+	}
 	redir_tokenisation(data->list);
 	built_in_tokenisation(data->list);
 	get_cmd_size(data->list, data);
@@ -94,9 +98,6 @@ int	analyzer(t_data *data, t_cmd *cmd)
 		return (on_error("Infile not found\n", 1));
 	if (count_heredoc(data->list))
 		start_heredoc(data);
-	// printf("\n");
-	// ft_print_list(data->env);
-	// printf("\n");
 	start_exec(cmd, data);
 	return (0);
 }

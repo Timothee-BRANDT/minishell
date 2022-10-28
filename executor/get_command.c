@@ -6,11 +6,22 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 12:59:25 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/10/25 11:01:49 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/10/28 14:40:01 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+void	check_all_redirection(char **cmd, int *k, t_data *data)
+{
+	while (is_redir(cmd[*k]))
+	{
+		if (is_redir(cmd[*k]) == 1 || is_redir(cmd[*k]) == 3)
+			redir_in_manager(k, cmd, data);
+		if (is_redir(cmd[*k]) == 2 || is_redir(cmd[*k]) == 4)
+			redir_out_manager(k, cmd, data);
+	}
+}
 
 char	**extract_cmd(char **cmd, t_data *data)
 {
@@ -24,12 +35,9 @@ char	**extract_cmd(char **cmd, t_data *data)
 	i = 0;
 	while (cmd[j] && ft_strcmp(cmd[j], "|") != 0)
 	{
-		if (!ft_strcmp(cmd[j], "<") || !ft_strcmp(cmd[j], "<<"))
-			redir_in_manager(k, cmd, data);
-		if (!cmd[j] || !ft_strcmp(cmd[j], "|"))
-			break ;
-		if (!ft_strcmp(cmd[j], ">") || !ft_strcmp(cmd[j], ">>"))
-			redir_out_manager(k, cmd, data);
+		if (cmd[j][0] == '\0')
+			j++;
+		check_all_redirection(cmd, k, data);
 		if (!cmd[j] || !ft_strcmp(cmd[j], "|"))
 			break ;
 		final_cmd[i++] = ft_strdup(cmd[j]);
