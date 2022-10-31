@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 15:16:08 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/09/21 15:04:32 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/10/31 11:37:43 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,9 @@
 size_t	ft_strlen(const char *str)
 {
 	size_t	i;
-	int		res;
 
 	i = 0;
-	res = 0;
-	while (str[i])
-	{
-		res++;
+	while (str && str[i])
 		i++;
-	}
-	return (res);
+	return (i);
 }

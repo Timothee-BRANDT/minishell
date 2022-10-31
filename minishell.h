@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 19:34:14 by mmatthie          #+#    #+#             */
-/*   Updated: 2022/10/28 15:01:38 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/10/31 14:06:27 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ void	ft_print_list(t_list	*lst);
 void	ft_manage(void	*to_add);
 void	ft_free_split(char **tab);
 void	free_tab(char **tab);
-void	print_tab(char **tab, t_data *data);
+void	print_tab(char **tab);
 void	free_2_tab(char **tab1, char **tab2);
 char	**lst_to_tab(t_list *list, t_data *data);
 int		on_error(char *str, int code);
@@ -215,7 +215,7 @@ char	**get_all_path(t_data *data);
 char 	**get_last_cmd(char **tab);
 
 
-//export.c
+//builtins
 t_list	*env_to_list(char **env);
 void	found_and_replace(t_list **export, char *name);
 void	found_and_add(t_list **export, char *name, t_data *data);
@@ -236,5 +236,8 @@ char	*ft_get_value(char *str);
 char	*remove_plus(char *str);
 char	*ft_get_key(char *str);
 char    **list_to_tab(t_list *list);
+int 	check_builtin(char *str);
+int 	redirect_in_builtin(char **cmds, t_data *data);
+void	start_echo(char **cmds);
 
 #endif

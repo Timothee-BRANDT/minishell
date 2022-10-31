@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 12:59:25 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/10/28 14:40:01 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/10/28 18:33:45 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	**extract_cmd(char **cmd, t_data *data)
 	int			i;
 	int			*k;
 
-	final_cmd = malloc(sizeof(char *) * 500);
+	final_cmd = malloc(sizeof(char *) * 500); // faire une fonction qui malloc bien flemmard;
 	k = &j;
 	i = 0;
 	while (cmd[j] && ft_strcmp(cmd[j], "|") != 0)

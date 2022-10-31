@@ -6,7 +6,7 @@
 #    By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/09 14:04:53 by tbrandt           #+#    #+#              #
-#    Updated: 2022/10/27 15:06:32 by tbrandt          ###   ########.fr        #
+#    Updated: 2022/10/28 16:29:23 by tbrandt          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,11 +35,13 @@ SRC		=	main.c						\
 			executor/get_command.c		\
 			executor/utils2.c			\
 			built_in/export.c			\
+			built_in/echo.c				\
 			built_in/utils.c			\
 			built_in/utils2.c			\
 			built_in/utils3.c			\
 			built_in/utils4.c			\
 			built_in/utils5.c			\
+			built_in/utils6.c			\
 
 OBJ		=	$(SRC:%.c=%.o)
 
