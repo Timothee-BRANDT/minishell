@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 12:59:25 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/11/01 16:04:06 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/11/01 16:14:46 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,23 @@ void	check_all_redirection(char **cmd, int *k, t_data *data)
 	}
 }
 
+int	final_cmd_size(char **cmd)
+{
+	int	i;
+	int	result;
+
+	i = 0;
+	result = 0;
+	while (cmd[i] && ft_strcmp(cmd[i], "|"))
+	{
+		if (is_redir(cmd[i]) && cmd[i + 2])
+			i = i + 2;
+		i++;
+		result++;
+	}
+	return (result);
+}
+
 char	**extract_cmd(char **cmd, t_data *data)
 {
 	static	int	j = 0;
@@ -30,7 +47,7 @@ char	**extract_cmd(char **cmd, t_data *data)
 	int			i;
 	int			*k;
 
-	final_cmd = malloc(sizeof(char *) * 500); // faire une fonction qui malloc bien flemmard;
+	final_cmd = malloc(sizeof(char *) * (final_cmd_size(cmd) + 1));
 	k = &j;
 	i = 0;
 	while (cmd[j] && ft_strcmp(cmd[j], "|") != 0)
