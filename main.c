@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 14:07:48 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/10/28 14:33:39 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/11/01 15:40:13 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	main(int ac, char	**av, char	**env)
 		free_it(data->buffer_save);
 		ft_lstclear(&data->list, &free_list);
 		// system("lsof -w -c minishell");
-		//system("leaks minishell");
+		system("leaks minishell");
 	}
 	free(data->buffer);
 	return (0);

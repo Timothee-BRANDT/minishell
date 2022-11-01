@@ -12,6 +12,27 @@
 
 #include "../minishell.h"
 
+t_list	*dpt_to_lst(char **env)
+{
+	t_list	*list;
+	int		i;
+
+	i = 2;
+	if (!env[0])
+	{
+		list = ft_lstnew("");
+		return (list);
+	}
+	else
+		list = ft_lstnew(env[1]);
+	while (env[i])
+	{
+		ft_lstadd_back(&list, ft_lstnew(env[i]));
+		i++;
+	}
+	return (list);
+}
+
 t_list	*env_to_list(char **env)
 {
 	t_list	*list;
@@ -64,7 +85,9 @@ void	found_and_replace(t_list **export, char *name)
 	while (ptr)
 	{
 		get_key_export = ft_get_key((char *)(ptr->next->content));
+		printf("pointeur get_key_export : %p\n", get_key_export);
 		get_key_name = ft_get_key(name);
+		printf("pointeur get_key_name : %p\n", get_key_name);
 		if (ft_strcmp(get_key_export, get_key_name) == 0)
 		{
 			free_two_string(get_key_export, get_key_name);

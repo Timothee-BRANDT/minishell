@@ -23,7 +23,7 @@ void	built_in_analyzer(t_list **list, t_data	*data)
 		if (ft_strcmp((*list)->content, "export") == 0 && !data->list->next)
 			ft_print_env(data->export);
 		if (ft_strcmp((*list)->content, "export") == 0 && data->list->next)
-			export_name(list, data, 0);
+			export_name(list, data);
 		if (ft_strcmp((*list)->content, "unset") == 0 && (*list)->next)
     	{
     		unset_name_export(&data->export, list);

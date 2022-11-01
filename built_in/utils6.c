@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 15:47:14 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/10/31 11:58:42 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/11/01 11:55:11 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int redirect_in_builtin(char **cmds, t_data *data)
         return (4);
     if (!ft_strcmp(cmds[0], "echo"))
     {
-        start_echo(cmds, data);
+        start_echo(cmds);
         return (5);
     }
     if (!ft_strcmp(cmds[0], "cd"))

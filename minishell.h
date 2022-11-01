@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 19:34:14 by mmatthie          #+#    #+#             */
-/*   Updated: 2022/10/31 14:06:27 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/11/01 12:35:24 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,7 @@ typedef struct s_data
 typedef struct s_cmd
 {
 	char	**args;
+	char	**tab;
 	t_list	*redirs;
 }	t_cmd;
 
@@ -188,6 +189,7 @@ void	redir_tokenisation(t_list *list);
 void	get_cmd_count(t_list *list, t_data *data);
 void	get_cmd_size(t_list *list, t_data *data);
 void    get_cmd_from_list(t_list *list, t_data *data, t_cmd *cmd);
+char	**get_cmd_from_list_v2(t_list *list, t_data *data);
 void	free_list(void *ptr);
 int		analyzer(t_data *data, t_cmd *cmd);
 int		token_error(t_list *list);
@@ -227,7 +229,7 @@ void	ft_print_env(t_list	*lst);
 void	free_all(t_data *data);
 void	free_two_string(char *s1, char *s2);
 void	free_three_string(char *s1, char *s2, char *s3, char *s4);
-int		export_name(t_list **list, t_data *data, int code);
+int		export_name(t_list **list, t_data *data);
 int		is_in_list(t_list **list, char *name);
 char	*get_env_v2(char *key, t_list *env);
 int		set_export_var(t_data *data);
@@ -239,5 +241,8 @@ char    **list_to_tab(t_list *list);
 int 	check_builtin(char *str);
 int 	redirect_in_builtin(char **cmds, t_data *data);
 void	start_echo(char **cmds);
+char	**get_next_pipe(char **tab);
+int		get_len(char **tab);
+t_list	*dpt_to_lst(char **env);
 
 #endif

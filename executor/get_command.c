@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 12:59:25 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/10/28 18:33:45 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/11/01 16:04:06 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,26 @@ void get_cmd_size(t_list *list, t_data *data)
         tmp = tmp->next;
         data->cmd_size++;
     }
+}
+
+char	**get_cmd_from_list_v2(t_list *list, t_data *data)
+{
+	t_list	*tmp;
+	char	**tab;
+	int		i;
+
+	tmp = list;
+	get_cmd_size(data->list, data);
+	tab = malloc(sizeof(char *) * data->cmd_size + 1);
+	i = 0;
+	while (tmp)
+	{
+		tab[i] = ft_strdup((char *)tmp->content);
+		i++;
+		tmp = tmp->next;
+	}
+	tab[i] = NULL;
+	return (tab);
 }
 
 void	get_cmd_from_list(t_list *list, t_data *data, t_cmd *cmd)
