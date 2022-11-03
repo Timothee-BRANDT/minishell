@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 12:59:25 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/11/01 16:14:46 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/11/03 17:38:45 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,10 @@ void	check_all_redirection(char **cmd, int *k, t_data *data)
 	while (is_redir(cmd[*k]))
 	{
 		if (is_redir(cmd[*k]) == 1 || is_redir(cmd[*k]) == 3)
+		{
 			redir_in_manager(k, cmd, data);
+		}
+
 		if (is_redir(cmd[*k]) == 2 || is_redir(cmd[*k]) == 4)
 			redir_out_manager(k, cmd, data);
 	}
@@ -30,6 +33,8 @@ int	final_cmd_size(char **cmd)
 
 	i = 0;
 	result = 0;
+	if (!cmd)
+		return (0);
 	while (cmd[i] && ft_strcmp(cmd[i], "|"))
 	{
 		if (is_redir(cmd[i]) && cmd[i + 2])
@@ -107,7 +112,7 @@ char	**get_cmd_from_list_v2(t_list *list, t_data *data)
 
 	tmp = list;
 	get_cmd_size(data->list, data);
-	tab = malloc(sizeof(char *) * data->cmd_size + 1);
+	tab = malloc(sizeof(char *) * (data->cmd_size + 1));
 	i = 0;
 	while (tmp)
 	{
@@ -126,7 +131,7 @@ void	get_cmd_from_list(t_list *list, t_data *data, t_cmd *cmd)
 
 	tmp = list;
 	get_cmd_size(data->list, data);
-	cmd->args = malloc(sizeof(char *) * data->cmd_size + 1);
+	cmd->args = malloc(sizeof(char *) * (data->cmd_size + 1));
 	i = 0;
 	while (tmp)
 	{

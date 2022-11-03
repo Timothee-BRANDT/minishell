@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 10:12:30 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/10/28 15:44:38 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/11/03 16:13:16 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char    **list_to_tab(t_list *cmd)
 	int		i;
 
 	tmp = cmd;
-	tab = malloc(sizeof(char *) * ft_lstsize(cmd) + 1);
+	tab = malloc(sizeof(char *) * (ft_lstsize(cmd) + 1));
 	i = 0;
 	while (tmp && !is_built_in((char *)cmd->content) && !is_token((char *)cmd->content))
 	{

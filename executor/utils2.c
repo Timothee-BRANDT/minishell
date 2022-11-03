@@ -101,5 +101,6 @@ int	redir_in_manager(int	*k, char **cmd, t_data *data)
 	}	
 	if (j == count_heredoc(data->list))
 		ft_bzero(&j, sizeof(int));
+	free_tab(tab);
 	return (0);
 }

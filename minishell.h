@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 19:34:14 by mmatthie          #+#    #+#             */
-/*   Updated: 2022/11/01 16:15:23 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/11/01 16:20:33 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,6 @@ typedef struct s_cmd
 {
 	char	**args;
 	char	**tab;
-	t_list	*redirs;
 }	t_cmd;
 
 //utils.c

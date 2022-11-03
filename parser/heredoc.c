@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 09:48:14 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/10/26 17:25:53 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/11/03 16:12:39 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char	**stock_delimitors(t_list *list, t_data *data)
 	int		i;
 
 	(void)data;
-	tab = malloc(sizeof(char *) * count_heredoc(list) + 1);
+	tab = malloc(sizeof(char *) * (count_heredoc(list) + 1));
 	tmp = list;
 	i = 0;
 

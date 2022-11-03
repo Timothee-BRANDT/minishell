@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 17:13:06 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/10/31 11:26:04 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/11/03 16:15:58 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,9 @@ int	ft_strlen(char *str)
 	int	i;
 
 	i = 0;
-	while (str && str[i])
+	if (!str)
+		return (0);
+	while (str[i])
 		i++;
 	return (i);
 }

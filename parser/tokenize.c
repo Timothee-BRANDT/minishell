@@ -82,7 +82,7 @@ void	built_in_tokenisation(t_list *list)
 
 void	exec_builtin(char **tab, t_data *data)
 {
-	t_list *command;
+	t_list *list;
 
 	if (!ft_strcmp(tab[0], "export"))
 	{
@@ -90,10 +90,14 @@ void	exec_builtin(char **tab, t_data *data)
         	ft_print_env(data->export);
 		else if (ft_strlen2d(tab) > 1)
 		{
-			command = dpt_to_lst(tab);
-			export_name(&command, data);
+			list = dpt_to_lst(tab);
+			export_name(&list, data);
+			ft_lstclear(&list, free);
+			// probleme de leaks ici
 		}
 	}
+	// if (ft_lstsize(list) > 1)
+		// ft_lstclear(&list, free);
 }
 
 int	get_len(char **tab)
@@ -103,6 +107,8 @@ int	get_len(char **tab)
 
 	i = 0;
 	result = 0;
+	if (!tab)
+		return (0);
 	while(tab[i] && ft_strcmp(tab[i], "|"))
 	{
 		i++;

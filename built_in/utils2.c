@@ -85,9 +85,7 @@ void	found_and_replace(t_list **export, char *name)
 	while (ptr)
 	{
 		get_key_export = ft_get_key((char *)(ptr->next->content));
-		printf("pointeur get_key_export : %p\n", get_key_export);
 		get_key_name = ft_get_key(name);
-		printf("pointeur get_key_name : %p\n", get_key_name);
 		if (ft_strcmp(get_key_export, get_key_name) == 0)
 		{
 			free_two_string(get_key_export, get_key_name);

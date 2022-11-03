@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 15:08:29 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/10/27 15:25:30 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/11/03 17:19:40 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,5 +70,6 @@ t_list	*get_word_in_list(char	*buffer, t_data	*data)
 				lst = get_in_list(buffer, data, lst);
 		}
 	}
+	printf("\n\n\nlst : %p\n\n\n", lst);
 	return (lst);
 }

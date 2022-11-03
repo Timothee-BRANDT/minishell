@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 13:12:18 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/11/01 15:37:12 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/11/03 18:29:08 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,7 @@
 
 int	export_name(t_list **cmd, t_data *data)
 {
-	t_list	*tmp;
-
-	tmp = *cmd;
-	data->str = ((char *)tmp->content);
+	data->str = ft_strdup(((char *)(*cmd)->content));
 	if (is_token(data->str))
 		return (on_error("syntax error near unexpected token `newline'\n", 1));
 	if (ft_strcmp(data->str, "=") == 0)
@@ -52,12 +49,7 @@ void	exec_export(t_data *data)
 	else
 	{
 		if (!is_in_list(&data->export, data->get_key))
-		{
-			printf("addback in data->export\n");
-			printf("data->get_key: %p\n", data->get_key);
 			ft_lstadd_back(&data->export, ft_lstnew(data->str));
-			// ft_print_list(data->export);
-		}
 	}
 	free(data->get_key);
 }
