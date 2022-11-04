@@ -93,11 +93,8 @@ void	exec_builtin(char **tab, t_data *data)
 			list = dpt_to_lst(tab);
 			export_name(&list, data);
 			ft_lstclear(&list, free);
-			// probleme de leaks ici
 		}
 	}
-	// if (ft_lstsize(list) > 1)
-		// ft_lstclear(&list, free);
 }
 
 int	get_len(char **tab)
@@ -145,7 +142,17 @@ void	start_builtin(t_data *data)
 	ft_manage(tab);
 	exec_builtin(command, data);
 	ft_manage(command);
+	// JE DOIS TRAVAILLER SUR CA DEMAIN, NE PAS ENVOYER MA BUILTIN DANS MON EXECVE//
 	// fonction qui remove tout jusqu'a la pipe si j'ai trouver une builtin
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+
 }
 
 int	analyzer(t_data *data, t_cmd *cmd)

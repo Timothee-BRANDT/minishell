@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 13:12:18 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/11/03 18:29:08 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/11/04 17:25:31 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 int	export_name(t_list **cmd, t_data *data)
 {
 	data->str = ft_strdup(((char *)(*cmd)->content));
+	// printf("pointeur data->str: %p\n", data->str);
+	// printf("pointeur cmd->content: %p\n", (char *)(*cmd)->content);
 	if (is_token(data->str))
 		return (on_error("syntax error near unexpected token `newline'\n", 1));
 	if (ft_strcmp(data->str, "=") == 0)
@@ -34,9 +36,9 @@ void	exec_export(t_data *data)
 	if (data->check == 1)
 	{
 		if (!is_in_list(&data->export, data->get_key))
-			ft_lstadd_back(&data->export, ft_lstnew(data->str));
+			ft_lstadd_back(&data->export, ft_lstnew(ft_strdup(data->str)));
 		if (!is_in_list(&data->env, data->get_key))
-			ft_lstadd_back(&data->env, ft_lstnew(data->str));
+			ft_lstadd_back(&data->env, ft_lstnew(ft_strdup(data->str)));
 		if (is_in_list(&data->export, data->get_key) && data->plus == 0)
 			found_and_replace(&data->export, data->str);
 		if (is_in_list(&data->export, data->get_key) && data->plus == 1)
@@ -49,9 +51,10 @@ void	exec_export(t_data *data)
 	else
 	{
 		if (!is_in_list(&data->export, data->get_key))
-			ft_lstadd_back(&data->export, ft_lstnew(data->str));
+			ft_lstadd_back(&data->export, ft_lstnew(ft_strdup(data->str)));
 	}
 	free(data->get_key);
+	free(data->str);
 }
 
 void	unset_name_env(t_list **env, t_list **cmd)

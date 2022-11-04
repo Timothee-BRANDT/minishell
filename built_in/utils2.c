@@ -90,8 +90,9 @@ void	found_and_replace(t_list **export, char *name)
 		{
 			free_two_string(get_key_export, get_key_name);
 			tmp = ptr->next->next;
+			free(ptr->next->content);
 			free(ptr->next);
-			ptr->next = ft_lstnew((void *)name);
+			ptr->next = ft_lstnew(ft_strdup(name));
 			ptr->next->next = tmp;
 			break ;
 		}
@@ -118,6 +119,7 @@ void	found_and_add(t_list **export, char *name, t_data *data)
 			data->result = ft_strjoin(data->string, data->get_value_name);
 			free_all(data);
 			data->tmp = ptr->next->next;
+			free(ptr->next->content);
 			free(ptr->next);
 			ptr->next = ft_lstnew(data->result);
 			ptr->next->next = data->tmp;

@@ -6,13 +6,13 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 17:07:44 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/11/04 17:21:57 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/11/04 17:04:22 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin_slash(char const *s1, char const *s2)
 {
 	char	*str;
 	int		i;
@@ -20,7 +20,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 
 	if (!s1 || !s2)
 		return (NULL);
-	str = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
+	str = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 2));
 	if (!str)
 		return (NULL);
 	i = 0;
@@ -30,6 +30,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		str[i] = s1[i];
 		i++;
 	}
+	str[i++] = '/';
 	while (s2 && s2[j])
 	{
 		str[i] = s2[j];
@@ -39,3 +40,11 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	str[i] = '\0';
 	return (str);
 }
+/*
+#include <stdio.h>
+int main()
+{
+	char s1 [] = "Coucou";
+	char s2 [] = "Bonsoir";
+	printf("%s\n", ft_strjoin(s1, s2));
+}*/

@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 11:55:22 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/09/27 11:12:14 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/11/04 15:25:33 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*ft_get_key(char *str)
 	i = 0;
 	while (str[i] && str[i] != '=' && str[i] != '+')
 		i++;
-	result = malloc(sizeof(char) * i + 1);
+	result = malloc(sizeof(char) * (i + 1));
 	i = 0;
 	while (str[i] && str[i] != '=' && str[i] != '+')
 	{
@@ -45,7 +45,7 @@ char	*ft_get_value(char *str)
 	i = 0;
 	while (str[i] && str[i] != '=')
 		i++;
-	result = malloc(sizeof(char) * (j - i) + 1);
+	result = malloc(sizeof(char) * ((j - i) + 1));
 	j = 0;
 	i++;
 	while (str[i])
