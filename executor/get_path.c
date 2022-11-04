@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 15:22:43 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/10/28 16:57:09 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/11/04 17:34:27 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char    *get_correct_cmd(char **paths, char **cmds)
 		return (cmds[0]);
 	while (paths[i])
 	{
-		cmd_path = ft_strjoin(paths[i], cmds[0]);
+		cmd_path = ft_strjoin_slash(paths[i], cmds[0]);
 		if (!access(cmd_path, F_OK | X_OK))
 			return (cmd_path);
 		free(cmd_path);
