@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 12:59:25 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/11/03 17:38:45 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/11/07 21:56:50 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,7 @@ void	check_all_redirection(char **cmd, int *k, t_data *data)
 	while (is_redir(cmd[*k]))
 	{
 		if (is_redir(cmd[*k]) == 1 || is_redir(cmd[*k]) == 3)
-		{
 			redir_in_manager(k, cmd, data);
-		}
 
 		if (is_redir(cmd[*k]) == 2 || is_redir(cmd[*k]) == 4)
 			redir_out_manager(k, cmd, data);
@@ -52,17 +50,18 @@ char	**extract_cmd(char **cmd, t_data *data)
 	int			i;
 	int			*k;
 
-	final_cmd = malloc(sizeof(char *) * (final_cmd_size(cmd) + 1));
 	k = &j;
 	i = 0;
-	while (cmd[j] && ft_strcmp(cmd[j], "|") != 0)
+	final_cmd = malloc(sizeof(char *) * (final_cmd_size(&cmd[j]) + 1));
+	while (cmd[j] && ft_strcmp(cmd[j], "|"))
 	{
 		if (cmd[j][0] == '\0')
 			j++;
 		check_all_redirection(cmd, k, data);
 		if (!cmd[j] || !ft_strcmp(cmd[j], "|"))
 			break ;
-		final_cmd[i++] = ft_strdup(cmd[j]);
+		final_cmd[i] = ft_strdup(cmd[j]);
+		i++;
 		j++;
 	}
 	if (cmd[j] && ft_strcmp(cmd[j], "|") == 0)

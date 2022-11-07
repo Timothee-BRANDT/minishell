@@ -58,15 +58,28 @@ void	dup_parent(t_data *data, int cmd_count)
 	close(data->pipe_1);
 }
 
+/*int	exit_code(int signum)
+{
+	if (WIFEXITED(signum))
+		return (WEXITSTATUS(signum));
+	else if (WIFSIGNALED(signum))
+		return (WTERMSIG(signum) + 128);
+	else if (WIFSTOPPED(signum))
+		return (WTERMSIG(signum) + 128);
+	return (0);
+}*/
+
 int	wait_my_childs(t_data *data)
 {
 	int	i;
 	int status;
+	// int test;
 
 	status = 0;
 	i = -1;
 	while (++i < data->cmd_count)
 		waitpid(0 , &status, 0);
+	// test = exit_code(status);
 	return (0);
 }
 

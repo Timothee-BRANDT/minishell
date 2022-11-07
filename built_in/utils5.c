@@ -47,9 +47,10 @@ void	print_tab(char **tab)
 	i = 0;
 	while (tab[i])
 	{
-		printf("tab[i]: %s\n", tab[i]);
+		printf("tab[%d]: %s\n", i, tab[i]);
 		i++;
 	}
+	
 }
 
 void	free_2_tab(char **tab1, char **tab2)

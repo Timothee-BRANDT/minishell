@@ -24,10 +24,10 @@ t_list	*dpt_to_lst(char **env)
 		return (list);
 	}
 	else
-		list = ft_lstnew(env[1]);
+		list = ft_lstnew(ft_strdup(env[1]));
 	while (env[i])
 	{
-		ft_lstadd_back(&list, ft_lstnew(env[i]));
+		ft_lstadd_back(&list, ft_lstnew(ft_strdup(env[i])));
 		i++;
 	}
 	return (list);
@@ -45,10 +45,10 @@ t_list	*env_to_list(char **env)
 		return (list);
 	}
 	else
-		list = ft_lstnew(env[0]);
+		list = ft_lstnew(ft_strdup(env[0]));
 	while (env[i])
 	{
-		ft_lstadd_back(&list, ft_lstnew(env[i]));
+		ft_lstadd_back(&list, ft_lstnew(ft_strdup(env[i])));
 		i++;
 	}
 	return (list);

@@ -48,15 +48,10 @@ void	exec_command(char **cmds, t_data	*data)
 		free_tab(cmds);
 		free_tab(paths);
 		printf("Shell: command not found.\n");
-		return ;
+		exit(127);
 	}
 	if (check_builtin(cmds[0]))
 		redirect_in_builtin(cmds, data);
-	// faire le check if built-in ici
-	// if (is_built_in(cmds[0]))
-	// exec_built_in
-	// else
-	// execve
 	else if (execve(good_cmd, cmds, env) == -1)
 		write(2, "Command execution failed\n", 25);
 }

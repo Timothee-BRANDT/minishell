@@ -84,6 +84,8 @@ void	exec_builtin(char **tab, t_data *data)
 {
 	t_list *list;
 
+	if (!tab)
+		return ;
 	if (!ft_strcmp(tab[0], "export"))
 	{
 		if (!tab[1])
@@ -139,9 +141,9 @@ void	start_builtin(t_data *data)
 
 	tab = get_cmd_from_list_v2(data->list, data);
 	command = get_next_pipe(tab);
-	ft_manage(tab);
+	free_tab(tab);
 	exec_builtin(command, data);
-	ft_manage(command);
+	free_tab(command);
 	// JE DOIS TRAVAILLER SUR CA DEMAIN, NE PAS ENVOYER MA BUILTIN DANS MON EXECVE//
 	// fonction qui remove tout jusqu'a la pipe si j'ai trouver une builtin
 	//
@@ -152,13 +154,13 @@ void	start_builtin(t_data *data)
 	//
 	//
 	//
-
 }
 
 int	analyzer(t_data *data, t_cmd *cmd)
 {
 	data->tmp_in = dup(0);
 	data->tmp_out = dup(1);
+	
 	if (token_error(data->list))
 	{
 		close(data->tmp_in);

@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 14:07:48 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/11/04 17:34:49 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/11/07 21:59:29 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int	main(int ac, char	**av, char	**env)
 			ft_putstr_fd("Error, quotes not closed.\n", 2);
 		    add_history(data->buffer);
 		    free(data->buffer);
+			free_it(data->buffer_save);
             continue ;
 		}
 		data->buffer = ft_add_space(data->buffer, data);
@@ -44,7 +45,7 @@ int	main(int ac, char	**av, char	**env)
 		free(data->buffer);
 		free_it(data->buffer_save);
 		ft_lstclear(&data->list, &free_list);
-		// system("leaks minishell");
+		system("leaks minishell");
 	}
 	free(data->buffer);
 	return (0);
