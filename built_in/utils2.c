@@ -12,7 +12,7 @@
 
 #include "../minishell.h"
 
-t_list	*dpt_to_lst(char **env)
+t_list	*dpt_to_lst_export(char **env)
 {
 	t_list	*list;
 	int		i;
@@ -25,6 +25,27 @@ t_list	*dpt_to_lst(char **env)
 	}
 	else
 		list = ft_lstnew(ft_strdup(env[1]));
+	while (env[i])
+	{
+		ft_lstadd_back(&list, ft_lstnew(ft_strdup(env[i])));
+		i++;
+	}
+	return (list);
+}
+
+t_list	*dpt_to_lst_env(char **env)
+{
+	t_list	*list;
+	int		i;
+
+	i = 1;
+	if (!env[0])
+	{
+		list = ft_lstnew("");
+		return (list);
+	}
+	else
+		list = ft_lstnew(ft_strdup(env[0]));
 	while (env[i])
 	{
 		ft_lstadd_back(&list, ft_lstnew(ft_strdup(env[i])));
@@ -86,7 +107,7 @@ void	found_and_replace(t_list **export, char *name)
 	{
 		get_key_export = ft_get_key((char *)(ptr->next->content));
 		get_key_name = ft_get_key(name);
-		if (ft_strcmp(get_key_export, get_key_name) == 0)
+		if (!ft_strcmp(get_key_export, get_key_name))
 		{
 			free_two_string(get_key_export, get_key_name);
 			tmp = ptr->next->next;
@@ -110,7 +131,7 @@ void	found_and_add(t_list **export, char *name, t_data *data)
 	{
 		data->get_key_export = ft_get_key((char *)(ptr->next->content));
 		data->get_key_name = ft_get_key(name);
-		if (ft_strcmp(data->get_key_export, data->get_key_name) == 0)
+		if (!ft_strcmp(data->get_key_export, data->get_key_name))
 		{
 			data->get_value_export = ft_get_value(ptr->next->content);
 			data->get_value_name = ft_get_value(name);

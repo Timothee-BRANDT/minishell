@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 18:26:03 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/11/07 19:47:45 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/11/07 23:26:23 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ int	on_error(char *str, int code)
 
 void	free_all(t_data *data)
 {
-	printf("free all export\n");
 	free(data->get_key_name);
 	free(data->get_key_export);
 	free(data->get_value_export);

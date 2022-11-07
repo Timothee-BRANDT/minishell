@@ -82,21 +82,20 @@ void	built_in_tokenisation(t_list *list)
 
 void	exec_builtin(char **tab, t_data *data)
 {
-	t_list *list;
-
 	if (!tab)
 		return ;
-	if (!ft_strcmp(tab[0], "export"))
+	if (is_export(tab, data))
+		return ;
+	if (tab[0] && !ft_strcmp(tab[0], "env") )
 	{
-		if (!tab[1])
-        	ft_print_env(data->export);
-		else if (ft_strlen2d(tab) > 1)
-		{
-			list = dpt_to_lst(tab);
-			export_name(&list, data);
-			ft_lstclear(&list, free);
-		}
+		ft_print_env(data->env);
+		return ;
 	}
+	if (is_unset(tab, data))
+		return ;
+	if (is_pwd(tab, data))
+		return ;
+	
 }
 
 int	get_len(char **tab)
@@ -144,16 +143,6 @@ void	start_builtin(t_data *data)
 	free_tab(tab);
 	exec_builtin(command, data);
 	free_tab(command);
-	// JE DOIS TRAVAILLER SUR CA DEMAIN, NE PAS ENVOYER MA BUILTIN DANS MON EXECVE//
-	// fonction qui remove tout jusqu'a la pipe si j'ai trouver une builtin
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
 }
 
 int	analyzer(t_data *data, t_cmd *cmd)

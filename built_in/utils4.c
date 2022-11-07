@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 10:12:30 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/11/07 21:37:16 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/11/07 22:49:14 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,19 +34,15 @@ char    **list_to_tab(t_list *cmd)
 
 int is_built_in(void *content)
 {
-    if (ft_strcmp((char *)content, "export") == 0)
+    if (!ft_strcmp((char *)content, "export"))
         return (1);
-    if (ft_strcmp(content, "env") == 0)
+    if (!ft_strcmp((char *)content, "env"))
         return (1);
-    if (ft_strcmp(content, "unset") == 0)
+    if (!ft_strcmp((char *)content, "unset"))
         return (1);
-    if (ft_strcmp(content, "pwd") == 0)
+    if (!ft_strcmp((char *)content, "cd"))
         return (1);
-    if (ft_strcmp(content, "echo") == 0)
-        return (1);
-    if (ft_strcmp(content, "cd") == 0)
-        return (1);
-    if (ft_strcmp(content, "exit") == 0)
+    if (!ft_strcmp((char *)content, "exit"))
         return (1);
     return (0);
 }

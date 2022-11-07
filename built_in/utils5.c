@@ -22,7 +22,7 @@ char	*get_env_v2(char *key, t_list *env)
 	len = ft_strlen(key);
 	while (tmp)
 	{
-		if (!ft_strncmp((char *)tmp->content, key, len))
+		if (!ft_strncmp_v2((char *)tmp->content, key, len))
 		{
 			tab = ft_get_value((char *)tmp->content);
 			return (tab);

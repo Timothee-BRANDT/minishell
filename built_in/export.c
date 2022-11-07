@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 13:12:18 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/11/07 20:57:51 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/11/07 23:22:27 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ void	unset_name_env(t_list **env, t_list **cmd)
 		{
 			tmp = ptr->next;
 			ptr->next = ptr->next->next;
+			free(tmp->content);
 			free(tmp);
 			if (!ptr->next)
 				return ;
@@ -98,6 +99,7 @@ void	unset_name_export(t_list **export, t_list **cmd)
 		{
 			tmp = ptr->next;
 			ptr->next = ptr->next->next;
+			free(tmp->content);
 			free(tmp);
 			if (!ptr->next)
 				return ;

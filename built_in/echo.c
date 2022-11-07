@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 16:11:49 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/10/31 14:12:17 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/11/07 23:09:18 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,14 +84,27 @@ char	*ft_strjoin_echo(char const *s1, char const *s2)
 	return (str);
 }
 
+int	check_arg(char **cmds)
+{
+	if (!cmds[1])
+	{
+		write(1, "\n", 1);
+		return (1);
+	}
+	return (0);
+}
+
+
 void	start_echo(char **cmds)
 {
 	int		i;
 	char	*result;
 
 	i = 1;
-	while (check_option(cmds[++i]));
 	result = NULL;
+	if (check_arg(cmds))
+		return ;
+	while (check_option(cmds[++i]));
 	if (!check_option(cmds[1]))
 		result = ft_strjoin_echo(result, cmds[1]);
 	while (cmds[i])
@@ -102,12 +115,6 @@ void	start_echo(char **cmds)
 			result = ft_strjoin_echo(result, cmds[i]);
 		i++;
 	}
-	if (check_option(cmds[1]))
-		ft_putstr(result);
-	else
-	{
-		ft_putstr(result);
-		write(1, "\n", 1);
-	}
+	print_echo(cmds, result);
 	free(result);
 }
