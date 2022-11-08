@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 15:08:29 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/11/03 17:27:38 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/11/08 18:03:45 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ int	get_second_double(char	*str, int count, t_data	*data)
 	tmp = 0;
 	if (data->indicate == 1)
 		reset_indicate(count, data);
+	count++;
 	i = count;
 	while (str && str[i] && str[i] != data->token && str[i] != '$')
 	{

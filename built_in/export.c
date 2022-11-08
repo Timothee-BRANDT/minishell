@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 13:12:18 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/11/07 23:22:27 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/11/08 17:04:33 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,12 @@
 int	export_name(t_list **cmd, t_data *data)
 {
 	data->str = ft_strdup(((char *)(*cmd)->content));
-	// printf("pointeur data->str: %p\n", data->str);
-	// printf("pointeur cmd->content: %p\n", (char *)(*cmd)->content);
 	if (is_token(data->str))
 		return (on_error("syntax error near unexpected token `newline'\n", 1));
 	if (ft_strcmp(data->str, "=") == 0)
 		return (on_error("not a valid identifier.\n", 1));
 	init_data(data);
-	if (set_export_var(data) == 1)
+	if (set_export_var(data))
 		return (on_error("Not a valid identifier.\n", 1));
 	exec_export(data);
 	if ((*cmd)->next != NULL && \

@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 14:40:13 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/11/04 17:20:01 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/11/08 18:37:39 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,4 +77,5 @@ int			ft_strcmp(char *s1, char *s2);
 int			size(char *str);
 long long	ft_atoll(const char *str);
 void		ft_lstclear(t_list **lst, void (*del)(void*));
+void		ft_putstr_fd_free(char *s, int fd);
 #endif

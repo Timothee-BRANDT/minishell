@@ -48,6 +48,7 @@ void	print_tab(char **tab)
 	while (tab[i])
 	{
 		printf("tab[%d]: %s\n", i, tab[i]);
+		printf("pointeur tab[%d]: %p\n", i, tab[i]);
 		i++;
 	}
 	

@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 09:48:14 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/11/03 16:12:39 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/11/08 18:37:48 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,25 +52,6 @@ char	**stock_delimitors(t_list *list, t_data *data)
 	return (tab);
 }
 
-/*void	create_files(t_list *list, t_data *data)
-{
-	int	i;
-	int	j;
-	char **tab;
-	
-	i = 0;
-	j = 0;
-	tab = stock_delimitors(data->list, data);
-	data->fd = malloc(sizeof(int) * count_heredoc(list));
-	while (i < count_heredoc(list))
-	{
-		data->fd[j] = open(tab[i], O_RDONLY | O_WRONLY | O_TRUNC | O_CREAT, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
-		i++;
-		j++;
-	}
-	free_tab(tab);
-}*/
-
 // when should i free my fd tab ???
 int	start_heredoc(t_data *data)
 {
@@ -89,10 +70,11 @@ int	start_heredoc(t_data *data)
 			str = readline("> ");
 			if (!ft_strcmp(str, tab[i]))
 				break;
-			ft_putstr_fd(str, fd);
+			ft_putstr_fd_free(str, fd);
 		}
-		i++;
+		free(str);
 		close(fd);
+		i++;
 		if (i == ft_strlen2d(tab))
 			break;
 	}
