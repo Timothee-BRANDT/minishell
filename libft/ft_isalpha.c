@@ -14,7 +14,7 @@
 
 int	ft_isalpha(int c)
 {
-	if (c >= '0' && c <= '9')
+	if ((c >= '0' && c <= '9') || c == '/' || c == '\'' || c == ':')
 		return (0);
 	else
 		return (1);

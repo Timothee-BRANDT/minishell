@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 12:59:25 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/11/07 23:40:47 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/11/09 16:55:46 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,6 @@ int	final_cmd_size(char **cmd)
 void	skip_builtin(char **cmd, int *k, t_data *data)
 {
 	(void)data;
-	if (cmd[*k] && !ft_strcmp(cmd[*k], "env"))
-	{
-		*k = *k + 1;
-		return ;
-	}
 	if (cmd[*k] && is_built_in(cmd[*k]))
 	{
 		while (cmd[*k] && ft_strcmp(cmd[*k], "|"))

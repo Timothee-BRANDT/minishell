@@ -86,16 +86,10 @@ void	exec_builtin(char **tab, t_data *data)
 		return ;
 	if (is_export(tab, data))
 		return ;
-	if (tab[0] && !ft_strcmp(tab[0], "env") )
-	{
-		ft_print_env(data->env);
-		return ;
-	}
 	if (is_unset(tab, data))
 		return ;
-	if (is_pwd(tab, data))
-		return ;
-	
+	if (is_cd(tab, data))
+		return;
 }
 
 int	get_len(char **tab)
@@ -139,6 +133,7 @@ void	start_builtin(t_data *data)
 	char **tab;
 
 	tab = get_cmd_from_list_v2(data->list, data);
+	check_if_pipe(tab, data);
 	command = get_next_pipe(tab);
 	free_tab(tab);
 	exec_builtin(command, data);

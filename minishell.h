@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 19:34:14 by mmatthie          #+#    #+#             */
-/*   Updated: 2022/11/08 00:06:16 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/11/09 16:59:27 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ typedef struct s_data
 	int		check_fd_in;
 	int		append;
 	int		check_fd_out;
+	int		check_pipe;
 	int		reset_prompt;
 	int		*fd;
 	char	*first_outfile;
@@ -240,7 +241,6 @@ char    **list_to_tab(t_list *list);
 int 	check_builtin(char *str);
 int 	redirect_in_builtin(char **cmds, t_data *data);
 void	start_echo(char **cmds);
-int    is_pwd(char **tab, t_data *data);
 char	**get_next_pipe(char **tab);
 int		get_len(char **tab);
 t_list	*dpt_to_lst_export(char **env);
@@ -250,5 +250,8 @@ void	print_echo(char **cmds, char *result);
 int 	check_option(char *tab);
 int 	is_export(char **tab, t_data *data);
 int		is_unset(char **tab, t_data *data);
+int		is_pwd(char **tab, t_data *data);
+int		is_cd(char **tab, t_data *data);
+int		check_if_pipe(char **tab, t_data *data);
 
 #endif

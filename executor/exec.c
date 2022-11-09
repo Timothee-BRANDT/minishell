@@ -43,15 +43,15 @@ void	exec_command(char **cmds, t_data	*data)
 	paths = get_all_path(data);
 	env = list_to_tab(data->env);
 	good_cmd = get_correct_cmd(paths, cmds);
-	if (!good_cmd)
+	if (check_builtin(cmds[0]))
+		redirect_in_builtin(cmds, data);
+	else if (!good_cmd)
 	{
 		free_tab(cmds);
 		free_tab(paths);
 		printf("Shell: command not found.\n");
 		exit(127);
 	}
-	if (check_builtin(cmds[0]))
-		redirect_in_builtin(cmds, data);
 	else if (execve(good_cmd, cmds, env) == -1)
 		write(2, "Command execution failed\n", 25);
 }

@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 10:12:30 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/11/07 22:49:14 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/11/09 15:23:18 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,8 @@ char    **list_to_tab(t_list *cmd)
 
 int is_built_in(void *content)
 {
-    if (!ft_strcmp((char *)content, "export"))
-        return (1);
-    if (!ft_strcmp((char *)content, "env"))
-        return (1);
+    // if (!ft_strcmp((char *)content, "env"))
+        // return (1);
     if (!ft_strcmp((char *)content, "unset"))
         return (1);
     if (!ft_strcmp((char *)content, "cd"))
