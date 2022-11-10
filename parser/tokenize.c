@@ -12,28 +12,6 @@
 
 #include "../minishell.h"
 
-void	redir_tokenisation(t_list *list)
-{
-	t_list *tmp;
-
-	tmp = list;
-	while (tmp && tmp->next)
-	{
-		if (ft_strcmp((char *)list->content, "<") == 0)
-			list->token = REDIR_IN;
-		if (ft_strcmp((char *)list->content, ">") == 0)
-			list->token = REDIR_OUT;
-		if (ft_strcmp((char *)list->content, "<<") == 0)
-			list->token = DELIM;
-		if (ft_strcmp((char *)list->content, ">>") == 0)
-			list->token = APPEND;
-		if (ft_strcmp((char *)list->content, "|") == 0)
-			list->token = PIPE;
-		list = list->next;
-		tmp = list;
-	}
-}
-
 int	token_error(t_list *list)
 {
 	t_list *tmp;
@@ -54,42 +32,23 @@ int	token_error(t_list *list)
 	return (0);
 }
 
-void	built_in_tokenisation(t_list *list)
-{
-	t_list *tmp;
-
-	tmp = list;
-	while (tmp && tmp->next)
-	{
-		if (!ft_strcmp((char *)list->content, "echo") || !ft_strcmp((char *)list->content, "ECHO"))
-			list->token = ECHO;
-		if (!ft_strcmp((char *)list->content, "cd") || !ft_strcmp((char *)list->content, "CD"))
-			list->token = CD;
-		if (!ft_strcmp((char *)list->content, "pwd") || !ft_strcmp((char *)list->content, "PWD"))
-			list->token = PWD;
-		if (!ft_strcmp((char *)list->content, "export") || !ft_strcmp((char *)list->content, "EXPORT"))
-			list->token = EXPORT;
-		if (!ft_strcmp((char *)list->content, "unset") || !ft_strcmp((char *)list->content, "UNSET"))
-			list->token = UNSET;
-		if (!ft_strcmp((char *)list->content, "env") || !ft_strcmp((char *)list->content, "ENV"))
-			list->token = ENV;
-		if (!ft_strcmp((char *)list->content, "exit") || !ft_strcmp((char *)list->content, "EXIT"))
-			list->token = EXIT;
-		list = list->next;
-		tmp = list;
-	}
-}
-
-void	exec_builtin(char **tab, t_data *data)
+int	exec_builtin(char **tab, t_data *data)
 {
 	if (!tab)
-		return ;
-	if (is_export(tab, data))
-		return ;
-	if (is_unset(tab, data))
-		return ;
-	if (is_cd(tab, data))
-		return;
+		return (1);
+	if (!is_export(tab, data))
+		return (1);
+	else if (!is_env(tab, data))
+		return (1);
+	else if (!is_unset(tab, data))
+		return (1);
+	else if (!is_cd(tab, data))
+		return (1);
+	else if (!is_pwd(tab, data))
+		return (1);
+	else if (!is_echo(tab, data))
+		return (1);
+	return (0);
 }
 
 int	get_len(char **tab)
@@ -127,7 +86,7 @@ char	**get_next_pipe(char **tab)
 	return (result);
 }
 
-void	start_builtin(t_data *data)
+int	start_builtin(t_data *data)
 {
 	char **command;
 	char **tab;
@@ -136,8 +95,13 @@ void	start_builtin(t_data *data)
 	check_if_pipe(tab, data);
 	command = get_next_pipe(tab);
 	free_tab(tab);
-	exec_builtin(command, data);
+	if (exec_builtin(command, data))
+	{
+		free_tab(command);
+		return (1);
+	}
 	free_tab(command);
+	return (0);
 }
 
 int	analyzer(t_data *data, t_cmd *cmd)
@@ -151,15 +115,22 @@ int	analyzer(t_data *data, t_cmd *cmd)
 		close(data->tmp_out);
 		return (on_error("Minishell: syntax error near unexpected token\n", 1));
 	}
-	redir_tokenisation(data->list);
-	built_in_tokenisation(data->list);
 	get_cmd_size(data->list, data);
 	get_cmd_count(data->list, data);
 	if (check_all_infile(data->list, data))
+	{
+		close(data->tmp_in);
+		close(data->tmp_out);
 		return (on_error("Infile not found\n", 1));
+	}
 	if (count_heredoc(data->list))
 		start_heredoc(data);
-	start_builtin(data);
+	if (start_builtin(data))
+	{
+		close(data->tmp_in);
+		close(data->tmp_out);
+		return (0);
+	}
 	start_exec(cmd, data);
 	return (0);
 }

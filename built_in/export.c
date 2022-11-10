@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 13:12:18 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/11/09 14:40:10 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/11/10 16:55:11 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,13 @@ int	export_name(t_list **cmd, t_data *data)
 		return (on_error("not a valid identifier.\n", 1));
 	init_data(data);
 	if (set_export_var(data)) 
-		return (on_error("Not a valid identifier.\n", 1));
+	{
+		printf("Not a valid identifier\n");
+		if ((*cmd)->next)
+			return (export_name(&(*cmd)->next, data));
+		else
+			return (0);
+	}
 	exec_export(data);
 	if ((*cmd)->next != NULL && \
 	!is_token((char *)(*cmd)->next->content))

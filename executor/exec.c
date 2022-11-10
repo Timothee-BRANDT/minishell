@@ -44,8 +44,11 @@ void	exec_command(char **cmds, t_data	*data)
 	env = list_to_tab(data->env);
 	good_cmd = get_correct_cmd(paths, cmds);
 	if (check_builtin(cmds[0]))
+	{
+		dprintf(data->tmp_out, "Builtin in child\n");
 		redirect_in_builtin(cmds, data);
-	else if (!good_cmd)
+	}
+	if (!good_cmd)
 	{
 		free_tab(cmds);
 		free_tab(paths);

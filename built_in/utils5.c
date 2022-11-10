@@ -12,20 +12,20 @@
 
 #include "../minishell.h"
 
-char	*get_env_v2(char *key, t_list *env)
+char	*get_env_v2_export(char *key, t_data *data)
 {
 	t_list	*tmp;
 	int		len;
-	char	*tab;
+	char	*value;
 
-	tmp = env;
+	tmp = data->export;
 	len = ft_strlen(key);
 	while (tmp)
 	{
 		if (!ft_strncmp_v2((char *)tmp->content, key, len))
 		{
-			tab = ft_get_value((char *)tmp->content);
-			return (tab);
+			value = ft_get_value((char *)tmp->content);
+			return (value);
 		}
 		tmp = tmp->next;
 	}
@@ -40,15 +40,15 @@ void	free_list(void *ptr)
 	free(list);
 }
 
-void	print_tab(char **tab)
+void	print_tab(char **tab, t_data *data)
 {
 	int	i;
 
 	i = 0;
 	while (tab[i])
 	{
-		printf("tab[%d]: %s\n", i, tab[i]);
-		printf("pointeur tab[%d]: %p\n", i, tab[i]);
+		dprintf(data->tmp_out, "tab[%d]: %s\n", i, tab[i]);
+		// printf("pointeur tab[%d]: %p\n", i, tab[i]);
 		i++;
 	}
 	

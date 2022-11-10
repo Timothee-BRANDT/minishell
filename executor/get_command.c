@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 12:59:25 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/11/09 16:55:46 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/11/09 18:18:31 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ char	**extract_cmd(char **cmd, t_data *data)
 		if (cmd[j][0] == '\0')
 			j++;
 		check_all_redirection(cmd, k, data);
-		skip_builtin(cmd, k, data);
 		if (!cmd[j] || !ft_strcmp(cmd[j], "|"))
 			break ;
 		final_cmd[i++] = ft_strdup(cmd[j]);

@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 18:26:03 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/11/08 17:22:41 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/11/10 16:47:33 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,12 @@ void	init_data(t_data *data)
 
 int	set_export_var(t_data *data)
 {
+	char	*parse;
+
+	parse = ft_get_key(data->str);
 	while (data->str[data->i])
 	{
-		if (!ft_isalpha(data->str[data->i]))
+		if (!ft_isnum_key(parse))
 			return (1);
 		if (data->str[data->i] == '+' && data->str[data->i - 1] == '+')
 			return (1);
@@ -72,5 +75,6 @@ int	set_export_var(t_data *data)
 		}
 		data->i++;
 	}
+	free(parse);
 	return (0);
 }

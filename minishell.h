@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 19:34:14 by mmatthie          #+#    #+#             */
-/*   Updated: 2022/11/09 16:59:27 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/11/10 16:27:38 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ void	ft_print_list(t_list	*lst);
 void	ft_manage(void	*to_add);
 void	ft_free_split(char **tab);
 void	free_tab(char **tab);
-void	print_tab(char **tab);
+void	print_tab(char **tab, t_data *data);
 void	free_2_tab(char **tab1, char **tab2);
 char	**lst_to_tab(t_list *list, t_data *data);
 int		on_error(char *str, int code);
@@ -231,7 +231,8 @@ void	free_two_string(char *s1, char *s2);
 void	free_three_string(char *s1, char *s2, char *s3, char *s4);
 int		export_name(t_list **list, t_data *data);
 int		is_in_list(t_list **list, char *name);
-char	*get_env_v2(char *key, t_list *env);
+char	*get_env_v2_export(char *key, t_data *data);
+char	*get_env_v2_env(char *key, t_data *data);
 int		set_export_var(t_data *data);
 char	*ft_strjoin_export(char const *s1, char const *s2);
 char	*ft_get_value(char *str);
@@ -252,6 +253,12 @@ int 	is_export(char **tab, t_data *data);
 int		is_unset(char **tab, t_data *data);
 int		is_pwd(char **tab, t_data *data);
 int		is_cd(char **tab, t_data *data);
+int		is_env(char **tab, t_data *data);
+int		is_echo(char **tab, t_data *data);
 int		check_if_pipe(char **tab, t_data *data);
+void	change_oldpwd_env(t_data *data, char *pwd);
+void	change_oldpwd_export(t_data *data, char *pwd);
+void	change_pwd_env(t_data *data);
+void	change_pwd_export(t_data *data);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 14:40:13 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/11/08 18:37:39 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/11/10 16:47:44 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void		*ft_calloc(size_t nmemb, size_t size);
 int			ft_is_numeric(char c);
 int			ft_isalnum(int c);
 int			ft_isalpha(int c);
+int			ft_isnum_key(char *str);
 int			ft_isascii(int c);
 int			ft_isdigit(int c);
 int			ft_isprint(int c);
