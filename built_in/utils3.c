@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 18:26:03 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/11/10 16:47:33 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/11/12 16:29:51 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,5 @@ int	set_export_var(t_data *data)
 		}
 		data->i++;
 	}
-	free(parse);
 	return (0);
 }

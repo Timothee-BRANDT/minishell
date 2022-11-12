@@ -43,12 +43,9 @@ void	exec_command(char **cmds, t_data	*data)
 	paths = get_all_path(data);
 	env = list_to_tab(data->env);
 	good_cmd = get_correct_cmd(paths, cmds);
-	if (check_builtin(cmds[0]))
-	{
-		dprintf(data->tmp_out, "Builtin in child\n");
+	if (check_builtin(cmds[0], data))
 		redirect_in_builtin(cmds, data);
-	}
-	if (!good_cmd)
+	else if (!good_cmd)
 	{
 		free_tab(cmds);
 		free_tab(paths);
@@ -76,6 +73,12 @@ int	start_exec(t_cmd *cmd, t_data *data)
 	{
     	get_cmd_from_list(data->list, data, cmd);
 		cmds = extract_cmd(cmd->args, data);
+		if (start_builtin(data))
+		{
+			close(data->tmp_out);
+			close(data->tmp_in);
+			return (0);
+		}
 		if (i == data->cmd_count - 1)
 			redir_fd_out(data);
 		else

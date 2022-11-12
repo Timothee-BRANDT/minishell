@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 14:07:48 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/11/10 17:10:18 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/11/12 17:20:39 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,17 +30,14 @@ int	check_if_pipe(char **tab, t_data *data)
 	return (0);
 }
 
-int is_export(char **tab, t_data *data)
+int is_export_main(char **tab, t_data *data)
 {
     t_list *list;
 
     if (tab[0] && !ft_strcmp(tab[0], "export") && !data->check_pipe)
     {
-		if (!tab[1])
-		{
-			ft_print_env(data->export);
-			return (0);
-		}
+		if (tab[1] && !ft_strcmp(tab[1], ">"))
+			return (1);
 		if (ft_strlen2d(tab) > 1 && !data->check_pipe)
     	{
 	    	list = dpt_to_lst_export(tab);
@@ -52,7 +49,7 @@ int is_export(char **tab, t_data *data)
 	return (1);
 }
 
-int	is_echo(char **tab, t_data *data)
+int	is_echo_main(char **tab, t_data *data)
 {
 	if (tab[0] && !ft_strcmp(tab[0], "echo") && !data->check_pipe)
     {
@@ -62,7 +59,7 @@ int	is_echo(char **tab, t_data *data)
 	return (1);
 }
 
-int	is_env(char **tab, t_data *data)
+int	is_env_main(char **tab, t_data *data)
 {
 	if (tab[0] && !ft_strcmp(tab[0], "env") && !data->check_pipe)	
 	{
@@ -72,7 +69,7 @@ int	is_env(char **tab, t_data *data)
 	return (1);
 }
 
-int is_unset(char **tab, t_data *data)
+int is_unset_main(char **tab, t_data *data)
 {
     t_list *list;
     
@@ -212,7 +209,7 @@ int	chdir_home(t_data *data)
 	return (0);
 }
 
-int is_cd(char **tab, t_data *data)
+int is_cd_main(char **tab, t_data *data)
 {
 	char	*pwd;
 

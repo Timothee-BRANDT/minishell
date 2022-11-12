@@ -6,14 +6,15 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 15:47:14 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/11/10 15:53:02 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/11/12 16:21:58 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int check_builtin(char *str)
+int check_builtin(char *str, t_data *data)
 {
+	(void)data;
     if (!ft_strcmp(str, "env"))
         return (1);
     if (!ft_strcmp(str, "export"))
@@ -35,17 +36,17 @@ int redirect_in_builtin(char **cmds, t_data *data)
 {
 	if (!cmds)
 		return (1);
-	if (is_export(cmds, data))
+	if (!is_export_child(cmds, data))
 		return (1);
-	else if (is_env(cmds, data))
+	if (!is_env_child(cmds, data))
 		return (1);
-	else if (is_unset(cmds, data))
+	if (!is_unset_child(cmds, data))
 		return (1);
-	else if (is_cd(cmds, data))
+	if (!is_cd_child(cmds, data))
 		return (1);
-	else if (is_pwd(cmds, data))
+	if (!is_pwd_child(cmds, data))
 		return (1);
-	else if (is_echo(cmds, data))
+	if (!is_echo_child(cmds, data))
 		return (1);
 	return (0);
 }

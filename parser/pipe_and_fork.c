@@ -32,7 +32,6 @@ void    dup_child_exec(char **cmds, t_data *data, int cmd_count)
 	{
 		dup2(data->fd_out, 1);
 		close(data->fd_out);
-
 	}
 	else if (cmd_count > 1)
 	{

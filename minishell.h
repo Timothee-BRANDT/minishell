@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 19:34:14 by mmatthie          #+#    #+#             */
-/*   Updated: 2022/11/10 16:27:38 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/11/12 16:28:38 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -225,7 +225,7 @@ void	exec_export(t_data *data);
 void	unset_name_env(t_list **env, t_list **cmd);
 void	unset_name_export(t_list **export, t_list **list);
 void	init_data(t_data *data);
-void	ft_print_env(t_list	*lst);
+void	ft_print_env(t_list *lst);
 void	free_all(t_data *data);
 void	free_two_string(char *s1, char *s2);
 void	free_three_string(char *s1, char *s2, char *s3, char *s4);
@@ -239,7 +239,7 @@ char	*ft_get_value(char *str);
 char	*remove_plus(char *str);
 char	*ft_get_key(char *str);
 char    **list_to_tab(t_list *list);
-int 	check_builtin(char *str);
+int 	check_builtin(char *str, t_data *data);
 int 	redirect_in_builtin(char **cmds, t_data *data);
 void	start_echo(char **cmds);
 char	**get_next_pipe(char **tab);
@@ -249,13 +249,22 @@ t_list	*dpt_to_lst_env(char **env);
 void	skip_builtin(char **cmd, int *k, t_data *data);
 void	print_echo(char **cmds, char *result);
 int 	check_option(char *tab);
-int 	is_export(char **tab, t_data *data);
-int		is_unset(char **tab, t_data *data);
-int		is_pwd(char **tab, t_data *data);
-int		is_cd(char **tab, t_data *data);
-int		is_env(char **tab, t_data *data);
-int		is_echo(char **tab, t_data *data);
+int 	is_export_main(char **tab, t_data *data);
+int		is_unset_main(char **tab, t_data *data);
+int		is_pwd_main(char **tab, t_data *data);
+int		is_cd_main(char **tab, t_data *data);
+int		is_env_main(char **tab, t_data *data);
+int		is_echo_main(char **tab, t_data *data);
+int 	is_export_child(char **tab, t_data *data);
+int		is_unset_child(char **tab, t_data *data);
+int		is_pwd_child(char **tab, t_data *data);
+int		is_cd_child(char **tab, t_data *data);
+int		is_env_child(char **tab, t_data *data);
+int		is_echo_child(char **tab, t_data *data);
 int		check_if_pipe(char **tab, t_data *data);
+int		start_builtin(t_data *data);
+int		check_if_pipe(char **tab, t_data *data);
+int		chdir_home(t_data *data);
 void	change_oldpwd_env(t_data *data, char *pwd);
 void	change_oldpwd_export(t_data *data, char *pwd);
 void	change_pwd_env(t_data *data);

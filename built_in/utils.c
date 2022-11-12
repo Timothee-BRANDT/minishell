@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 11:55:22 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/11/09 19:31:47 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/11/12 16:25:50 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ void	ft_print_env(t_list	*lst)
 		return ;
 	while (lst)
 	{
-		printf("%s\n", (char *)(lst->content));
+		printf("declare -x %s\n", (char *)(lst->content));
 		lst = lst->next;
 	}
 }

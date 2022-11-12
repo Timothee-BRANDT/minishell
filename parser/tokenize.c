@@ -36,17 +36,19 @@ int	exec_builtin(char **tab, t_data *data)
 {
 	if (!tab)
 		return (1);
-	if (!is_export(tab, data))
+	if (!is_export_main(tab, data))
 		return (1);
-	else if (!is_env(tab, data))
+	if (!is_env_main(tab, data))
 		return (1);
-	else if (!is_unset(tab, data))
+	if (!is_unset_main(tab, data))
 		return (1);
-	else if (!is_cd(tab, data))
+	if (!is_cd_main(tab, data))
 		return (1);
-	else if (!is_pwd(tab, data))
+	if (!is_echo_main(tab, data))
 		return (1);
-	else if (!is_echo(tab, data))
+	if (!is_pwd_main(tab, data))
+		return (1);
+	if (is_pwd_main(tab, data) == -1)
 		return (1);
 	return (0);
 }
@@ -125,12 +127,6 @@ int	analyzer(t_data *data, t_cmd *cmd)
 	}
 	if (count_heredoc(data->list))
 		start_heredoc(data);
-	if (start_builtin(data))
-	{
-		close(data->tmp_in);
-		close(data->tmp_out);
-		return (0);
-	}
 	start_exec(cmd, data);
 	return (0);
 }
