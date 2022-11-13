@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 14:07:48 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/11/12 17:20:39 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/11/13 13:28:45y tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,11 @@ int	is_echo_main(char **tab, t_data *data)
 {
 	if (tab[0] && !ft_strcmp(tab[0], "echo") && !data->check_pipe)
     {
+		if (data->fd_out)
+		{
+			dup2(data->fd_out, 1);
+			close(data->fd_out);
+		}
         start_echo(tab);
         return (0);
     }
@@ -63,6 +68,8 @@ int	is_env_main(char **tab, t_data *data)
 {
 	if (tab[0] && !ft_strcmp(tab[0], "env") && !data->check_pipe)	
 	{
+		if (tab[1] && !ft_strcmp(tab[1], ">"))
+			return (1);
 		ft_print_env(data->env);
 		return (0);
 	}
@@ -93,22 +100,18 @@ void	change_pwd_export(t_data *data)
 {
 	t_list	*ptr;
 	char	cwd[256];
-	t_list	*tmp;
 	char	*list_key;
 	
 	ptr = data->export;
 	getcwd(cwd, sizeof(cwd));
 	while (ptr)
 	{
-		list_key = ft_get_key((char *)ptr->next->content);
+		list_key = ft_get_key((char *)ptr->content);
 		if (!ft_strcmp("PWD", list_key))
 		{
 			free(list_key);
-			tmp = ptr->next->next;
-			free(ptr->next->content);
-			free(ptr->next);
-			ptr->next = ft_lstnew(ft_strjoin("PWD=", cwd));
-			ptr->next->next = tmp;
+			free(ptr->content);
+			ptr->content = ft_strjoin("PWD=", cwd);
 			break ;
 		}
 		free(list_key);
@@ -120,22 +123,18 @@ void	change_pwd_env(t_data *data)
 {
 	t_list	*ptr;
 	char	cwd[256];
-	t_list	*tmp;
 	char	*list_key;
 	
 	ptr = data->env;
 	getcwd(cwd, sizeof(cwd));
 	while (ptr)
 	{
-		list_key = ft_get_key((char *)ptr->next->content);
+		list_key = ft_get_key((char *)ptr->content);
 		if (!ft_strcmp("PWD", list_key))
 		{
 			free(list_key);
-			tmp = ptr->next->next;
-			free(ptr->next->content);
-			free(ptr->next);
-			ptr->next = ft_lstnew(ft_strjoin("PWD=", cwd));
-			ptr->next->next = tmp;
+			free(ptr->content);
+			ptr->content = ft_strjoin("PWD=", cwd);
 			break ;
 		}
 		free(list_key);
@@ -146,21 +145,17 @@ void	change_pwd_env(t_data *data)
 void	change_oldpwd_env(t_data *data, char *pwd)
 {
 	t_list	*ptr;
-	t_list	*tmp;
 	char	*list_key;
 	
 	ptr = data->env;
 	while (ptr)
 	{
-		list_key = ft_get_key((char *)ptr->next->content);
+		list_key = ft_get_key((char *)ptr->content);
 		if (!ft_strcmp("OLDPWD", list_key))
 		{
 			free(list_key);
-			tmp = ptr->next->next;
-			free(ptr->next->content);
-			free(ptr->next);
-			ptr->next = ft_lstnew(ft_strjoin("OLDPWD=", pwd));
-			ptr->next->next = tmp;
+			free(ptr->content);
+			ptr->content = ft_strjoin("OLDPWD=", pwd);
 			break ;
 		}
 		free(list_key);
@@ -171,21 +166,17 @@ void	change_oldpwd_env(t_data *data, char *pwd)
 void	change_oldpwd_export(t_data *data, char *pwd)
 {
 	t_list	*ptr;
-	t_list	*tmp;
 	char	*list_key;
 	
 	ptr = data->export;
 	while (ptr)
 	{
-		list_key = ft_get_key((char *)ptr->next->content);
+		list_key = ft_get_key((char *)ptr->content);
 		if (!ft_strcmp("OLDPWD", list_key))
 		{
 			free(list_key);
-			tmp = ptr->next->next;
-			free(ptr->next->content);
-			free(ptr->next);
-			ptr->next = ft_lstnew(ft_strjoin("OLDPWD=", pwd));
-			ptr->next->next = tmp;
+			free(ptr->content);
+			ptr->content = ft_strjoin("OLDPWD=", pwd);
 			break ;
 		}
 		free(list_key);
@@ -218,6 +209,15 @@ int is_cd_main(char **tab, t_data *data)
 		pwd = get_env_v2_export("PWD", data);
 		if (tab[1])
 		{
+			if (open(tab[1], O_DIRECTORY) == -1)
+			{
+				if (errno == EACCES)
+					printf("Bibishell: cd : %s: Permission denied\n", tab[1]);
+				else if (errno == ENOENT)
+					printf("Bibishell: cd : %s: No such file or directory\n", tab[1]);
+				free(pwd);
+				return (0);
+			}
 			chdir(tab[1]);
 			change_pwd_export(data);
 			change_pwd_env(data);

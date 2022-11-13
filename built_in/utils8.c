@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 14:53:37 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/11/12 16:27:58 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/11/13 14:14:08 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,12 @@ int is_cd_child(char **tab, t_data *data)
 		pwd = get_env_v2_export("PWD", data);
 		if (tab[1])
 		{
+			if (open(tab[1], O_DIRECTORY) == -1)
+			{
+				printf("Bibishell: cd : %s: No such file or directory\n", tab[1]);
+				free(pwd);
+				return (0);
+			}
 			chdir(tab[1]);
 			change_pwd_export(data);
 			change_pwd_env(data);

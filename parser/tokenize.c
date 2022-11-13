@@ -44,8 +44,6 @@ int	exec_builtin(char **tab, t_data *data)
 		return (1);
 	if (!is_cd_main(tab, data))
 		return (1);
-	if (!is_echo_main(tab, data))
-		return (1);
 	if (!is_pwd_main(tab, data))
 		return (1);
 	if (is_pwd_main(tab, data) == -1)

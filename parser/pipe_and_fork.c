@@ -17,8 +17,8 @@ void	create_pipe(t_data *data)
 	int pipe_fd[2];
 
 	pipe(pipe_fd);
-	data->pipe_1 = pipe_fd[1]; // output
-	data->pipe_0 = pipe_fd[0]; // input
+	data->pipe_1 = pipe_fd[1];
+	data->pipe_0 = pipe_fd[0];
 }
 
 void    dup_child_exec(char **cmds, t_data *data, int cmd_count)

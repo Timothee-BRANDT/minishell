@@ -75,8 +75,11 @@ int	start_exec(t_cmd *cmd, t_data *data)
 		cmds = extract_cmd(cmd->args, data);
 		if (start_builtin(data))
 		{
+			if (data->fd_out)
+				close(data->fd_out);
 			close(data->tmp_out);
 			close(data->tmp_in);
+			free_2_tab(cmd->args, cmds);
 			return (0);
 		}
 		if (i == data->cmd_count - 1)

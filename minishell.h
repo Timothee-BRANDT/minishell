@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 19:34:14 by mmatthie          #+#    #+#             */
-/*   Updated: 2022/11/12 16:28:38 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/11/13 14:29:22 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <stdio.h>
 # include <signal.h>
 # include <unistd.h>
+# include <errno.h>
 # include "libft/libft.h"
 # include <readline/history.h>
 # include <readline/readline.h>
@@ -218,7 +219,6 @@ char 	**get_last_cmd(char **tab);
 int		final_cmd_size(char **cmd);
 
 //builtins
-t_list	*env_to_list(char **env);
 void	found_and_replace(t_list **export, char *name);
 void	found_and_add(t_list **export, char *name, t_data *data);
 void	exec_export(t_data *data);
@@ -244,8 +244,6 @@ int 	redirect_in_builtin(char **cmds, t_data *data);
 void	start_echo(char **cmds);
 char	**get_next_pipe(char **tab);
 int		get_len(char **tab);
-t_list	*dpt_to_lst_export(char **env);
-t_list	*dpt_to_lst_env(char **env);
 void	skip_builtin(char **cmd, int *k, t_data *data);
 void	print_echo(char **cmds, char *result);
 int 	check_option(char *tab);
@@ -269,5 +267,8 @@ void	change_oldpwd_env(t_data *data, char *pwd);
 void	change_oldpwd_export(t_data *data, char *pwd);
 void	change_pwd_env(t_data *data);
 void	change_pwd_export(t_data *data);
+t_list	*env_to_list(char **env);
+t_list	*dpt_to_lst_export(char **env);
+t_list	*dpt_to_lst_env(char **env);
 
 #endif

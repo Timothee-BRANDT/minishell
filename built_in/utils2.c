@@ -57,12 +57,15 @@ t_list	*dpt_to_lst_env(char **env)
 t_list	*env_to_list(char **env)
 {
 	t_list	*list;
+	char	c[256];
 	int		i;
 
 	i = 1;
+	getcwd(c, sizeof(c));
 	if (!env[0])
 	{
-		list = ft_lstnew("");
+		list = ft_lstnew(ft_strjoin("OLDPW", "D"));
+		list->next = ft_lstnew(ft_strjoin("PWD=", c));
 		return (list);
 	}
 	else
