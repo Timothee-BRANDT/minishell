@@ -12,48 +12,6 @@
 
 #include "../minishell.h"
 
-t_list	*dpt_to_lst_export(char **env)
-{
-	t_list	*list;
-	int		i;
-
-	i = 2;
-	if (!env[0])
-	{
-		list = ft_lstnew("");
-		return (list);
-	}
-	else
-		list = ft_lstnew(ft_strdup(env[1]));
-	while (env[i])
-	{
-		ft_lstadd_back(&list, ft_lstnew(ft_strdup(env[i])));
-		i++;
-	}
-	return (list);
-}
-
-t_list	*dpt_to_lst_env(char **env)
-{
-	t_list	*list;
-	int		i;
-
-	i = 1;
-	if (!env[0])
-	{
-		list = ft_lstnew("");
-		return (list);
-	}
-	else
-		list = ft_lstnew(ft_strdup(env[0]));
-	while (env[i])
-	{
-		ft_lstadd_back(&list, ft_lstnew(ft_strdup(env[i])));
-		i++;
-	}
-	return (list);
-}
-
 t_list	*env_to_list(char **env)
 {
 	t_list	*list;

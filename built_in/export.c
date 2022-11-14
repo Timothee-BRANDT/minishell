@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 13:12:18 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/11/12 16:09:41 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/11/14 10:29:26 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	export_name(t_list **cmd, t_data *data)
 	if (ft_strcmp(data->str, "=") == 0)
 		return (on_error("not a valid identifier.\n", 1));
 	init_data(data);
-	if (set_export_var(data)) 
+	if (set_export_var(data))
 	{
 		printf("Not a valid identifier\n");
 		if ((*cmd)->next)

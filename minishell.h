@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 19:34:14 by mmatthie          #+#    #+#             */
-/*   Updated: 2022/11/13 14:29:22 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/11/14 12:40:36 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ void	ft_manage(void	*to_add);
 void	ft_free_split(char **tab);
 void	free_tab(char **tab);
 void	print_tab(char **tab, t_data *data);
-void	free_2_tab(char **tab1, char **tab2);
+void	free_2_tab(char **tab1, char **tab2, t_data *data);
 char	**lst_to_tab(t_list *list, t_data *data);
 int		on_error(char *str, int code);
 int		open_error(char *infile, char *outfile);
@@ -211,7 +211,7 @@ void    dup_child_exec(char **cmd, t_data *data, int cmd_count);
 void	dup_parent(t_data *data, int cmd_count);
 void	create_pipe(t_data *data);
 void	redir_fd_out(t_data *data);
-int		start_exec(t_cmd *cmd, t_data *data);
+void	start_exec(t_cmd *cmd, t_data *data);
 int		wait_my_childs(t_data *data);
 char	*get_correct_cmd(char **paths, char **cmds);
 char	**get_all_path(t_data *data);
@@ -260,13 +260,15 @@ int		is_cd_child(char **tab, t_data *data);
 int		is_env_child(char **tab, t_data *data);
 int		is_echo_child(char **tab, t_data *data);
 int		check_if_pipe(char **tab, t_data *data);
-int		start_builtin(t_data *data);
+int		start_builtin(t_data *data, char **args, char **cmds);
 int		check_if_pipe(char **tab, t_data *data);
 int		chdir_home(t_data *data);
 void	change_oldpwd_env(t_data *data, char *pwd);
 void	change_oldpwd_export(t_data *data, char *pwd);
 void	change_pwd_env(t_data *data);
+void	change_pwd(t_data *data, char *pwd);
 void	change_pwd_export(t_data *data);
+int		error_open(char **tab, char *pwd);
 t_list	*env_to_list(char **env);
 t_list	*dpt_to_lst_export(char **env);
 t_list	*dpt_to_lst_env(char **env);

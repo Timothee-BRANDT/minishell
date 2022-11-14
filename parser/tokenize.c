@@ -86,7 +86,7 @@ char	**get_next_pipe(char **tab)
 	return (result);
 }
 
-int	start_builtin(t_data *data)
+int	start_builtin(t_data *data, char **args, char **cmds)
 {
 	char **command;
 	char **tab;
@@ -97,6 +97,11 @@ int	start_builtin(t_data *data)
 	free_tab(tab);
 	if (exec_builtin(command, data))
 	{
+		if (data->fd_out)
+			close(data->fd_out);
+		close(data->tmp_out);
+		close(data->tmp_in);
+		free_2_tab(args, cmds, data);
 		free_tab(command);
 		return (1);
 	}

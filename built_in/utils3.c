@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 18:26:03 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/11/12 16:29:51 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/11/14 10:41:03 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,6 @@ int	open_error(char *infile, char *outfile)
 	free(outfile);
 	outfile = NULL;
 	return (0);
-}
-
-int	on_error(char *str, int code)
-{
-	write(1, str, ft_strlen(str));
-	return (code);
 }
 
 void	free_all(t_data *data)

@@ -6,31 +6,11 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 15:20:28 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/10/08 17:25:56y tbrandt          ###   ########.fr       */
+/*   Updated: 2022/11/14 12:41:47 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-void	built_in_analyzer(t_list **list, t_data	*data)
-{
-	if (!(*list))
-		return ;
-    if (is_built_in((*list)->content))
-    {
-		if (ft_strcmp((*list)->content, "env") == 0)
-			ft_print_env(data->env);
-		if (ft_strcmp((*list)->content, "export") == 0 && !data->list->next)
-			ft_print_env(data->export);
-		if (ft_strcmp((*list)->content, "export") == 0 && data->list->next)
-			export_name(list, data);
-		if (ft_strcmp((*list)->content, "unset") == 0 && (*list)->next)
-    	{
-    		unset_name_export(&data->export, list);
-    		unset_name_env(&data->env, list);
-		}
-	}
-}
 
 void	exec_command(char **cmds, t_data	*data)
 {
@@ -62,26 +42,19 @@ void	close_and_reset(t_data *data)
 	data->check_fd_in = 0;
 }
 
-int	start_exec(t_cmd *cmd, t_data *data)
+void	start_exec(t_cmd *cmd, t_data *data)
 {
-	int i;
-	pid_t pid;
-	char **cmds;
+	int		i;
+	pid_t	pid;
+	char	**cmds;
 
 	i = -1;
 	while (++i < data->cmd_count)
 	{
-    	get_cmd_from_list(data->list, data, cmd);
+		get_cmd_from_list(data->list, data, cmd);
 		cmds = extract_cmd(cmd->args, data);
-		if (start_builtin(data))
-		{
-			if (data->fd_out)
-				close(data->fd_out);
-			close(data->tmp_out);
-			close(data->tmp_in);
-			free_2_tab(cmd->args, cmds);
-			return (0);
-		}
+		if (start_builtin(data, cmd->args, cmds))
+			return ;
 		if (i == data->cmd_count - 1)
 			redir_fd_out(data);
 		else
@@ -91,10 +64,8 @@ int	start_exec(t_cmd *cmd, t_data *data)
 			dup_child_exec(cmds, data, data->cmd_count);
 		else
 			dup_parent(data, data->cmd_count);
-		free_2_tab(cmd->args, cmds);
-		close_and_reset(data);
+		free_2_tab(cmd->args, cmds, data);
 	}
 	restore_fd(data);
 	wait_my_childs(data);
-	return (0);
 }

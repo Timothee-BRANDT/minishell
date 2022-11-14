@@ -6,13 +6,13 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 16:11:49 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/11/07 23:09:18 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/11/14 10:38:16 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int check_option(char *tab)
+int	check_option(char *tab)
 {
 	int	i;
 
@@ -94,7 +94,6 @@ int	check_arg(char **cmds)
 	return (0);
 }
 
-
 void	start_echo(char **cmds)
 {
 	int		i;
@@ -104,14 +103,15 @@ void	start_echo(char **cmds)
 	result = NULL;
 	if (check_arg(cmds))
 		return ;
-	while (check_option(cmds[++i]));
+	while (check_option(cmds[i]))
+		i++;
 	if (!check_option(cmds[1]))
 		result = ft_strjoin_echo(result, cmds[1]);
 	while (cmds[i])
 	{
 		if (cmds && !cmds[i + 1] && !check_option(cmds[i]))
 			result = ft_strjoin_echo_v2(result, cmds[i]);
-		else 
+		else
 			result = ft_strjoin_echo(result, cmds[i]);
 		i++;
 	}

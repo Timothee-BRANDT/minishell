@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/27 11:23:18 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/09/28 10:01:36by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/11/14 12:35:20 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,14 +48,14 @@ void	print_tab(char **tab, t_data *data)
 	while (tab[i])
 	{
 		dprintf(data->tmp_out, "tab[%d]: %s\n", i, tab[i]);
-		// printf("pointeur tab[%d]: %p\n", i, tab[i]);
 		i++;
 	}
-	
 }
 
-void	free_2_tab(char **tab1, char **tab2)
+void	free_2_tab(char **tab1, char **tab2, t_data *data)
 {
+	data->check_fd_out = 0;
+	data->check_fd_in = 0;
 	free_tab(tab1);
 	free_tab(tab2);
 }
