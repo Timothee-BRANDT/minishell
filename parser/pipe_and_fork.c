@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 08:16:10 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/11/14 14:42:30 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/11/14 16:23:30 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,17 +57,6 @@ void	dup_parent(t_data *data, int cmd_count)
 	close(data->pipe_1);
 }
 
-/*int	exit_code(int signum)
-{
-	if (WIFEXITED(signum))
-		return (WEXITSTATUS(signum));
-	else if (WIFSIGNALED(signum))
-		return (WTERMSIG(signum) + 128);
-	else if (WIFSTOPPED(signum))
-		return (WTERMSIG(signum) + 128);
-	return (0);
-}*/
-
 int	wait_my_childs(t_data *data)
 {
 	int	i;
@@ -77,6 +66,7 @@ int	wait_my_childs(t_data *data)
 	i = -1;
 	while (++i < data->cmd_count)
 		waitpid(0, &status, 0);
+	g_glo.g_signum = exit_code(status);
 	return (0);
 }
 

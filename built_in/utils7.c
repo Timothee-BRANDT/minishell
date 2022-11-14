@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 14:07:48 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/11/14 13:27:57 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/11/14 16:26:51 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,10 +87,10 @@ int	is_cd_main(char **tab, t_data *data)
 		pwd = get_env_v2_export("PWD", data);
 		if (tab[1])
 		{
-			if (open(tab[1], O_DIRECTORY) == -1)
+			if (error_open(tab, pwd))
 			{
-				if (error_open(tab, pwd))
-					return (0);
+				g_glo.g_signum = 1;
+				return (0);
 			}
 			chdir(tab[1]);
 			change_pwd(data, pwd);

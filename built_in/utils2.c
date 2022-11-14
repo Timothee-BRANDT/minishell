@@ -24,6 +24,7 @@ t_list	*env_to_list(char **env)
 	{
 		list = ft_lstnew(ft_strjoin("OLDPW", "D"));
 		list->next = ft_lstnew(ft_strjoin("PWD=", c));
+		list->next->next = ft_lstnew(ft_strjoin("SHLVL=", "\"1\""));
 		return (list);
 	}
 	else

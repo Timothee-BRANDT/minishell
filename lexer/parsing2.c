@@ -6,7 +6,7 @@
 /*   By: mmatthie <mmatthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 15:12:20 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/10/22 03:07:53 by mmatthie         ###   ########.fr       */
+/*   Updated: 2022/11/11 11:07:31 by mmatthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ void	set_data(t_data	*data)
 	data->index_space = 0;
 	data->space_len = 0;
 	data->indicate_expend = 0;
+	data->i_get = 0;
+	data->j_get = 0;
 }
 
 void	print_it(char	*ptr)

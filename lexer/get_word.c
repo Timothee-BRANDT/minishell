@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_word.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mmatthie <mmatthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 14:34:37 by mmatthie          #+#    #+#             */
-/*   Updated: 2022/10/27 16:44:08 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/11/11 17:43:16 by mmatthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ int	get_word(char	*str, t_data *data, int count)
 
 	i = 0;
 	j = count;
-	while ((str[j] && str) && (str[j] != '"' && str[j] != '\'') && (str[j] != ' ' && str[j] != '$'))
+	while ((str[j] && str) && (str[j] != '"'\
+	&& str[j] != '\'') && (str[j] != ' ' && str[j] != '$'))
 	{
 		j++;
 		i++;
@@ -35,91 +36,55 @@ int	get_word(char	*str, t_data *data, int count)
 	return (j);
 }
 
-int	get_simple_quotes(char	*buffer, int count, t_data *data)
+static int	get_join_and_manage(char	*buffer, int i, t_data	*data)
 {
-	int	i;
-	int	j;
+	i = get_join(buffer, i, data);
+	ft_manage(data->first);
+	return (i);
+}
 
-	j = 0;
-	data->token = buffer[count];
-	i = count;
-	while (buffer[++i] && buffer[i] != data->token)
-		j++;
-	if (buffer[i] && buffer[i] == data->token)
-		i = last_token(i, data);
-	count += 1;
-	data->first = ft_substr(buffer, count, j);
-	if (buffer[i] && buffer[i] != ' ')
-		i = get_join(buffer, i, data);
-	else
+static void	else_in_double_quotes(int j, t_data	*data)
+{
+	if (j > 0)
 	{
 		data->get_word = ft_strdup(data->first);
-		free(data->first);
+		free (data->first);
 	}
-	return (i);
+	else
+		data->get_word = ft_strdup(" ");
+}
+
+static void	increment_it(char	*buffer, t_data	*data)
+{
+	while (buffer[data->i_get] && buffer[data->i_get] \
+	!= data->token && buffer[data->i_get] != '$')
+	{
+		data->i_get++;
+		data->j_get++;
+	}	
+	if ((buffer[data->i_get] && buffer[data->i_get] == '$') \
+	&& (buffer[data->i_get + 1] && buffer[data->i_get + 1] == '"'))
+	{
+		data->j_get++;
+		data->i_get++;
+	}
 }
 
 int	get_double_quotes(char	*buffer, t_data	*data, int count)
 {
-	int	i;
-	int	j;
-
-	j = 0;
 	data->token = buffer[count];
 	count++;
-	i = count;
-	while (buffer[i] && buffer[i] != data->token && buffer[i] != '$')
-	{
-		i++;
-		j++;
-	}
-	if (j > 0)
-		data->first = ft_substr(buffer, count, j);
-	if (buffer && buffer[i] == '"')
-		i = last_token(i, data);
-	if (buffer && buffer[i] && buffer[i] == '$')
-		i = get_expend_with_token(buffer, i , count, data);
-	else if (buffer && buffer[i] && buffer[i] != ' ')
-	{
-		i = get_join(buffer, i, data);
-		ft_manage(data->first);
-	}
+	data->i_get = count;
+	increment_it(buffer, data);
+	if (data->j_get > 0)
+		data->first = ft_substr(buffer, count, data->j_get);
+	if (buffer && buffer[data->i_get] == '"')
+		data->i_get = last_token(data->i_get, data);
+	if (buffer && buffer[data->i_get] && buffer[data->i_get] == '$')
+		data->i_get = get_expend_with_token(buffer, data->i_get, count, data);
+	else if (buffer && buffer[data->i_get] && buffer[data->i_get] != ' ')
+		data->i_get = get_join_and_manage(buffer, data->i_get, data);
 	else
-	{
-		if (j > 0)
-		{
-			data->get_word = ft_strdup(data->first);
-			free (data->first);
-		}
-		else
-			data->get_word = ft_strdup(" ");
-	}
-	return (i);
-}
-
-int	get_without_quotes(char	*buffer, t_data	*data, int count)
-{
-	int	tmp;
-	int	j;
-
-	j = 0;
-	tmp = count;
-	while (buffer[tmp] != '"' && buffer[tmp] != '\'' \
-	&& buffer[tmp] && buffer[tmp] != ' ' && buffer[tmp] != '$')
-	{
-		j++;
-		tmp++;
-	}
-	data->second = ft_substr(buffer, count, j);
-	data->join = ft_join_free_ss(data->first, data->second);
-	if (!data->join)
-	{
-		ft_putstr_fd("error in join\n", 2);
-		exit(EXIT_FAILURE);
-	}
-	data->first = ft_strdup(data->get_word);
-	count = tmp;
-	if (buffer[tmp] && buffer[tmp] == '$')
-		count = get_expend(buffer, tmp , tmp, data);
-	return (count);
+		else_in_double_quotes(data->j_get, data);
+	return (data->i_get);
 }

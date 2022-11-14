@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 19:34:14 by mmatthie          #+#    #+#             */
-/*   Updated: 2022/11/14 14:08:03 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/11/14 16:25:58 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,34 +20,21 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdio.h>
-# include <stdio.h>
 # include <signal.h>
-# include <unistd.h>
 # include <errno.h>
 # include "libft/libft.h"
 # include <readline/history.h>
 # include <readline/readline.h>
+# include <termios.h>
 
-extern int global_signum;
+typedef struct s_glo
+{
+	int	g_signum;
+	int	g_prompt;
+	int ctrl;
+}	t_glo;
 
-enum e_redir {
-	WORD,
-	REDIR_IN,
-	REDIR_OUT,
-	DELIM,
-	APPEND,
-	PIPE,
-};
-
-enum e_built_in {
-	ECHO,
-	CD,
-	PWD,
-	EXPORT,
-	UNSET,
-	ENV,
-	EXIT,
-};
+t_glo	g_glo;
 
 typedef struct s_data
 {
@@ -56,6 +43,8 @@ typedef struct s_data
 	int		j_space;
 	char	*first;
 	char	*second;
+	int		i_get;
+	int		j_get;
 	char	*join;
 	char	*buffer;
 	char	*get_word;
@@ -136,8 +125,14 @@ int		is_token(char *str);
 int		is_redir(char *str);
 int		is_pipe(char*str);
 char	*ft_strncpy(char *dest, char *src, unsigned int n);
+void	ctrl_c(int sig);
+int		set_sig(int sig);
+void	tty_hide_ctrl(void);
+void	tty_show_ctrl(void);
+void	unset_tty(t_data	*data, char	**env);
+void	stop_handler(int sig);
 
-//need to list
+//lexer
 void	little_one(t_data	*data);
 int		get_expend_without_first(char	*str, int count, t_data	*data);
 void	do_else(t_data	*data);
@@ -147,6 +142,8 @@ int		last_token(int count, t_data	*data);
 int		ft_check_token(char c);
 int		fill_quotes(char *dest, char	*buffer, t_data	*data);
 void	expend_it(t_data	*data, char	*str, int j);
+char	*ft_itoa_v2(int n);
+int		exit_code(int signum);
 void	set_redir(t_data	*data, char	*str, char	*buffer);
 void	set_redir(t_data	*data, char	*str, char	*buffer);
 int		reset_indicate(int count, t_data	*data);
@@ -180,10 +177,12 @@ void	ft_manage(void	*to_add);
 int		make_second(char	*buffer, t_data	*data, int count);
 t_list	*ft_list(t_list	*lst, t_data *data);
 t_list	*get_word_in_list(char	*buffer, t_data	*data);
+int		get_join_and_free(char	*str, int count, t_data	*data);
 int		get_second_word(char	*buffer, int count, t_data	*data);
 int		get_word(char	*buffer, t_data	*data, int count);
 int		get_join(char	*str, int j, t_data	*data);
 int		get_without_quotes(char	*buffer, t_data	*data, int count);
+void	get_and_free(t_data *data);
 
 //parser
 void	built_in_analyzer(t_list **list, t_data	*data);

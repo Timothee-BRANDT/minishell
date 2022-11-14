@@ -6,13 +6,18 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 14:07:48 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/11/14 14:48:23 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/11/14 16:42:20 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int global_signum = 0;
+void	set_glo()
+{
+	g_glo.g_prompt = 0;
+	g_glo.ctrl = 0;
+	g_glo.g_signum = set_sig(g_glo.g_signum);
+}
 
 int	main(int ac, char	**av, char	**env)
 {
@@ -28,7 +33,13 @@ int	main(int ac, char	**av, char	**env)
 	while (1)
 	{
 		set_data(data);
+		set_glo();
+		tty_hide_ctrl();
 		data->buffer = readline("Bibishell>$ ");
+		g_glo.g_prompt = 1;
+		tty_show_ctrl();
+		if (data->buffer == NULL)
+			stop_handler(g_glo.g_signum);
 		data->buffer_save = ft_strdup(data->buffer);
 		if (!check_quote(data->buffer))
 		{
@@ -44,11 +55,8 @@ int	main(int ac, char	**av, char	**env)
 		add_history(data->buffer_save);
 		free(data->buffer);
 		free_it(data->buffer_save);
-		// ft_print_list(data->list);
 		ft_lstclear(&data->list, &free_list);
-		system("leaks minishell");
-		// system("lsof -w -c minishell");
 	}
 	free(data->buffer);
-	return (0);
+	return (g_glo.g_signum);
 }

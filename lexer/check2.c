@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mmatthie <mmatthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 15:08:29 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/11/03 17:19:40 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/11/06 13:06:36 by mmatthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,29 +47,4 @@ int	make_second(char	*buffer, t_data *data, int count)
 	ft_manage(data->join);
 	count = i;
 	return (count);
-}
-
-t_list	*get_word_in_list(char	*buffer, t_data	*data)
-{
-	t_list	*lst;
-
-	lst = NULL;
-	data->count = 0;
-	if (buffer && buffer[0])
-	{
-		while (data->count < (int)ft_strlen(buffer))
-		{
-			while (ft_isspace(buffer[data->count]))
-				data->count++;
-			if (buffer[data->count] != '"' && buffer[data->count] \
-			!= '\'' && buffer[data->count] != '\0')
-				data->count = get_word(buffer, data, data->count);
-			else if (buffer[data->count] == '"' || buffer[data->count] == '\'')
-				data->count = get_quotes(buffer, data, data->count);
-			if (buffer[data->count] == ' ' || buffer[data->count] == '\0')
-				lst = get_in_list(buffer, data, lst);
-		}
-	}
-	printf("\n\n\nlst : %p\n\n\n", lst);
-	return (lst);
 }

@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 16:11:49 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/11/14 10:38:16 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/11/14 15:58:36 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,8 +105,8 @@ void	start_echo(char **cmds)
 		return ;
 	while (check_option(cmds[i]))
 		i++;
-	if (!check_option(cmds[1]))
-		result = ft_strjoin_echo(result, cmds[1]);
+	// if (!check_option(cmds[1]))
+		// result = ft_strjoin_echo(result, cmds[1]);
 	while (cmds[i])
 	{
 		if (cmds && !cmds[i + 1] && !check_option(cmds[i]))

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echoctl.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mmatthie <mmatthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 11:46:21 by mmatthie          #+#    #+#             */
-/*   Updated: 2022/10/27 15:19:44 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/10/31 17:37:18 by mmatthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,15 @@ void	ft_free_split(char	**to_split)
 	free (to_split);
 }
 
+
+
 void	set_tty(t_data	*data, char	**env)
 {
 	(void)data;
-	char	*buffer;
-	char	**path;
+	char	**args;
 	pid_t	pid;
 
-	buffer = ft_strdup("/bin/stty echoctl");
-	path = ft_split(buffer, ' ');
+	args = ft_split("/bin/stty echoctl", ' ');
 	pid = fork();
 	if (pid == -1)
 	{
@@ -43,25 +43,22 @@ void	set_tty(t_data	*data, char	**env)
 	}
 	if (pid == 0)
 	{
-		if (execve(path[0], &path[0], env) == -1)
+		if (execve("/bin/stty", args, env) == -1)
 		{
 			write(2, "error in execve\n", 16);
 			exit(EXIT_FAILURE);
 		}
 	}
-	free_it(buffer);
-	ft_free_split(path);
+	ft_free_split(args);
 }
 
 void	unset_tty(t_data	*data, char	**env)
 {
 	(void)data;
-	char	*buffer;
-	char	**path;
+	char	**args;
 	pid_t	pid;
 
-	buffer = ft_strdup("/bin/stty -echoctl");
-	path = ft_split(buffer, ' ');
+	args = ft_split("/bin/stty -echoctl", ' ');
 	pid = fork();
 	if (pid == -1)
 	{
@@ -70,12 +67,29 @@ void	unset_tty(t_data	*data, char	**env)
 	}
 	if (pid == 0)
 	{
-		if (execve(path[0], &path[0], env) == -1)
+		if (execve("/bin/stty", args, env) == -1)
 		{
 			write(2, "error in execve\n", 16);
 			exit(EXIT_FAILURE);
 		}
 	}
-	ft_free_split(path);
-	free_it(buffer);
+	ft_free_split(args);
+}
+
+void	tty_hide_ctrl(void)
+{
+	struct termios	term;
+
+	tcgetattr(STDIN_FILENO, &term);
+	term.c_lflag &= ~(ECHOCTL);
+	tcsetattr(STDIN_FILENO, TCSANOW, &term);
+}
+
+void	tty_show_ctrl(void)
+{
+	struct termios	term;
+
+	tcgetattr(STDIN_FILENO, &term);
+	term.c_lflag |= ECHOCTL;
+	tcsetattr(STDIN_FILENO, TCSANOW, &term);
 }

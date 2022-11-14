@@ -6,13 +6,13 @@
 /*   By: mmatthie <mmatthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 02:40:15 by mmatthie          #+#    #+#             */
-/*   Updated: 2022/10/22 02:43:10 by mmatthie         ###   ########.fr       */
+/*   Updated: 2022/11/01 18:36:59 by mmatthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	double_redir(t_data	*data, char	*str, char*	buffer)
+void	double_redir(t_data	*data, char	*str, char	*buffer)
 {
 	str[data->j_space] = ' ';
 	str[data->j_space + 1] = buffer[data->i_space];
