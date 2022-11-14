@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmatthie <mmatthie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 17:49:37 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/10/08 09:34:18 by mmatthie         ###   ########.fr       */
+/*   Updated: 2022/10/27 15:16:03 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,3 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	}
 	return (0);
 }
-/*
-#include <stdio.h>
-int main()
-{
-	char s1[] = "sonsoir";
-	char s2[] = "salut";
-	printf("%d", ft_strncmp(s1, s2, 2));
-}*/

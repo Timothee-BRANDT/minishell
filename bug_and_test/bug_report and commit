@@ -1,0 +1,93 @@
+basic :
+
+- cat lol cat lol catlol cat lol lol lol                       lol;
+- catlol                                      cat;
+- lol;
+
+for quotes :
+
+- alou'rala'm'iff'looool '                              ' ""
+- aloura"lafamille"lol'test'
+- aloura|"lamiff"
+- "aloura"la"miff"
+- lol"lablague" ca a des bugs
+- 'cat""lol' "lol'laquotes'" mdrrr'lol' "letest'deouf";
+- ok'doncla"camarche"' "et la?" 'canedevrait"pas' "poserde soucis";
+- "par contrela'c'est un peu problematique";
+- lol""
+- ""
+- md""rrrr
+- "";
+
+for add_space :
+
+- lol||ok|c'est'le|premier>>test|>lol<<
+- aloura|lamiff<çaavance?etavc|>ça?
+- cat|lol;
+- >cat|lol;
+- cat>|lol;
+- cat||lol; !!! HERE !!!
+- lol|lamerdequec'est' de|gerer les "quotes"
+
+for expand :
+
+- "lol$PATH" echo $PWD
+- cat $PATH cat$PATH cat$PATH cat$PATH
+- cat "$PATH" lol "oups"$mdr
+- $PATH'$USER'$USERlol
+- $PATH$PATH
+- lol$PATH
+- $PATH
+- $PATHlol
+- alabase"tout"allaitbien'mais'cenestplus"le"cas.$PATH
+- lol$PATH|$ENV
+- lol$PATH|$ENV|"lol"|$USER>out !!! HERE !!!
+- "$PATH"
+- $"PATH"
+- lol$"PATH"
+- lol$PA"TH"
+- lol$"PATH"lol$PA"TH" lol$PA"TH" !!! HERE PARSING !!!
+- printf("test1\n")
+- $USER$PATH
+- "$USER"lol'$PATH'
+- '$PATH'"$USER"lol !!! HERE PARSING !!!
+- '$PATH'lol"$PATH"lol"mdr" !!! HERE PARSING !!!
+- $PATH'$USER'$USERlol
+- "'$USER'"
+- "$PATH"$lol
+- "'$USER'lol$USER" !!! HERE PARSING !!!
+- "'$USER'lolmdrrrr"$USER
+- "'$USER'lolmdrrrr" $USER
+- "'$USER'lolmdrrrr" $USER $PATH
+- lol mdr $PATH
+- '"$USER''lolmdrrrr"' $USER $PATH
+- cat "$PATH" lol "oups"$mdr
+- '$PATH'lol"$PATH"lol"mdr" $USER $lol ok$"lol"!!! HERE !!! PARSING !!!
+- '"$USER''lolmdrrrr" $USER $PATH'
+- $?lol $?
+- $$
+- $$PATH
+- ok $$$$$$$$$$$$$$$$$$$$$$$$$$$$PATH
+- echo $$$$$$$$$$$$$$$$$$$$$$$$$$$USER lol
+- "$"
+- $
+
+redir :
+- echo bizarre > test1 | echo $? > test2 (did it twice)
+- echo bizarre >> test1 | echo $? >> test2
+
+
+
+
+git commit on a branch :
+
+- git branch -a;
+- git checkout "the name branch";
+- doing some stuff;
+- git add .;
+"never forget to commit bro"
+- git commit -am "commit message"
+- git push;
+
+BE CAREFULL !!
+- git merge (will merge everything from commit)

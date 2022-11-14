@@ -6,11 +6,21 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 18:26:03 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/06/22 18:42:16y tbrandt          ###   ########.fr       */
+/*   Updated: 2022/10/10 09:13:47 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+int	open_error(char *infile, char *outfile)
+{
+	printf("Minishell: infile not found\n");
+	free(infile);
+	infile = NULL;
+	free(outfile);
+	outfile = NULL;
+	return (0);
+}
 
 int	on_error(char *str, int code)
 {
@@ -32,14 +42,6 @@ void	free_two_string(char *s1, char *s2)
 {
 	free(s1);
 	free(s2);
-}
-
-void	free_three_string(char *s1, char *s2, char *s3, char *s4)
-{
-	free(s1);
-	free(s2);
-	free(s3);
-	ft_manage(s4);
 }
 
 void	init_data(t_data *data)

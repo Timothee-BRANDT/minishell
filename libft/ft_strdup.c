@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbrandt <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 14:56:12 by tbrandt           #+#    #+#             */
-/*   Updated: 2021/11/02 18:36:19 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/10/27 15:17:05 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,3 @@ char	*ft_strdup(const char *str)
 	ptr[i] = '\0';
 	return (ptr);
 }
-
-/*
-#include<stdio.h>
-int main()
-{
-	char *str = "Cette chaine vient d'etre DUP";
-
-	printf("Result: %s\n", ft_strdup(str));
-}*/
