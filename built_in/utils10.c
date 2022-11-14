@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 12:11:30 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/11/14 12:19:40 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/11/14 14:01:50 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,10 @@ int	error_open(char **tab, char *pwd)
 		return (1);
 	}
 	return (0);
+}
+
+void	free_2_string(char *s1, char *s2)
+{
+	free(s1);
+	free(s2);
 }

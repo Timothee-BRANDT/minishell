@@ -6,23 +6,11 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 12:59:25 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/11/09 18:18:31 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/11/14 14:06:13 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-void	check_all_redirection(char **cmd, int *k, t_data *data)
-{
-	while (is_redir(cmd[*k]))
-	{
-		if (is_redir(cmd[*k]) == 1 || is_redir(cmd[*k]) == 3)
-			redir_in_manager(k, cmd, data);
-
-		if (is_redir(cmd[*k]) == 2 || is_redir(cmd[*k]) == 4)
-			redir_out_manager(k, cmd, data);
-	}
-}
 
 int	final_cmd_size(char **cmd)
 {
@@ -43,19 +31,9 @@ int	final_cmd_size(char **cmd)
 	return (result);
 }
 
-void	skip_builtin(char **cmd, int *k, t_data *data)
-{
-	(void)data;
-	if (cmd[*k] && is_built_in(cmd[*k]))
-	{
-		while (cmd[*k] && ft_strcmp(cmd[*k], "|"))
-			*k = *k + 1;
-	}
-}
-
 char	**extract_cmd(char **cmd, t_data *data)
 {
-	static	int	j = 0;
+	static int	j = 0;
 	char		**final_cmd;
 	int			i;
 	int			*k;
@@ -76,40 +54,22 @@ char	**extract_cmd(char **cmd, t_data *data)
 	if (cmd[j] && ft_strcmp(cmd[j], "|") == 0)
 		j++;
 	final_cmd[i] = NULL;
-	if(j == ft_strlen2d(cmd))
+	if (j == ft_strlen2d(cmd))
 		ft_bzero(&j, sizeof(int));
 	return (final_cmd);
 }
 
-void	get_cmd_count(t_list *list, t_data *data)
+void	get_cmd_size(t_list *list, t_data *data)
 {
 	t_list	*tmp;
 
-	data->cmd_count = 1;
-	data->pipe_count = 0;
 	tmp = list;
+	data->cmd_size = 0;
 	while (tmp)
 	{
-		if (is_pipe((char *)tmp->content))
-		{
-			data->pipe_count++;
-			data->cmd_count++;
-		}
 		tmp = tmp->next;
+		data->cmd_size++;
 	}
-}
-
-void get_cmd_size(t_list *list, t_data *data)
-{
-    t_list *tmp;
-
-    tmp = list;
-    data->cmd_size = 0;
-    while (tmp)
-    {
-        tmp = tmp->next;
-        data->cmd_size++;
-    }
 }
 
 char	**get_cmd_from_list_v2(t_list *list, t_data *data)
@@ -148,24 +108,4 @@ void	get_cmd_from_list(t_list *list, t_data *data, t_cmd *cmd)
 		i++;
 	}
 	cmd->args[i] = NULL;
-}
-
-char	**lst_to_tab(t_list *list, t_data *data)
-{
-	t_list	*tmp;
-	char	**tab;
-	int		i;
-
-	tmp = list;
-	get_cmd_size(data->list, data);
-	tab = malloc(sizeof(char *) * data->cmd_size + 1);
-	i = 0;
-	while (tmp)
-	{
-		tab[i] = ft_strdup((char *)tmp->content);
-		tmp = tmp->next;
-		i++;
-	}
-	tab[i] = NULL;
-	return (tab);
 }

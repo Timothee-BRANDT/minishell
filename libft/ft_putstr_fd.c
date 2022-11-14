@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 12:24:15 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/11/08 18:37:26 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/11/14 14:35:21 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ void	ft_putstr_fd(char *s, int fd)
 	}
 	write(fd, "\n", 1);
 }
-
 
 void	ft_putstr_fd_free(char *s, int fd)
 {

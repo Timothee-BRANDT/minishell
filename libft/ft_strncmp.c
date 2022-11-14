@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 17:49:37 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/10/27 15:16:03 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/11/14 14:36:11 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
 	size_t			i;
-	
+
 	i = 0;
 	if (!n)
 		return (n);

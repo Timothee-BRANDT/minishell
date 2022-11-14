@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 00:22:03 by mmatthie          #+#    #+#             */
-/*   Updated: 2022/11/08 18:29:48 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/11/14 13:27:44 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	ft_print_list(t_list	*lst)
 	while (lst != NULL)
 	{
 		printf("List %d:%s\n", i += 1, (char *)(lst->content));
-		// printf("Pointeur :%p\n", (char *)(lst->content));
+		printf("Pointeur :%p\n", (char *)(lst->content));
 		lst = lst->next;
 	}
 }

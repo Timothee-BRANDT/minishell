@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 13:47:06 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/11/08 17:17:42y tbrandt          ###   ########.fr       */
+/*   Updated: 2022/11/14 14:34:21 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,10 @@ int	ft_isalpha(int c)
 	}
 }
 
-
 int	ft_isnum_key(char *str)
 {
 	int	i;
-	
+
 	i = 0;
 	while (str && str[i])
 	{

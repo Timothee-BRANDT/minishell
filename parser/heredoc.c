@@ -6,25 +6,42 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 09:48:14 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/11/08 18:37:48 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/11/14 14:46:08 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int count_heredoc(t_list *list)
+int	get_len(char **tab)
 {
-    t_list	*tmp;
-    int		count;
+	int	i;
+	int	result;
+
+	i = 0;
+	result = 0;
+	if (!tab)
+		return (0);
+	while (tab[i] && ft_strcmp(tab[i], "|"))
+	{
+		i++;
+		result++;
+	}
+	return (result);
+}
+
+int	count_heredoc(t_list *list)
+{
+	t_list	*tmp;
+	int		count;
 
 	tmp = list;
 	count = 0;
-    while (tmp && tmp->next)
-    {
+	while (tmp && tmp->next)
+	{
 		if (!ft_strcmp((char *)tmp->content, "<<"))
 			count++;
 		tmp = tmp->next;
-    }
+	}
 	return (count);
 }
 
@@ -38,8 +55,7 @@ char	**stock_delimitors(t_list *list, t_data *data)
 	tab = malloc(sizeof(char *) * (count_heredoc(list) + 1));
 	tmp = list;
 	i = 0;
-
-	while(tmp && tmp->next)
+	while (tmp && tmp->next)
 	{
 		if (!ft_strcmp((char *)tmp->content, "<<"))
 		{
@@ -52,7 +68,12 @@ char	**stock_delimitors(t_list *list, t_data *data)
 	return (tab);
 }
 
-// when should i free my fd tab ???
+void	free_and_close(char *str, int fd)
+{
+	free(str);
+	close(fd);
+}
+
 int	start_heredoc(t_data *data)
 {
 	char	**tab;
@@ -64,19 +85,19 @@ int	start_heredoc(t_data *data)
 	i = 0;
 	while (i < count_heredoc(data->list))
 	{
-		fd = open(tab[i], O_RDONLY | O_WRONLY | O_TRUNC | O_CREAT, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+		fd = open(tab[i], O_RDONLY | O_WRONLY | \
+		O_TRUNC | O_CREAT, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 		while (1)
 		{
 			str = readline("> ");
 			if (!ft_strcmp(str, tab[i]))
-				break;
+				break ;
 			ft_putstr_fd_free(str, fd);
 		}
-		free(str);
-		close(fd);
+		free_and_close(str, fd);
 		i++;
 		if (i == ft_strlen2d(tab))
-			break;
+			break ;
 	}
 	free_tab(tab);
 	return (0);

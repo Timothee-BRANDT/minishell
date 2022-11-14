@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 10:42:43 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/10/04 15:03:28y tbrandt          ###   ########.fr       */
+/*   Updated: 2022/11/14 14:46:55 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	token_error(t_list *list)
 {
-	t_list *tmp;
+	t_list	*tmp;
 
 	if (!list)
 		return (0);
@@ -25,7 +25,8 @@ int	token_error(t_list *list)
 	{
 		if (is_token((char *)tmp->next->content) && !tmp->next->next)
 			return (1);
-		if (is_token((char *)tmp->content) && is_token((char *)tmp->next->content))
+		if (is_token((char *)tmp->content) && \
+		is_token((char *)tmp->next->content))
 			return (1);
 		tmp = tmp->next;
 	}
@@ -51,26 +52,9 @@ int	exec_builtin(char **tab, t_data *data)
 	return (0);
 }
 
-int	get_len(char **tab)
-{
-	int	i;
-	int	result;
-
-	i = 0;
-	result = 0;
-	if (!tab)
-		return (0);
-	while(tab[i] && ft_strcmp(tab[i], "|"))
-	{
-		i++;
-		result++;
-	}
-	return (result);
-}
-
 char	**get_next_pipe(char **tab)
 {
-	char 	**result;
+	char	**result;
 	int		i;
 	int		len;
 
@@ -88,8 +72,8 @@ char	**get_next_pipe(char **tab)
 
 int	start_builtin(t_data *data, char **args, char **cmds)
 {
-	char **command;
-	char **tab;
+	char	**command;
+	char	**tab;
 
 	tab = get_cmd_from_list_v2(data->list, data);
 	check_if_pipe(tab, data);
@@ -113,7 +97,6 @@ int	analyzer(t_data *data, t_cmd *cmd)
 {
 	data->tmp_in = dup(0);
 	data->tmp_out = dup(1);
-	
 	if (token_error(data->list))
 	{
 		close(data->tmp_in);

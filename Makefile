@@ -6,7 +6,7 @@
 #    By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/09 14:04:53 by tbrandt           #+#    #+#              #
-#    Updated: 2022/11/14 12:11:59 by tbrandt          ###   ########.fr        #
+#    Updated: 2022/11/14 14:07:35 by tbrandt          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,6 +34,7 @@ SRC		=	main.c						\
 			executor/get_path.c			\
 			executor/get_command.c		\
 			executor/utils2.c			\
+			executor/utils3.c			\
 			built_in/export.c			\
 			built_in/echo.c				\
 			built_in/pwd.c				\

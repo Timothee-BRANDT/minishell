@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 19:34:14 by mmatthie          #+#    #+#             */
-/*   Updated: 2022/11/14 12:40:36 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/11/14 14:08:03 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,6 +150,7 @@ void	expend_it(t_data	*data, char	*str, int j);
 void	set_redir(t_data	*data, char	*str, char	*buffer);
 void	set_redir(t_data	*data, char	*str, char	*buffer);
 int		reset_indicate(int count, t_data	*data);
+void	free_2_string(char *s1, char *s2);
 int		get_next(char	*str, int i, t_data	*data, int tmp);
 int		get_token(t_data	*data, char	*buffer, int count);
 int		first_expend(char	*str, int count, t_data	*data);
@@ -217,6 +218,7 @@ char	*get_correct_cmd(char **paths, char **cmds);
 char	**get_all_path(t_data *data);
 char 	**get_last_cmd(char **tab);
 int		final_cmd_size(char **cmd);
+void	check_all_redirection(char **cmd, int *k, t_data *data);
 
 //builtins
 void	found_and_replace(t_list **export, char *name);
@@ -263,6 +265,7 @@ int		check_if_pipe(char **tab, t_data *data);
 int		start_builtin(t_data *data, char **args, char **cmds);
 int		check_if_pipe(char **tab, t_data *data);
 int		chdir_home(t_data *data);
+int		str_error(char *str);
 void	change_oldpwd_env(t_data *data, char *pwd);
 void	change_oldpwd_export(t_data *data, char *pwd);
 void	change_pwd_env(t_data *data);

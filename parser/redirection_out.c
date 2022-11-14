@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 15:39:09 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/10/27 12:47:46 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/11/14 14:43:41 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	check_all_infile(t_list *list, t_data *data)
 {
-	t_list *tmp;
+	t_list	*tmp;
 
 	tmp = list;
 	while (tmp && tmp->next)
@@ -23,7 +23,7 @@ int	check_all_infile(t_list *list, t_data *data)
 		{
 			data->check_fd = open((char *)tmp->next->content, O_RDONLY);
 			close(data->check_fd);
-			if (data->check_fd == - 1)
+			if (data->check_fd == -1)
 			{
 				data->check_fd = 0;
 				return (1);

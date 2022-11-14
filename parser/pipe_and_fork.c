@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 08:16:10 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/10/21 09:10:50y tbrandt          ###   ########.fr       */
+/*   Updated: 2022/11/14 14:42:30 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 void	create_pipe(t_data *data)
 {
-	int pipe_fd[2];
+	int	pipe_fd[2];
 
 	pipe(pipe_fd);
 	data->pipe_1 = pipe_fd[1];
 	data->pipe_0 = pipe_fd[0];
 }
 
-void    dup_child_exec(char **cmds, t_data *data, int cmd_count)
+void	dup_child_exec(char **cmds, t_data *data, int cmd_count)
 {
 	if (data->check_fd_in == 1)
 	{
@@ -71,18 +71,16 @@ void	dup_parent(t_data *data, int cmd_count)
 int	wait_my_childs(t_data *data)
 {
 	int	i;
-	int status;
-	// int test;
+	int	status;
 
 	status = 0;
 	i = -1;
 	while (++i < data->cmd_count)
-		waitpid(0 , &status, 0);
-	// test = exit_code(status);
+		waitpid(0, &status, 0);
 	return (0);
 }
 
-void    restore_fd(t_data *data)
+void	restore_fd(t_data *data)
 {
 	close(data->last_redir);
 	close(data->fd_in);
