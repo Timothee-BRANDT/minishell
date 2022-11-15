@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 15:20:28 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/11/14 16:24:59 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/11/15 11:54:02 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void	exec_command(char **cmds, t_data	*data)
 		free_tab(cmds);
 		free_tab(paths);
 		printf("Shell: command not found.\n");
-		// g_glo.g_signum = 127;
 		exit(127);
 	}
 	else if (execve(good_cmd, cmds, env) == -1)

@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 19:34:14 by mmatthie          #+#    #+#             */
-/*   Updated: 2022/11/14 16:25:58 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/11/15 12:18:04 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,14 @@ typedef struct s_glo
 {
 	int	g_signum;
 	int	g_prompt;
-	int ctrl;
+	int	ctrl;
 }	t_glo;
 
 t_glo	g_glo;
 
 typedef struct s_data
 {
-	// parsing manu
-	int	i_space;
+	int		i_space;
 	int		j_space;
 	char	*first;
 	char	*second;
@@ -63,7 +62,6 @@ typedef struct s_data
 	char	*string;
 	char	*expend;
 	char	*dollarplusquotes;
-	// redirections
 	int		cmd_count;
 	int		pipe_count;
 	int		cmd_size;
@@ -87,7 +85,6 @@ typedef struct s_data
 	char	*infile;
 	char	*outfile;
 	char	*delimitor;
-	// built-ins
 	char	*get_key;
 	char	*result;
 	char	*get_key_export;
@@ -189,7 +186,7 @@ void	built_in_analyzer(t_list **list, t_data	*data);
 void	redir_tokenisation(t_list *list);
 void	get_cmd_count(t_list *list, t_data *data);
 void	get_cmd_size(t_list *list, t_data *data);
-void    get_cmd_from_list(t_list *list, t_data *data, t_cmd *cmd);
+void	get_cmd_from_list(t_list *list, t_data *data, t_cmd *cmd);
 char	**get_cmd_from_list_v2(t_list *list, t_data *data);
 void	free_list(void *ptr);
 int		analyzer(t_data *data, t_cmd *cmd);
@@ -205,9 +202,9 @@ void	redir_out_manager(int *j, char **cmd, t_data *data);
 int		redir_in_manager(int *k, char **cmd, t_data *data);
 
 // executor
-void    exec_command(char **cmds, t_data *data);
-void    restore_fd(t_data *data);
-void    dup_child_exec(char **cmd, t_data *data, int cmd_count);
+void	exec_command(char **cmds, t_data *data);
+void	restore_fd(t_data *data);
+void	dup_child_exec(char **cmd, t_data *data, int cmd_count);
 void	dup_parent(t_data *data, int cmd_count);
 void	create_pipe(t_data *data);
 void	redir_fd_out(t_data *data);
@@ -215,7 +212,7 @@ void	start_exec(t_cmd *cmd, t_data *data);
 int		wait_my_childs(t_data *data);
 char	*get_correct_cmd(char **paths, char **cmds);
 char	**get_all_path(t_data *data);
-char 	**get_last_cmd(char **tab);
+char	**get_last_cmd(char **tab);
 int		final_cmd_size(char **cmd);
 void	check_all_redirection(char **cmd, int *k, t_data *data);
 
@@ -239,26 +236,27 @@ char	*ft_strjoin_export(char const *s1, char const *s2);
 char	*ft_get_value(char *str);
 char	*remove_plus(char *str);
 char	*ft_get_key(char *str);
-char    **list_to_tab(t_list *list);
-int 	check_builtin(char *str, t_data *data);
-int 	redirect_in_builtin(char **cmds, t_data *data);
+char	**list_to_tab(t_list *list);
+int		check_builtin(char *str, t_data *data);
+int		redirect_in_builtin(char **cmds, t_data *data);
 void	start_echo(char **cmds);
 char	**get_next_pipe(char **tab);
 int		get_len(char **tab);
 void	skip_builtin(char **cmd, int *k, t_data *data);
 void	print_echo(char **cmds, char *result);
-int 	check_option(char *tab);
-int 	is_export_main(char **tab, t_data *data);
+int		check_option(char *tab);
+int		is_export_main(char **tab, t_data *data);
 int		is_unset_main(char **tab, t_data *data);
 int		is_pwd_main(char **tab, t_data *data);
 int		is_cd_main(char **tab, t_data *data);
 int		is_env_main(char **tab, t_data *data);
 int		is_echo_main(char **tab, t_data *data);
-int 	is_export_child(char **tab, t_data *data);
+int		is_export_child(char **tab, t_data *data);
 int		is_unset_child(char **tab, t_data *data);
 int		is_pwd_child(char **tab, t_data *data);
 int		is_cd_child(char **tab, t_data *data);
 int		is_env_child(char **tab, t_data *data);
+int		is_exit(char **tab);
 int		is_echo_child(char **tab, t_data *data);
 int		check_if_pipe(char **tab, t_data *data);
 int		start_builtin(t_data *data, char **args, char **cmds);

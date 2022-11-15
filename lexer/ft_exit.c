@@ -3,35 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmatthie <mmatthie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 11:24:53 by mmatthie          #+#    #+#             */
-/*   Updated: 2022/11/14 14:58:20 by mmatthie         ###   ########.fr       */
+/*   Updated: 2022/11/15 16:21:45 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static char	**ft_lst2dpt(t_list	*lst)
-{
-	int	i;
-	char	**tab;
-
-	i = 0;
-	tab = malloc(sizeof(char	*) * (ft_lstsize(lst) + 1));
-	if (!tab)
-		return (NULL);
-	while (lst->content && lst->next)
-	{
-		tab[i] = ft_strdup(lst->content);
-		i++;
-		lst = lst->next;
-	}
-	tab[i] = NULL;
-	return (tab);
-}
-
-void	required_num_arg()
+/*void	required_num_arg()
 {
 	ft_putstr_fd("Shell: exit: numeric argument required", 2);
 	exit (255);
@@ -105,4 +86,40 @@ void	ft_exit(t_list	*lst, t_data	*data)
 		else
 			required_num_arg();
 	}
+}*/
+
+int	check_exit_arg(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] <= '0' || str[i] >= '9')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+int	is_exit(char **tab)
+{
+	if (!ft_strcmp(tab[0], "exit"))
+	{
+		if (tab[1] && check_exit_arg(tab[1]))
+		{
+			write(1, "exit\n", 5);
+			ft_putstr_fd("bash: exit: numeric argument required", 2);
+			g_glo.g_signum = 255;
+			exit(255);
+		}
+		if (ft_strlen2d(tab) > 2)
+		{
+			write(1, "exit\n", 5);
+			ft_putstr_fd("Bibishell: exit: too many arguments", 2);
+			g_glo.g_signum = 1;
+			return (0);
+		}
+	}
+	return (1);
 }

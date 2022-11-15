@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_word.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmatthie <mmatthie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 14:34:37 by mmatthie          #+#    #+#             */
-/*   Updated: 2022/11/11 17:43:16 by mmatthie         ###   ########.fr       */
+/*   Updated: 2022/11/15 16:18:33 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,14 @@ static void	else_in_double_quotes(int j, t_data	*data)
 		data->get_word = ft_strdup(" ");
 }
 
-static void	increment_it(char	*buffer, t_data	*data)
+static int	increment_it(char	*buffer, t_data	*data)
 {
+	if (buffer[data->i_get] && data->token \
+	&& buffer[data->i_get] == data->token)
+	{
+		data->i_get = last_token(data->i_get, data);
+		return (-1);
+	}
 	while (buffer[data->i_get] && buffer[data->i_get] \
 	!= data->token && buffer[data->i_get] != '$')
 	{
@@ -68,6 +74,7 @@ static void	increment_it(char	*buffer, t_data	*data)
 		data->j_get++;
 		data->i_get++;
 	}
+	return (0);
 }
 
 int	get_double_quotes(char	*buffer, t_data	*data, int count)
@@ -75,7 +82,8 @@ int	get_double_quotes(char	*buffer, t_data	*data, int count)
 	data->token = buffer[count];
 	count++;
 	data->i_get = count;
-	increment_it(buffer, data);
+	if (increment_it(buffer, data) == -1)
+		return (data->i_get);
 	if (data->j_get > 0)
 		data->first = ft_substr(buffer, count, data->j_get);
 	if (buffer && buffer[data->i_get] == '"')
@@ -86,5 +94,6 @@ int	get_double_quotes(char	*buffer, t_data	*data, int count)
 		data->i_get = get_join_and_manage(buffer, data->i_get, data);
 	else
 		else_in_double_quotes(data->j_get, data);
+	data->j_get = 0;
 	return (data->i_get);
 }

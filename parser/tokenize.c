@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 10:42:43 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/11/14 14:46:55 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/11/15 16:20:09 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ int	token_error(t_list *list)
 int	exec_builtin(char **tab, t_data *data)
 {
 	if (!tab)
+		return (1);
+	if (!is_exit(tab))
 		return (1);
 	if (!is_export_main(tab, data))
 		return (1);
