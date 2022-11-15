@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 12:11:30 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/11/14 16:11:54 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/11/15 10:40:32 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ void	change_pwd(t_data *data, char *pwd)
 
 int	error_open(char **tab, char *pwd)
 {
-	int fd;
+	int	fd;
+
 	fd = open(tab[1], O_DIRECTORY);
 	if (errno == EACCES)
 	{

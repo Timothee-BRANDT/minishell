@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expend.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmatthie <mmatthie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 02:46:39 by mmatthie          #+#    #+#             */
-/*   Updated: 2022/11/11 17:44:45 by mmatthie         ###   ########.fr       */
+/*   Updated: 2022/11/14 16:54:02 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,5 @@ int	make_expend(char	*str, int j, int content, t_data	*data)
 		else
 			return (count + 1);
 	}
-	printf("count : %d\n", count);
 	return (count);
 }

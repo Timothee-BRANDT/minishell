@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 14:07:48 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/11/14 16:42:20 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/11/15 11:03:53 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,40 @@ void	set_glo()
 	g_glo.g_signum = set_sig(g_glo.g_signum);
 }
 
+void	create_env(t_data *data, char **env)
+{
+	data->env = env_to_list(env);
+	data->export = env_to_list(env);
+}
+
+int	quote_error(t_data *data)
+{
+	if (!check_quote(data->buffer))
+	{
+		ft_putstr_fd("Error, quotes not closed.", 2);
+		add_history(data->buffer);
+		if (data->buffer)
+			free(data->buffer);
+		if (data->buffer_save)
+			free_it(data->buffer_save);
+		return (1);
+	}
+	return (0);
+}
+
+void	bibishell(t_data *data, t_cmd *cmd)
+{
+	data->buffer = ft_add_space(data->buffer, data);
+	data->list = get_word_in_list(data->buffer, data);
+	analyzer(data, cmd);
+	add_history(data->buffer_save);
+	if (data->buffer)
+		free(data->buffer);
+	if (data->buffer_save)
+		free_it(data->buffer_save);
+	ft_lstclear(&data->list, &free_list);
+}
+
 int	main(int ac, char	**av, char	**env)
 {
 	t_data	*data;
@@ -28,34 +62,21 @@ int	main(int ac, char	**av, char	**env)
 	(void) av;
 	cmd = malloc(sizeof(t_cmd));
 	data = malloc(sizeof(t_data));
-	data->env = env_to_list(env);
-	data->export = env_to_list(env);
-	while (1)
+	create_env(data, env);
+	while ("Bibishell")
 	{
 		set_data(data);
 		set_glo();
 		tty_hide_ctrl();
 		data->buffer = readline("Bibishell>$ ");
+		data->buffer_save = ft_strdup(data->buffer);
+		if (quote_error(data))
+			continue ;
 		g_glo.g_prompt = 1;
 		tty_show_ctrl();
 		if (data->buffer == NULL)
 			stop_handler(g_glo.g_signum);
-		data->buffer_save = ft_strdup(data->buffer);
-		if (!check_quote(data->buffer))
-		{
-			ft_putstr_fd("Error, quotes not closed.\n", 2);
-		    add_history(data->buffer);
-		    free(data->buffer);
-			free_it(data->buffer_save);
-            continue ;
-		}
-		data->buffer = ft_add_space(data->buffer, data);
-		data->list = get_word_in_list(data->buffer, data);
-		analyzer(data, cmd);
-		add_history(data->buffer_save);
-		free(data->buffer);
-		free_it(data->buffer_save);
-		ft_lstclear(&data->list, &free_list);
+		bibishell(data, cmd);
 	}
 	free(data->buffer);
 	return (g_glo.g_signum);
