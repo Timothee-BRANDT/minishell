@@ -6,13 +6,13 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 14:07:48 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/11/15 16:22:58 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/11/15 16:29:09 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	set_glo()
+void	set_glo(void)
 {
 	g_glo.g_prompt = 0;
 	g_glo.ctrl = 0;

@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 16:17:57 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/11/14 16:20:03 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/11/15 16:38:04 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 static int	get_len_v2(int n)
 {
 	int	res;
+
 	res = 0;
 	if (!n)
 		return (1);
@@ -27,10 +28,12 @@ static int	get_len_v2(int n)
 	}
 	return (res);
 }
+
 char	*ft_itoa_v2(int n)
 {
 	char	*res;
 	int		len_res;
+
 	if (n == -2147483648)
 		return (ft_strdup("-2147483648"));
 	len_res = (get_len_v2(n));
