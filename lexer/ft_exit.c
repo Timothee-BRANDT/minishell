@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 11:24:53 by mmatthie          #+#    #+#             */
-/*   Updated: 2022/11/15 16:21:45 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/11/15 16:25:58 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,12 +113,17 @@ int	is_exit(char **tab)
 			g_glo.g_signum = 255;
 			exit(255);
 		}
-		if (ft_strlen2d(tab) > 2)
+		else if (ft_strlen2d(tab) > 2)
 		{
 			write(1, "exit\n", 5);
 			ft_putstr_fd("Bibishell: exit: too many arguments", 2);
 			g_glo.g_signum = 1;
 			return (0);
+		}
+		else if (ft_strlen2d(tab) == 1)
+		{
+			g_glo.g_signum = 1;
+			exit(1);
 		}
 	}
 	return (1);
