@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 14:07:48 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/11/15 16:29:09 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/11/15 16:54:27 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ int	quote_error(t_data *data)
 
 void	bibishell(t_data *data, t_cmd *cmd)
 {
+	if (!ft_strcmp(data->buffer, "\0"))
+		return ;
 	data->buffer = ft_add_space(data->buffer, data);
 	data->list = get_word_in_list(data->buffer, data);
 	analyzer(data, cmd);
