@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmatthie <mmatthie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 00:22:03 by mmatthie          #+#    #+#             */
-/*   Updated: 2022/10/19 00:22:26 by mmatthie         ###   ########.fr       */
+/*   Updated: 2022/11/16 14:48:10 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	ft_print_list(t_list	*lst)
 	while (lst != NULL)
 	{
 		printf("List %d:%s\n", i += 1, (char *)(lst->content));
+		printf("pointeur: %p\n", (char *)lst->content);
 		lst = lst->next;
 	}
 }

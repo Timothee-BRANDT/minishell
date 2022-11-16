@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 09:48:14 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/11/16 14:28:29 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/11/16 14:53:20 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ int	count_heredoc(t_list *list)
 	t_list	*tmp;
 	int		count;
 
+	if (!list->content)
+		return (0);
 	tmp = list;
 	count = 0;
 	while (tmp && tmp->next)
