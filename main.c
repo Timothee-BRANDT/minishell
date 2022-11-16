@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 14:07:48 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/11/15 16:54:27 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/11/16 13:41:12 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void	set_glo(void)
 {
 	g_glo.g_prompt = 0;
 	g_glo.ctrl = 0;
-	signal(SIGQUIT, SIG_IGN);
 	g_glo.g_signum = set_sig(g_glo.g_signum);
 }
 
@@ -66,19 +65,19 @@ int	main(int ac, char	**av, char	**env)
 	cmd = malloc(sizeof(t_cmd));
 	data = malloc(sizeof(t_data));
 	create_env(data, env);
-	while ("Bibishell")
+	while (1)
 	{
 		set_data(data);
 		set_glo();
 		tty_hide_ctrl();
 		data->buffer = readline("Bibishell>$ ");
-		data->buffer_save = ft_strdup(data->buffer);
-		if (quote_error(data))
-			continue ;
 		g_glo.g_prompt = 1;
 		tty_show_ctrl();
 		if (data->buffer == NULL)
 			stop_handler(g_glo.g_signum);
+		data->buffer_save = ft_strdup(data->buffer);
+		if (quote_error(data))
+			continue ;
 		bibishell(data, cmd);
 	}
 	free(data->buffer);

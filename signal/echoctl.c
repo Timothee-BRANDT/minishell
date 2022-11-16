@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echoctl.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mmatthie <mmatthie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 11:46:21 by mmatthie          #+#    #+#             */
-/*   Updated: 2022/11/15 16:39:10 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/10/31 17:37:18 by mmatthie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,14 @@ void	ft_free_split(char	**to_split)
 	free (to_split);
 }
 
+
+
 void	set_tty(t_data	*data, char	**env)
 {
+	(void)data;
 	char	**args;
 	pid_t	pid;
 
-	(void)data;
 	args = ft_split("/bin/stty echoctl", ' ');
 	pid = fork();
 	if (pid == -1)
@@ -52,10 +54,10 @@ void	set_tty(t_data	*data, char	**env)
 
 void	unset_tty(t_data	*data, char	**env)
 {
+	(void)data;
 	char	**args;
 	pid_t	pid;
 
-	(void)data;
 	args = ft_split("/bin/stty -echoctl", ' ');
 	pid = fork();
 	if (pid == -1)

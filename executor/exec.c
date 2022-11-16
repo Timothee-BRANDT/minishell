@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 15:20:28 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/11/15 11:54:02 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/11/16 13:38:31 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ void	exec_command(char **cmds, t_data	*data)
 		redirect_in_builtin(cmds, data);
 	else if (!good_cmd)
 	{
+		printf("Shell: %s: command not found.\n", cmds[0]);
 		free_tab(cmds);
 		free_tab(paths);
-		printf("Shell: command not found.\n");
 		exit(127);
 	}
 	else if (execve(good_cmd, cmds, env) == -1)

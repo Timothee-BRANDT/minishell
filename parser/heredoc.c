@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 09:48:14 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/11/14 14:46:08 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/11/16 13:48:12 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,12 @@ int	start_heredoc(t_data *data)
 		O_TRUNC | O_CREAT, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 		while (1)
 		{
+			tty_hide_ctrl();
+			set_glo();
 			str = readline("> ");
+			if (str == NULL)
+				break ;
+			tty_show_ctrl();
 			if (!ft_strcmp(str, tab[i]))
 				break ;
 			ft_putstr_fd_free(str, fd);
