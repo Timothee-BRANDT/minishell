@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 12:59:25 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/11/14 14:06:13 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/11/16 15:55:01 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,10 @@ char	**get_cmd_from_list_v2(t_list *list, t_data *data)
 	i = 0;
 	while (tmp)
 	{
-		tab[i] = ft_strdup((char *)tmp->content);
+		if (tmp->content == NULL)
+			tab[i] = ft_strdup(" ");
+		else
+			tab[i] = ft_strdup((char *)tmp->content);
 		i++;
 		tmp = tmp->next;
 	}
@@ -103,7 +106,10 @@ void	get_cmd_from_list(t_list *list, t_data *data, t_cmd *cmd)
 	i = 0;
 	while (tmp)
 	{
-		cmd->args[i] = ft_strdup((char *)tmp->content);
+		if (tmp->content == NULL)
+			cmd->args[i] = ft_strdup(" ");
+		else
+			cmd->args[i] = ft_strdup((char *)tmp->content);
 		tmp = tmp->next;
 		i++;
 	}

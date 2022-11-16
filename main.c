@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 14:07:48 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/11/16 14:45:50 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/11/16 15:57:43 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,13 @@ int	quote_error(t_data *data)
 void	bibishell(t_data *data, t_cmd *cmd)
 {
 	if (!ft_strcmp(data->buffer, "\0"))
+	{
+		if (data->buffer)
+			free(data->buffer);
+		if (data->buffer_save)
+			free_it(data->buffer_save);
 		return ;
+	}
 	data->buffer = ft_add_space(data->buffer, data);
 	data->list = get_word_in_list(data->buffer, data);
 	analyzer(data, cmd);
@@ -79,7 +85,6 @@ int	main(int ac, char	**av, char	**env)
 		if (quote_error(data))
 			continue ;
 		bibishell(data, cmd);
-		system("leaks minishell");
 	}
 	free(data->buffer);
 	return (g_glo.g_signum);
