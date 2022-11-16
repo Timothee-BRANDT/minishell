@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 09:48:14 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/11/16 13:48:12 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/11/16 14:28:29 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,25 +82,20 @@ int	start_heredoc(t_data *data)
 	int		fd;
 
 	tab = stock_delimitors(data->list, data);
-	i = 0;
-	while (i < count_heredoc(data->list))
+	i = -1;
+	while (++i < count_heredoc(data->list))
 	{
 		fd = open(tab[i], O_RDONLY | O_WRONLY | \
 		O_TRUNC | O_CREAT, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 		while (1)
 		{
-			tty_hide_ctrl();
-			set_glo();
+			hd_norm();
 			str = readline("> ");
-			if (str == NULL)
+			if (str == NULL || !ft_strcmp(str, tab[i]))
 				break ;
-			tty_show_ctrl();
-			if (!ft_strcmp(str, tab[i]))
-				break ;
-			ft_putstr_fd_free(str, fd);
+			hd_norm_2(str, fd);
 		}
 		free_and_close(str, fd);
-		i++;
 		if (i == ft_strlen2d(tab))
 			break ;
 	}

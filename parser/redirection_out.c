@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 15:39:09 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/11/14 14:43:41 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/11/16 14:29:05 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,16 @@ void	redir_fd_out(t_data *data)
 		data->fd_out = dup(data->tmp_out);
 		close(data->tmp_out);
 	}
+}
+
+void	hd_norm(void)
+{
+	tty_hide_ctrl();
+	set_glo();
+}
+
+void	hd_norm_2(char *str, int fd)
+{
+	tty_show_ctrl();
+	ft_putstr_fd_free(str, fd);
 }

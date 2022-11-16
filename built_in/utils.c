@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 11:55:22 by tbrandt           #+#    #+#             */
-/*   Updated: 2022/11/12 16:25:50 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/11/16 14:23:00 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	is_token(char *str)
 	int		i;
 
 	i = 0;
-	while (str[i])
+	while (str && str[i])
 	{
 		if (str[0] == '<' && str[1] == '<')
 			return (1);

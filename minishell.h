@@ -6,7 +6,7 @@
 /*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 19:34:14 by mmatthie          #+#    #+#             */
-/*   Updated: 2022/11/16 13:42:10 by tbrandt          ###   ########.fr       */
+/*   Updated: 2022/11/16 14:26:03 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -268,6 +268,8 @@ void	change_oldpwd_export(t_data *data, char *pwd);
 void	change_pwd_env(t_data *data);
 void	change_pwd(t_data *data, char *pwd);
 void	set_glo(void);
+void	hd_norm(void);
+void	hd_norm_2(char *str, int fd);
 void	change_pwd_export(t_data *data);
 int		error_open(char **tab, char *pwd);
 t_list	*env_to_list(char **env);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echoctl.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmatthie <mmatthie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tbrandt <tbrandt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 11:46:21 by mmatthie          #+#    #+#             */
-/*   Updated: 2022/10/31 17:37:18 by mmatthie         ###   ########.fr       */
+/*   Updated: 2022/11/16 14:30:36 by tbrandt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,56 +24,6 @@ void	ft_free_split(char	**to_split)
 		i--;
 	}
 	free (to_split);
-}
-
-
-
-void	set_tty(t_data	*data, char	**env)
-{
-	(void)data;
-	char	**args;
-	pid_t	pid;
-
-	args = ft_split("/bin/stty echoctl", ' ');
-	pid = fork();
-	if (pid == -1)
-	{
-		write(2, "error in stty echoctl\n", 22);
-		exit(EXIT_FAILURE);
-	}
-	if (pid == 0)
-	{
-		if (execve("/bin/stty", args, env) == -1)
-		{
-			write(2, "error in execve\n", 16);
-			exit(EXIT_FAILURE);
-		}
-	}
-	ft_free_split(args);
-}
-
-void	unset_tty(t_data	*data, char	**env)
-{
-	(void)data;
-	char	**args;
-	pid_t	pid;
-
-	args = ft_split("/bin/stty -echoctl", ' ');
-	pid = fork();
-	if (pid == -1)
-	{
-		write(2, "error in stty -echoctl\n", 22);
-		exit(EXIT_FAILURE);
-	}
-	if (pid == 0)
-	{
-		if (execve("/bin/stty", args, env) == -1)
-		{
-			write(2, "error in execve\n", 16);
-			exit(EXIT_FAILURE);
-		}
-	}
-	ft_free_split(args);
 }
 
 void	tty_hide_ctrl(void)
